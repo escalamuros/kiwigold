@@ -1,0 +1,307 @@
+@charset "UTF-8";
+/* CSS Document */
+body{
+	margin:0;
+	color:#345;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+input{
+	text-align:center;
+}
+#contenedor{
+	width:100%;   
+    height: 100%;
+	}
+#header{
+	width:100%;
+	min-height:120px;
+	height:auto;
+	background:#fff;
+	}
+#footer{}
+#login{
+	width:350px;
+	height:350px;
+	border:1px solid #ddd;
+	text-align:center;
+	position:fixed;
+	top:45%;
+	left:50%;
+	margin-left:-166px;
+	margin-top:-175px;
+	overflow:hidden;
+	}
+.linea{
+	
+	
+	}
+.ibox{
+	width:90%;
+	height:20px;
+	border:1px solid #ddd;
+	margin:30px auto 0px auto;
+	padding-left:5px;
+	}
+.btnstdr{
+	width:30%;
+	border:1px solid #ccc;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#ccc;
+	font-size:14px;
+	padding:4px 15px;
+	margin:30px auto 0 auto;
+	cursor:pointer;
+	}
+#logo{
+	margin-left:20px;
+	float:left;
+}
+#welcome{
+	float:right;
+	
+	margin:30px 60px;
+	font-size:18px;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+#menu_iz{
+	float:left;
+	width:18%;
+	min-height:450px;
+	height:auto;
+	border-right:solid 2px #ddd;
+	
+}
+.imgmenu{
+	width:43px;
+	height:35px;
+	text-align:center;
+	float:left;
+	margin:-10px 5px auto 2px;
+}
+.barra{
+	margin:10px auto auto 10px;
+	height:35px;
+	cursor:pointer;
+}
+.barra:first-child{
+	margin-top:30px;
+}
+#cont_centro{
+	width:80%;
+	height:auto;
+	min-height:450px;
+	float:left;
+	padding:5px 10px 5px 10px;
+}
+#expo_prod{
+	display:none;
+	}
+#expo_um{
+	display:none;
+	}
+#texto_wel{
+	color:#678;
+	font-size:18px;
+	float:left;
+	text-align:center;
+	}
+#foto_wel{
+	float:left;
+	width:80%;
+	margin:20px 20% 0 20%;
+	}
+.men_i{
+	width:50%;
+	float:left;
+	margin:10px auto 20px auto;
+	}
+.expo{
+	padding:5px;
+	}
+.week{
+	border:1px solid #777;
+	border-radius:5px;
+	height:22px;
+	position:relative;
+	top:-3px;
+}
+table{
+	font-size:12px;
+	border:1px solid #eee;
+	padding-bottom:10px;
+	}
+td{
+	padding:3px;
+	text-align:center;
+	color #345;
+	}
+	
+.btn_color{ padding-left:5px;background-color:#345;color:white; border-radius:5px;}
+.btn_color2{ padding:5px 3px 0 3px;background-color:#345;color:whitesmoke;border-radius:6px 0 6px 0;}
+.mod{ width:500px;float:left;}
+
+#add_data{
+	display:none;
+	/*este siempre en none, ahora en block por pruebas*/
+	}
+#datos_2{
+	display:none;
+}
+
+.es_1{
+	border:1px solid #bbb;
+	width:50px;
+	height:18px;
+	background:#eee;
+	margin:0 auto 0 auto;
+	padding-top:5px;
+	}
+#rs_search{
+	width:130px;
+	height:auto;
+	background:#fff;
+	border:1px solid #ddd;
+	position:absolute;
+	left:5px;
+	font-size:12px;
+	display:none;
+	text-align:left;
+	}
+.resul_ind{
+	width:100%;
+	float:left;
+	}
+.resul_ind:hover{
+	background:#2be;
+	cursor:pointer;
+	}
+.adder{
+	color:#fff;
+	background:#09c;
+	font-size:16px;
+	font-weight:400;
+	cursor:pointer;
+	border:1px solid #333;
+	padding:4px;
+	margin:10px auto 10px auto;
+	width:85%;
+	text-align:center;
+	border-radius:15px;
+	
+}
+.addersd{
+	color:#fff;
+	background:#09c;
+	font-size:16px;
+	font-weight:400;
+	cursor:pointer;
+	border:1px solid #333;
+	padding:4px;
+	margin:10px auto 10px auto;
+	width:85%;
+	text-align:center;
+	border-radius:15px;
+	
+}
+.barra_res{
+	border:1px solid #eee;
+	width:100%;
+	height:40px;
+	}
+
+.espa{
+	float:left;
+	width:30px;
+	height:12px;
+	margin:5px 24px 0px 8px;
+}
+.barralong{
+	float:left;
+}
+.etex{
+	width:130px;
+	float:left;
+	}
+#resultados{
+	width:100%;
+	float:left;
+	display:none;
+	margin-top:20px;
+	}
+.resul{
+	width:auto;
+	height:14px;
+	padding:3px 8px 3px 8px;
+	background:#eee;
+	}
+#add_data td{
+	width:60px;		
+	}
+#add_data td:first-child{
+	width:30px;		
+	}
+#resultados td:first-child{
+	width:110px;
+}
+#resultados td{
+	width:80px;
+	}
+#edo_fen{
+	display:none;  //lo mismo del otro..siempre none
+	width:100%;
+	float:left;
+	min-height:300px;
+	height:auto;
+	}
+.boxfen{
+		width:140px;
+		height:auto;
+		background:#39C;
+		display:inline-block;
+		margin:5px 20px 10px 5px;
+		overflow:hidden;
+		font-size:12px;
+		color:white;
+		text-align:center;
+	}
+.img_f{ width:140px; height:100px;}
+.tfe{
+	margin:3px auto 3px auto;
+	}
+.itfe{
+	width:100%;
+	height:22px;
+	float:left;
+	background:#ffe;
+	display:block;
+	}
+#finsession{
+	float:right;
+	cursor:pointer;
+	margin:35px -159px;
+	font-size:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+.nivel{
+	text-align:right;
+	margin:5px 5px 20px auto;
+	font-size:12px;
+	}
+.estado{
+	color:#eee;
+	margin-top:35px;
+	font-size:12px;
+	}
+.lista_usu{
+	color:#666;
+	font-size:18px;
+	}
+.c_usu{
+	padding-top:3px;
+	padding-bottom:3px;
+	text-align:center;
+	}
+.nusuario{
+	width:80px;
+	float:left;
+	}
