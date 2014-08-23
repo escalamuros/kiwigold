@@ -1,0 +1,81 @@
+GIT, COMANDOS BÁSICOS
+Estándar
+      3 VOTES
+Git es un sistema de control de versiones que está muy de moda últimamente entre los desarrolladores. Creado por Linus Torvalds específicamente para alojar el código fuente del kernel de Linux, es un sistema de control de versiones muy versátil, rápido y eficaz.Git es un VCS del tipo distribuido, en los cuales el cliente se baja una copia total del repositorio junto con todos sus anteriores cambios y no sólo la última versión de los ficheros. Esto nos permite volver atrás “en el tiempo” y mantener una copia completa del repositorio central por si este nos falla en algún momento. Además de esta ventaja existen otras como la posibilidad de interactuar con distintas versiones entre distintos ordenadores sin pasar por el respositorio central.
+
+Una de las principales diferencias entre Git y otras opciones dentro de los VCS’s que existen desde hace tiempo, como svn o cvs, es que Git no almacena en sus commits los cambios entre el punto en que nos encontrábamos en el anterior commit y el estado actual, sino que guarda copias y referencias a ficheros completos, como si de un mini sistema de ficheros se tratase. Además casi todas las posible operaciones que tiene git se hacen en modo local, es decir que lo que cambian son las versiones de tu propio repositorio que tienes en tu máquina local; estos cambios sólo se ven reflejados en el servidor cuando damos consetimiento de ello y los enviamos al servidor en forma de paquete.
+
+Una de las cosas que me llamó la atención la primera vez que usé Git fueron los números que identifican los distintos commit’s que no representan, a diferencia de otros como svn, el número de orden de dicho commit, sino que que se trata de un hash SHA-1 de 40 caracteres que le permiten a Git realizar una comprobación checksum del commit en cuestión.
+
+Inicializando un repostorio propio
+
+Si tenemos una máquina que nos sirve de servidor para nuestro control de versiones o si queremos tener nuestra copia de servidor en un dispositivo móvil, como por ejemplo un pen drive, nos interesa el comando que inicializa un repositorio en un directorio específico. Nuestro comando es
+
+1
+git init
+que crea el esqueleto de ficheros necesarios para la creación de un repositorio (esto es la carpeta oculta .git en el directorio de nuestro repositorio).
+
+Consiguiendo una copia de un repositorio
+
+Una vez que tenemos un repositorio creado en nuestro servidor, o hemos creado uno en un sitio de alojamiento de control de versiones (como Bitbucket), necesitamos clonar dicho repositorio para obtener una copia local con la que trabajar. Esto lo conseguimos con la orden:
+
+1-git clone url [carpeta]
+Por defecto Git nos crea una carpeta con el mismo nombre que el repositorio en cuestión, pero si nos gusta más otro nombre podemos indicarselo después de la url del repositorio.
+Añadiendo y eliminando ficheros
+
+Añadir nuevos ficheros o eliminar otros que es muy sencillo con Git, básicamente se reduce a dos comandos:
+1-git add ficheros
+1-git rm ficheros
+Pero una opción muy útil y acosejable es añadir directorios completos acompañando a la orden con la ruta al fichero o incluso utilizar comodines del tipo *.java para añadir todos los ficheros con la extensión .java. Lo mismo podemos decir de la eliminación de ficheros/directorios, sólo que interesa añadir una opción que se usa muy a menudo con git. Si al eliminar un fichero queremos que este fichero permanezca de forma física en nuestro disco duro en el mismo sitio en el que estaba.
+
+Informando de nuestros cambios
+
+Tras hacer unas cuantas modificaciones querremos almacenar nuestros cambios en forma de commit, pero antes de esto debemos entender los distintos estados en los que puede estar un fichero en el árbol de directorio de un repositorio Git.
+
+Sin seguimiento (untracked): Cuando un fichero está en el sistema de archivos pero no ha sido añadido todavía al repositorio Git está en este estado.
+Sin modificar (unmodified): Si el fichero si que estaba añadido previamente al repositorio, pero no ha sido cambiado desde el último commit Git lo ignorará y si realizamos un commit simplemente añadirá una referencia al fichero original en dicho commit (porque recordemos que los commits apuntan a ficheros reales, no son listas de cambios).
+Modificado (modified): Cuando modificamos un fichero que está bajo el control de versiones se marca como modificado.
+Marcado para commit (staged): Los ficheros modificados que añadamos a esta fase (ahora veremos como) serán los que se añadan al siguiente commit que realicemos.
+Para ver los ficheros que están en cada estado nuestro comando es
+
+1-git status
+(lo vais a usar mucho, es aconsejable asignarlo a un alias) que nos muestra la información de los ficheros de la carpeta en la que estamos e inferiores acerca de ficheros no seguidos por el sistema, modificados, y marcados para commit.
+
+Una cosa que extraña a los recién llegados a Git es que cuando un fichero está modificado y se realiza un commit, éste no se añade por defecto al commit sino que hay que añadirlo al escenario (stage) para que suceda esto. Cómo si de ficheros nuevos se tratase, deberemos ejecutar un
+
+1-git add ficheros_modificado
+para añadirlos a esta fase y posteriormente hacer un commit con ellos. Esto puede ser muy útil si hemos modificado muchos ficheros y algunos pertencen a un grupo de cambios distinto de otro, de esta manera podremos hacer dos commits separados diferenciando los cambios. Sin embargo, si quisiesemos incluir todos los cambios en nuestro siguiente commit tenemos dos opciones que nos hacen la vida más fácil que añadiendo uno a uno estos ficheros modificados. Ejecutando el siguiente comando desde la raíz de nuestro repositorio añadiremos todos los ficheros directamente para el siguiente commit (es como añadir de nuevo la carpeta principal recursivamente).
+
+1-git add .
+La siguiente opción es un parámetro del comando commit, que cómo bien habréis adivinado sirve para crear commits :p. Esta orden la podemos ejecutar con numerosos parámetros, los más usados son:
+
+-a: Añadimos todos los ficheros modificados directamente al commit, sin ejecutar un git add prévio.
+-m”mensaje”: Para añadir nuestro mensaje al commit. Si no incluimos este parámetro se nos abrirá nuestro editor por defecto (que espero que sea vim) para editar nuestro mensaje de commit.
+-v: Incluye un diff de los ficheros incluidos en el commit en el mensaje.
+–no-status: Usado cuando utilizamos un editor externo (no proporcionamos la opción -m) para que no se muestre la salida del comando git status en el editor externo.
+No olvidemos que la mayoría de los cambios, y este es uno de esa mayoría, son locales. Podemos ejecutar tantas veces como queramos el commando git commit sin enviar al servidor ningún tipo de información, simplemente almacenándola en nuestro repositorio local.
+
+Salvando nuestros cambios
+
+Todo eso está muy bien, pero.. Si los commits que realizamos están en nuestro ordenador, ¿de qué nos sirve el control de versiones? No os preocupéis, cuando queramos, o más bien cuando tengamos internet, podemos subir nuestros commits realizados en local al servidor (y bajarnos la última versión del mismo, por supuesto). Podríamos pensar que es más útil que cada vez que se realiza un commit este se suba al servidor directamente, pero eso no facilita el trabajo cuando estamos en algún sitio en el que no podemos acceder a la red para guardar nuestros cambios, lo que nos supondría no trabajar o enviar commits muy grandes que dificultan las posibles vueltas antrás entre distintos commits.
+
+Para mandar nuestros commits locales al servidor nos basta con ejecutar el comando:
+
+1-git push
+La url del repositorio no debería ser necesaria si hemos hecho un clone del repositorio ya que la rama master (maestra) del mismo se autoconfigura con la url del repositorio para evitarnos tener que ponerla constantemente. Si nos hemos pasando mucho tiempo con la misma copia del repositorio en nuestro ordenador es posible que el repositorio haya cambiado (siempre y cuando trabajen varios en el proyecto) y el comando anterior fallará pidiendonos que recojamos los cambios más recientes del servidor y los incorporemos a nuestra rama local antes de poder subir nuestros cambios al servidor (para evitar males mayores). Para esto tenemos un comando específico
+
+1-git pull
+que es el antónimo del comando anterior. Este comando baja los cambios a nuestro ordenador y hace una mezcla de los cambios (merge) entre nuestra rama local y la rama que ha bajado del servidor. Es un comando que internamente realiza dos comandos separados:
+
+1-git fetch origin;
+2-git merge origin master;
+No obstante, si hemos realizado un par de commits en nuestro repositorio local, un git pull no es la mejor opción ya que el no se puede realizar un merge rápido y el propio Git crea un commit extra a los nuestros llamado commit de merge (merge commit). Sin embargo, si no tenemos commits prévios no es tanta la preocupación ya que Git se dará cuenta de que nuestro último commit es un commit anterior en el servidor y añadirá los commits que nos faltan a nuestro repositorio, colocando nuestro cambios encima de todo.
+
+Si hemos realizado un commit y queremos bajar los cambios del servidor es más aconsejable realizar lo siguiente:
+
+1-git fech origin;
+2-git rebase origin/master;
+Estas líneas bajan los últimos cambios del servidor sin tocar nuestra copia local y la segunda línea pone nuestros commits más nuevos encima de los últimos cambios que había en el servidor, de ahí el término rebasar, siempre y cuando no existan conflictos entre nuestros cambios y los cambios nuevos del servidor, en cuyo caso nos tocará hacer un merge igualmente.
+
+Con estos comandos somos ya capaces de trabajar en equipo con un control de versiones moderno como Git con todas las características que nos ofrece.
+
