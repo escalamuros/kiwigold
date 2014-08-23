@@ -1,5 +1,5 @@
 GIT, COMANDOS BÁSICOS
-Estándar
+Estándar ok
       3 VOTES
 Git es un sistema de control de versiones que está muy de moda últimamente entre los desarrolladores. Creado por Linus Torvalds específicamente para alojar el código fuente del kernel de Linux, es un sistema de control de versiones muy versátil, rápido y eficaz.Git es un VCS del tipo distribuido, en los cuales el cliente se baja una copia total del repositorio junto con todos sus anteriores cambios y no sólo la última versión de los ficheros. Esto nos permite volver atrás “en el tiempo” y mantener una copia completa del repositorio central por si este nos falla en algún momento. Además de esta ventaja existen otras como la posibilidad de interactuar con distintas versiones entre distintos ordenadores sin pasar por el respositorio central.
 
