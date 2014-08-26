@@ -7,16 +7,19 @@
 <script>
 $(document).ready(function(){
 	$('.mod').hide();
+	$('#form_nu_cuar').hide();
 	$('#Editar').bind('click',function(){
 		$('.mod').hide();
 		$('#editar_prod').show();
 	});
 	$('#MostrarCuarteles').bind('click',function(){
 		$('.mod').hide();
+		$('#form_nu_cuar').hide();
 		$('#mantenedor_cuarteles').show();
 	});
 	$('#ArchadjEditar').bind('click',function(){
 		$('.mod').hide();
+		$('#form_nu_cuar').hide();
 		$('#mantenedor_arch').show();
 	});
 	$('#guar_datos').bind('click',function(){
@@ -29,6 +32,9 @@ $(document).ready(function(){
 	});
 	$('.bit_cuartel').bind('click',function(){
 		alert($(this).attr('id'));
+	});
+	$('#agregar_cuartel').bind('click',function(){
+		$('#form_nu_cuar').show();
 	});
 });
 </script>
@@ -80,7 +86,8 @@ $(document).ready(function(){
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
 		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
-		echo "Nuevo Cuartel:<br>";
+		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
+		echo "<div id='form_nu_cuar'>";
 		echo "Nombre:<input type='text' id='nom'><br>";
 		echo "Superficie:<input type='text' id='sup'><br>";
 		echo "Numero de Plantas:<input type='text' id='nplan'><br>";
@@ -94,7 +101,8 @@ $(document).ready(function(){
 		echo "Distancia en hileras:<input type='text' id='deh'><br>";
 		echo "% Machos:<input type='text' id='pm'><br>";
 		echo "Observación:<input type='text' id='o'><br>";
-		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
+		echo "<div class='btn_color' style='width:300px;'>Guardar</div>";
+		echo "</div>";
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_arch' >";
 		echo "Lista de Archivos Adjuntos Productora:<br>";
