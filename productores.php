@@ -9,13 +9,7 @@ $d->desconexion();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style type="text/css">
-#list_prod{float:left;width:450px;scroll:auto;height:470px;overflow: auto;}
-#nue_prod{float:left;width:450px;height:470px;margin-left:40px;color:#345;overflow: auto;}
-#btn_guar{color:white;background:#345;padding:5px;border-radius:5px;}
-.tit_expo{background-color:#345;color:white;width:400px;font-size: 16px;text-align: center;}
-.prod{ cursor:pointer;background-color:white;border:1px solid #345;color:#345;font-size: 13px;width:400px; }
-</style>
+<link href="css/formato.css" rel="stylesheet" type="text/css" />
 <script>
 $(document).ready(function(){
 	$('#btn_guar').bind('click',function(){
