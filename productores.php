@@ -22,16 +22,16 @@ $(document).ready(function(){
 		$.ajax({
 			url:'ingreso_productora.php',
 			type:'POST',
-			data:{expo:$('select#opex').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),enc:$('#enc').val(),rute:$('#rute').val(),fonoe:$('#fonoe').val(),maile:$('#maile').val()},
-			success:function(a){$('#list_prod').html(a);}});
+			data: {expo:$('select#opex').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val()},
+			success:function(a){$('#list_prod').html(a);}
+		});
 	});
-	$('.prod').bind('click',function()
-	{
+	$('.prod').bind('click',function(){
 		$.ajax({url:'productora_esp.php',
 			type:'POST',
 			data:{elegido:$(this).attr('id')},
 			success:function(uk){$('#cont_productores').html(uk);}
-		})
+		});
 	});
 });
 </script>
@@ -76,10 +76,6 @@ if(isset($_SESSION['id']))
 		<tr><td>Rut Representante Legal</td><td> <input type="text" id="rutr"></td></tr>
 		<tr><td>Fono Representante Legal</td><td> <input type="text" id="fonor"></td></tr>
 		<tr><td>Mail Representante Legal</td><td> <input type="text" id="mailr"></td></tr>
-		<tr><td>Encargado</td><td> <input type="text" id="enc"></td></tr>
-		<tr><td>Rut Encargado </td><td><input type="text" id="rute"></td></tr>
-		<tr><td>Fono Encargado </td><td><input type="text" id="fonoe"></td></tr>
-		<tr><td>Mail Encargado </td><td><input type="text" id="maile"></td></tr>
 		</table>
 		<div id="btn_guar">Guardar</div>
 		

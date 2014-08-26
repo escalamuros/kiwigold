@@ -11,9 +11,9 @@ $(document).ready(function(){
 		$('.mod').hide();
 		$('#editar_prod').show();
 	});
-	$('#MostrarUM').bind('click',function(){
+	$('#MostrarCuarteles').bind('click',function(){
 		$('.mod').hide();
-		$('#mantenedor_um').show();
+		$('#mantenedor_cuarteles').show();
 	});
 	$('#ArchadjEditar').bind('click',function(){
 		$('.mod').hide();
@@ -26,6 +26,9 @@ $(document).ready(function(){
 			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),enc:$('#enc').val(),rute:$('#rute').val(),fonoe:$('#fonoe').val(),maile:$('#maile').val()},
 			success:function(a){$('#editar_prod').html('Cambios Aseptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
 		});
+	});
+	$('.bit_cuartel').bind('click',function(){
+		alert($(this).attr('id'));
 	});
 });
 </script>
@@ -52,13 +55,9 @@ $(document).ready(function(){
 		echo "<tr><td>Rut Rep.</td><td>".$lis[10]."</td>          <td></td></tr>";
 		echo "<tr><td>Telefono Rep.</td><td>".$lis[11]."</td>     <td></td></tr>";
 		echo "<tr><td>E Mail Rep.</td><td>".$lis[12]."</td>       <td></td></tr>";
-		echo "<tr><td>Encargado</td><td>".$lis[13]."</td>         <td></td></tr>";
-		echo "<tr><td>Rut Enc.</td><td>".$lis[14]."</td>          <td></td></tr>";
-		echo "<tr><td>Telefono Enc.</td><td>".$lis[15]."</td>     <td></td></tr>";
-		echo "<tr><td>E Mail Enc.</td><td>".$lis[16]."</td>       <td></td></tr>";
 		echo "</table>";
-		echo "<div class='btn_color' id='Editar' style='width:240px;'>Editar Campos</div><br>";
-		echo "<div class='btn_color' id='MostrarUM' style='width:240px;'>Listar UM</div><br>";
+		echo "<div class='btn_color' id='Editar' style='width:240px;'>Editar Productora</div><br>";
+		echo "<div class='btn_color' id='MostrarCuarteles' style='width:240px;'>Listar Cuarteles</div><br>";
 		echo "<div class='btn_color' id='ArchadjEditar' style='width:240px;'>Archivos Adjunto Productora</div>";
 		echo "</div>";
 		echo "<div class='mod' id='editar_prod' >";
@@ -74,18 +73,28 @@ $(document).ready(function(){
 		echo "<tr><td>Rut Representante Legal</td><td>    <input type='text' id='rutr' value='".$lis[10]."'></td></tr>";
 		echo "<tr><td>Fono Representante Legal</td><td>  <input type='text' id='fonor' value='".$lis[11]."'></td></tr>";
 		echo "<tr><td>Mail Representante Legal</td><td>  <input type='text' id='mailr' value='".$lis[12]."'></td></tr>";
-		echo "<tr><td>Encargado</td><td>                   <input type='text' id='enc' value='".$lis[13]."'></td></tr>";
-		echo "<tr><td>Rut Encargado </td><td>             <input type='text' id='rute' value='".$lis[14]."'></td></tr>";
-		echo "<tr><td>Fono Encargado </td><td>           <input type='text' id='fonoe' value='".$lis[15]."'></td></tr>";
-		echo "<tr><td>Mail Encargado </td><td>           <input type='text' id='maile' value='".$lis[16]."'></td></tr>";
 		echo "</table>";
 		echo "<div class='btn_color' id='guar_datos' style='width:240px;'>Guardar</div>";
 		echo "</div>";
-		echo "<div class='mod' id='mantenedor_um' >";
-		echo "Lista de U M asociado a la productora:<br>";
-		$lum=$c->lista_um_productor($_POST['elegido']);
-		foreach($lum as $v)	{echo "<div class='bit_um btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
-		echo "<div class='btn_color' id='agregar_um' style='width:300px;margin-top:10px;'>Agregar nuevo UM</div>";
+		echo "<div class='mod' id='mantenedor_cuarteles' >";
+		echo "Lista de Cuarteles asociado a la productora:<br>";
+		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
+		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
+		echo "Nuevo Cuartel:<br>";
+		echo "Nombre:<input type='text' id='nom'><br>";
+		echo "Superficie:<input type='text' id='sup'><br>";
+		echo "Numero de Plantas:<input type='text' id='nplan'><br>";
+		echo "Zona:<input type='text' id='z'><br>";
+		echo "Dirección:<input type='text' id='d'><br>";
+		echo "Nombre Encargado:<input type='text' id='nenc'><br>";
+		echo "Fono Encargado:<input type='text' id='fenc'><br>";
+		echo "E-Mail Encargado:<input type='text' id='eenc'><br>";
+		echo "Geolocalización:<input type='text' id='geo'><br>";
+		echo "Distancia entre hileras:<input type='text' id='dth'><br>";
+		echo "Distancia en hileras:<input type='text' id='deh'><br>";
+		echo "% Machos:<input type='text' id='pm'><br>";
+		echo "Observación:<input type='text' id='o'><br>";
+		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_arch' >";
 		echo "Lista de Archivos Adjuntos Productora:<br>";

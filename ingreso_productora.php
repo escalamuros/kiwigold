@@ -22,7 +22,7 @@ $('.prod').bind('click',function()
 	if(isset($_POST['expo']))
 	{
 		$c->conexion();
-		$c->registrar_productora($_POST['expo'],$_POST['rs'],$_POST['nombre'],$_POST['rut'],$_POST['giro'],$_POST['fono'],$_POST['dir'],$_POST['mail'],$_POST['rl'],$_POST['rutr'],$_POST['fonor'],$_POST['mailr'],$_POST['enc'],$_POST['rute'],$_POST['fonoe'],$_POST['maile']);
+		$c->registrar_productora($_POST['expo'],$_POST['rs'],$_POST['nombre'],$_POST['rut'],$_POST['giro'],$_POST['fono'],$_POST['dir'],$_POST['mail'],$_POST['rl'],$_POST['rutr'],$_POST['fonor'],$_POST['mailr']);
 		$lis=$c->lista_prod_y_exp();
 		$c->desconexion();
 		$a='0';

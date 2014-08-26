@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		/*
+		
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		*/
+		/*
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 	}
 	function conexion()
 	{
@@ -153,11 +153,26 @@ class basededatos
 		}
 		return $arr;
 	}
+	function lista_cuarteles_productor($prod)
+	{
+		$cons="select id,nombre from cuarteles where campo=$prod;";
+		$ejec=mysql_query($cons,$this->id_con);
+		//$arreglo[]=array('0','No hay Cuarteles');
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{
+			$arreglo[]=array($rs['id'],$rs['nombre']);
+		}
+		return $arreglo;
+	}
+	function agregar_cuartel_productor($prod,$ano,$nom,$sup,$nplan,$z,$d,$nenc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
+	{
+		$cons="insert into campo values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$o');";
+		mysql_query($cons,$this->id_con);
+	}
 	function lista_um_productor($prod)
 	{
 		$cons="select id,um from um where campo=$prod;";
 		$ejec=mysql_query($cons,$this->id_con);
-		
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arreglo[]=array($rs['id'],$rs['um']);
 		}
@@ -278,14 +293,14 @@ class basededatos
 		}
 		return $ar;
 	}
-	function registrar_productora($expo,$rs,$empresa,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl,$enc,$rute,$fonoe,$maile)
+	function registrar_productora($expo,$rs,$empresa,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl)
 	{
 		$cons="insert into campos values(NULL,'$expo','0','$empresa');";
 		$ejec=mysql_query($cons,$this->id_con);
 		if(mysql_errno($this->id_con)==0)
 		{
 			$p=mysql_insert_id($this->id_con);
-			$cons="insert into datos_prod values('$p','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl','$enc','$rute','$fonoe','$maile');";
+			$cons="insert into datos_prod values('$p','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 		
