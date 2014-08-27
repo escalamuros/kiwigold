@@ -12,6 +12,10 @@ $d->desconexion();
 <link href="css/formato.css" rel="stylesheet" type="text/css" />
 <script>
 $(document).ready(function(){
+	$('#btn_add').bind('click',function(){
+		$('#nue_prod').css('display','block');
+
+	});
 	$('#btn_guar').bind('click',function(){
 		$.ajax({
 			url:'ingreso_productora.php',
@@ -37,6 +41,7 @@ if(isset($_SESSION['id']))
 	if($_SESSION['nivel']=='1')
 	{
 		?>
+		<div id="btn_add">+ Agregar Productor</div>
 		<div id="cont_productores">
 		<div id='list_prod'>
 		<?php

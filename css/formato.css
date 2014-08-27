@@ -343,4 +343,9 @@ td{
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+#btn_add{
+	margin-left: 250px;
+	padding-bottom: 5px;
+	cursor: pointer;
+}
 
