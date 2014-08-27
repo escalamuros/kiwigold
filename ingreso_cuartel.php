@@ -6,16 +6,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script>
-$('.c_usu').bind('click',function()
-{
-	$.ajax({url:'usuario_esp.php',
-		type:'POST',
-		data:{elegido:$(this).attr('id')},
-		success:function(uk){$('#conten_usuario').html(uk);}
-	})
-});
-</script>
 </head>
 <body>
 <?php 

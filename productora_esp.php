@@ -27,7 +27,7 @@ $(document).ready(function(){
 			url:'modif_productora.php',
 			type:'POST',
 			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),enc:$('#enc').val(),rute:$('#rute').val(),fonoe:$('#fonoe').val(),maile:$('#maile').val()},
-			success:function(a){$('#editar_prod').html('Cambios Aseptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
+			success:function(a){$('#1editar_prod').html('Cambios Aseptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
 		});
 	});
 	$('.bit_cuartel').bind('click',function(){
@@ -35,6 +35,14 @@ $(document).ready(function(){
 	});
 	$('#agregar_cuartel').bind('click',function(){
 		$('#form_nu_cuar').show();
+	});
+	$('#btn_guar_nu_cuar').bind('click',function(){
+		$.ajax({
+			url:'ingreso_cuartel.php',
+			type:'POST',
+			data:{prod:$('#p').val(),ano:$('#p').val()},
+			success:function(a){}
+		});
 	});
 });
 </script>
@@ -88,20 +96,22 @@ $(document).ready(function(){
 		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
 		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
 		echo "<div id='form_nu_cuar'>";
-		echo "Nombre:<input type='text' id='nom'><br>";
-		echo "Superficie:<input type='text' id='sup'><br>";
-		echo "Numero de Plantas:<input type='text' id='nplan'><br>";
-		echo "Zona:<input type='text' id='z'><br>";
-		echo "Dirección:<input type='text' id='d'><br>";
-		echo "Nombre Encargado:<input type='text' id='nenc'><br>";
-		echo "Fono Encargado:<input type='text' id='fenc'><br>";
-		echo "E-Mail Encargado:<input type='text' id='eenc'><br>";
-		echo "Geolocalización:<input type='text' id='geo'><br>";
-		echo "Distancia entre hileras:<input type='text' id='dth'><br>";
-		echo "Distancia en hileras:<input type='text' id='deh'><br>";
-		echo "% Machos:<input type='text' id='pm'><br>";
-		echo "Observación:<input type='text' id='o'><br>";
-		echo "<div class='btn_color' style='width:300px;'>Guardar</div>";
+		echo "<input type='hidden' id='p' value='".$lis[0]."' >";
+		echo "Nombre:                  <input type='text' id='nom'><br>";
+		echo "Año:                     <input type='text' id='ano'><br>";
+		echo "Superficie:              <input type='text' id='sup'><br>";
+		echo "Numero de Plantas:       <input type='text' id='nplan'><br>";
+		echo "Zona:                    <input type='text' id='z'><br>";
+		echo "Dirección:               <input type='text' id='d'><br>";
+		echo "Nombre Encargado:        <input type='text' id='nenc'><br>";
+		echo "Fono Encargado:          <input type='text' id='fenc'><br>";
+		echo "E-Mail Encargado:        <input type='text' id='eenc'><br>";
+		echo "Geolocalización:         <input type='text' id='geo'><br>";
+		echo "Distancia entre hileras: <input type='text' id='dth'><br>";
+		echo "Distancia en hileras:    <input type='text' id='deh'><br>";
+		echo "% Machos:                <input type='text' id='pm'><br>";
+		echo "Observación:             <input type='text' id='o'><br>";
+		echo "<div class='btn_color' id='btn_guar_nu_cuar' style='width:120px;'>Guardar</div>";
 		echo "</div>";
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_arch' >";
