@@ -40,8 +40,8 @@ $(document).ready(function(){
 		$.ajax({
 			url:'ingreso_cuartel.php',
 			type:'POST',
-			data:{prod:$('#p').val(),ano:$('#p').val()},
-			success:function(a){}
+			data:{prod:$('#p').val(),ano:$('#ano').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
+			success:function(a){$('#lis_cuarteles').html(a);}
 		});
 	});
 });
@@ -91,26 +91,30 @@ $(document).ready(function(){
 		echo "<div class='btn_color' id='guar_datos' style='width:240px;'>Guardar</div>";
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_cuarteles' >";
+		echo "<div id='lis_cuarteles'>";
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
 		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
+		echo "</div>";
 		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
 		echo "<div id='form_nu_cuar'>";
 		echo "<input type='hidden' id='p' value='".$lis[0]."' >";
-		echo "Nombre:                  <input type='text' id='nom'><br>";
-		echo "Año:                     <input type='text' id='ano'><br>";
-		echo "Superficie:              <input type='text' id='sup'><br>";
-		echo "Numero de Plantas:       <input type='text' id='nplan'><br>";
-		echo "Zona:                    <input type='text' id='z'><br>";
-		echo "Dirección:               <input type='text' id='d'><br>";
-		echo "Nombre Encargado:        <input type='text' id='nenc'><br>";
-		echo "Fono Encargado:          <input type='text' id='fenc'><br>";
-		echo "E-Mail Encargado:        <input type='text' id='eenc'><br>";
-		echo "Geolocalización:         <input type='text' id='geo'><br>";
-		echo "Distancia entre hileras: <input type='text' id='dth'><br>";
-		echo "Distancia en hileras:    <input type='text' id='deh'><br>";
-		echo "% Machos:                <input type='text' id='pm'><br>";
-		echo "Observación:             <input type='text' id='o'><br>";
+		echo "<table>";
+		echo "<tr><td>Nombre:</td><td>                  <input type='text' id='nom'></td></tr>";
+		echo "<tr><td>Año:</td><td>                     <input type='text' id='ano'></td></tr>";
+		echo "<tr><td>Superficie:</td><td>              <input type='text' id='sup'></td></tr>";
+		echo "<tr><td>Numero de Plantas:</td><td>       <input type='text' id='nplan'></td></tr>";
+		echo "<tr><td>Zona:</td><td>                    <input type='text' id='z'></td></tr>";
+		echo "<tr><td>Dirección:</td><td>               <input type='text' id='d'></td></tr>";
+		echo "<tr><td>Nombre Encargado:</td><td>        <input type='text' id='nenc'></td></tr>";
+		echo "<tr><td>Fono Encargado:</td><td>          <input type='text' id='fenc'></td></tr>";
+		echo "<tr><td>E-Mail Encargado:</td><td>        <input type='text' id='eenc'></td></tr>";
+		echo "<tr><td>Geolocalización:</td><td>         <input type='text' id='geo'></td></tr>";
+		echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='dth'></td></tr>";
+		echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='deh'></td></tr>";
+		echo "<tr><td>% Machos:</td><td>                <input type='text' id='pm'></td></tr>";
+		echo "<tr><td>Observación:</td><td>             <input type='text' id='o'></td></tr>";
+		echo "</table>";
 		echo "<div class='btn_color' id='btn_guar_nu_cuar' style='width:120px;'>Guardar</div>";
 		echo "</div>";
 		echo "</div>";

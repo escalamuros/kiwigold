@@ -12,16 +12,12 @@
 	if(isset($_POST['prod']))
 	{
 		$c->conexion();
-		$c->registrar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
+		$c->agregar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
 	}
 	$ar=$c->lista_cuarteles_productor($_POST['prod']);
 	$c->desconexion();
-	echo "Lista de Cuarteles<br>";
-	$a='0';
-	foreach($ar as $p)
-	{
-		echo "<div class='edi_cuar' id='".$p[0]."' style='mouse:pointer;background:blue;color:white;'>".$p[1]."</div>";
-	}
+	echo "Lista de Cuarteles asociado a la productora:<br>";
+	foreach($ar as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
 ?>
 </body>
 </html>

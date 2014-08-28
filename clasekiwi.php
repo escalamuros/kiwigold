@@ -155,7 +155,7 @@ class basededatos
 	}
 	function lista_cuarteles_productor($prod)
 	{
-		$cons="select id,nombre from cuarteles where campo=$prod;";
+		$cons="select id,nombre from cuarteles where campo='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
 		//$arreglo[]=array('0','No hay Cuarteles');
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
