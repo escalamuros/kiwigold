@@ -19,5 +19,10 @@
 	echo "Lista de Cuarteles asociado a la productora:<br>";
 	foreach($ar as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
 ?>
+<script>
+$('.bit_cuartel').bind('click',function(){
+		alert($(this).attr('id'));
+	});
+</script>
 </body>
 </html>

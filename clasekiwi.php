@@ -178,6 +178,15 @@ class basededatos
 		}
 		return $arreglo;
 	}
+	function recuperar_cuartel($cuar)
+	{
+		$cons="select * from cuarteles where id='$cuar';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmacho'],$rs['obs']);
+		}
+		return $arr;
+	}
 	function datos_um($um)
 	{
 		$cons="select * from um where id=$um;";
