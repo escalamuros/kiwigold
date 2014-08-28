@@ -166,12 +166,12 @@ class basededatos
 	}
 	function agregar_cuartel_productor($prod,$ano,$nom,$sup,$nplan,$z,$d,$nenc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
 	{
-		$cons="insert into campo values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$o');";
+		$cons="insert into cuarteles values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$o');";
 		mysql_query($cons,$this->id_con);
 	}
 	function lista_um_productor($prod)
 	{
-		$cons="select id,um from um where campo=$prod;";
+		$cons="select id,um from um where campo='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arreglo[]=array($rs['id'],$rs['um']);

@@ -40,7 +40,7 @@ $(document).ready(function(){
 		$.ajax({
 			url:'ingreso_cuartel.php',
 			type:'POST',
-			data:{prod:$('#p').val(),ano:$('#ano').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
+			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
 			success:function(a){$('#lis_cuarteles').html(a);}
 		});
 	});

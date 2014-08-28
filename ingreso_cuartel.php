@@ -1,6 +1,7 @@
 <?php
 	require_once 'clasekiwi.php';
 	$c=new basededatos();
+	$c->conexion();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -11,7 +12,6 @@
 <?php 
 	if(isset($_POST['prod']))
 	{
-		$c->conexion();
 		$c->agregar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
 	}
 	$ar=$c->lista_cuarteles_productor($_POST['prod']);
