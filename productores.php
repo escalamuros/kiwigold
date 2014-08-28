@@ -25,6 +25,7 @@ $(document).ready(function(){
 		});
 	});
 	$('.prod').bind('click',function(){
+		$('#btn_add').css('display','none');
 		$.ajax({url:'productora_esp.php',
 			type:'POST',
 			data:{elegido:$(this).attr('id')},

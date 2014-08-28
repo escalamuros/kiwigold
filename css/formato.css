@@ -140,7 +140,15 @@ td{
 	color #345;
 	}
 	
-.btn_color{ padding-left:5px;background-color:#345;color:white; border-radius:5px;}
+.btn_color{ 
+	padding-left:15px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color:#345;
+	color:white;
+	border-radius:8px;
+	cursor: pointer;
+}
 .btn_color2{ padding:5px 3px 0 3px;background-color:#345;color:whitesmoke;border-radius:6px 0 6px 0;}
 .mod{ width:500px;float:left;}
 
@@ -347,5 +355,13 @@ td{
 	margin-left: 250px;
 	padding-bottom: 5px;
 	cursor: pointer;
+}
+#a td:first-child{
+	background: #abc;
+	padding:4px;
+}
+#a td{
+	background: #ccc;
+	padding:4px;
 }
 
