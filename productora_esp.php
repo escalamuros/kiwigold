@@ -1,6 +1,23 @@
 <?php
 	require('clasekiwi.php');
 	$c=new basededatos();
+
+if(isset($_POST['prod'])){
+	
+      
+      $ruta='./documentos/'.$_POST['prod'].'/';
+      if(mkdir ($ruta ,0777)){chmod($ruta,0777);}
+      $archivo=$_FILES["archivo"]['name'];
+      $destino=$ruta.$archivo;
+      
+      if(copy($_FILES['archivo']['tmp_name'],$destino)){
+         
+         header('location:menu.php?ece=1');
+
+      }else{echo 'Error al cargar archivo';}
+      
+   }
+	
 ?>
 <html>
 <head>
@@ -27,7 +44,7 @@ $(document).ready(function(){
 			url:'modif_productora.php',
 			type:'POST',
 			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),enc:$('#enc').val(),rute:$('#rute').val(),fonoe:$('#fonoe').val(),maile:$('#maile').val()},
-			success:function(a){$('#1editar_prod').html('Cambios Aseptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
+			success:function(a){$('#1editar_prod').html('Cambios Aceptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
 		});
 	});
 	$('.bit_cuartel').bind('click',function(){
@@ -53,6 +70,7 @@ $(document).ready(function(){
 	{
 		$c->conexion();
 		$lis=$c->recuperar_productora($_POST['elegido']);
+
 		echo "<input type='hidden' id='ide' value='".$lis[0]."' >";
 		echo "<div id='a' style='float:left;width:400px;'>";
 		echo "Datos De la Productora<br>";
@@ -124,7 +142,7 @@ $(document).ready(function(){
 		foreach($lum as $v)	{echo "<div class='btn_color2' style='width:250px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
 		echo "<br>";
 		echo "Agregar nuevo Archivo:<br>";
-		echo "<form><input type='hidden' name='prod' value='".$_POST['elegido']."'><input type='file' name='archivo'><input type='submit' value='Guardar'></form>";
+		echo "<form method='post' action='productora_esp.php' enctype='multipart/form-data'><input type='hidden' name='prod' value='".$_POST['elegido']."'><input type='file' name='archivo'><input type='submit' value='Guardar'></form>";
 		echo "</div>";
 		$c->desconexion();
 	}
