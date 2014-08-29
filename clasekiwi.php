@@ -153,6 +153,7 @@ class basededatos
 		}
 		return $arr;
 	}
+
 	function lista_cuarteles_productor($prod)
 	{
 		$cons="select id,nombre from cuarteles where campo='$prod';";
@@ -206,9 +207,10 @@ class basededatos
 		}
 		return $arr;
 	}
+	/*
 	function lista_fenologico_actual_um($um,$anno)
 	{
-		$cons="select fenologicos.fecha,est_fen.nombre from fenologicos,est_fen where um=$um and fenologicos.estado_f=est_fen.id and fecha between '$anno-01-01' and '$anno-12-31' order by fecha asc ;";
+		$cons="select fenologicos.fecha,est_fen.nombre from fenologicos,est_fen where um=$um and fenologicos.estado_f=est_fen.id and fecha between '$anno-05-01' and '".$anno+1."-06-30' order by fecha asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arr[]=array($rs['fecha'],$rs['nombre']);
@@ -216,26 +218,30 @@ class basededatos
 		if(count($arr)==0){ $arr=array(array('0','No hay registro')); }
 		return $arr;
 	}
-	function registrar_fenologico($um,$fecha,$estado)
+	*/
+	function lista_estados_fenologicos()
 	{
-		$et=substr($estado,3);
-		$cons="insert into fenologicos values ('".$um."','".$fecha."','".$et."');";
-		mysql_query($cons,$this->id_con);
+		$cons="select id,nombre from est_fen order by id asc ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+		$arr[]=array($rs['id'],$rs['nombre']);
+		}
+		return $arr;
 	}
-	function registrar_fitosanitario($um,$fecha,$prog,$met)
+	function registrar_labores($um,$fecha,$prog,$met,$feno)
 	{
 		//$f=substr($fecha,6,4)."-". substr($fecha,3,2)."-". substr($fecha,0,2);
-		$cons="insert into fitosanitarios values ('".$um."','".$fecha."','".$prog."','".$met."');";
+		$cons="insert into labores values ('$um','$fecha','$prog','$met','$feno');";
 		mysql_query($cons,$this->id_con);
 	}
-	function lista_ultimos10_fito($um)
+	function lista_ultimos10_labores($um)
 	{
-		$cons="select fecha,programa,aplicacion from fitosanitarios where um='$um' order by fecha asc limit 10;";
+		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$f=substr($rs['fecha'],8,2). substr($rs['fecha'],4,3)."-". substr($rs['fecha'],0,4);
-			$arr[]=array($f,$rs['programa'],$rs['aplicacion']);
+			$arr[]=array($f,$rs['programa'],$rs['nombre']);
 		}
 		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
 		return $arr;
@@ -312,7 +318,6 @@ class basededatos
 			$cons="insert into datos_prod values('$p','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
-		
 	}
 	function recuperar_productora($id)
 	{
@@ -336,10 +341,6 @@ class basededatos
 		$re[10]=$rs['rutrl'];
 		$re[11]=$rs['fonorl'];
 		$re[12]=$rs['mailrl'];
-		$re[13]=$rs['encargado'];
-		$re[14]=$rs['rute'];
-		$re[15]=$rs['fonoe'];
-		$re[16]=$rs['maile'];
 		}
 		while(count($re) < 17){$re[]='';}
 		return $re;
