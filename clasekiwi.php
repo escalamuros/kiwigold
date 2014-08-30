@@ -55,8 +55,8 @@ class basededatos
 		return $lista;
 	}
 		
-	function lista_productores_select($po){	
-		
+	function lista_productores_select($po)
+	{	
 		$cons="select id,empresa from campos where exportadora=$po order by id;";
 		echo $cons;
 		$arreglo[]="<option selected='selected'>Seleccione</option>";
@@ -66,8 +66,9 @@ class basededatos
 		}
 		return $arreglo;
 		
-		}
-	function lista_campos_select($po){	
+	}
+	function lista_campos_select($po)
+	{	
 		$cons="select id,um from um where campo=$po;";
 		$ejec=mysql_query($cons,$this->id_con);
 		$arreglo[]="<option selected='selected'>Seleccione</option>";	
@@ -75,7 +76,23 @@ class basededatos
 		$arreglo[]="<option value='".$rs['id']."'>".$rs['um']."</option>";
 		}
 		return $arreglo;
+	}
+	
+	function guardar_archivo($prod,$archivo)
+	{
+		$cons="insert into archivos values (NULL,'$archivo','$prod');";
+		mysql_query($cons,$this->id_con);
+	}
+	function lista_archivos($prod)
+	{
+		$cons="select id,archivo from archivos where productor='$prod';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{
+			$arreglo[]=array($rs['id'],basename($rs['archivo']));
 		}
+		return $arreglo;
+	}
 	// hasta aqui revisado	
 	function ingresolab($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
 		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
@@ -236,6 +253,25 @@ class basededatos
 	}
 	function lista_ultimos10_labores($um)
 	{
+		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{
+			$f=substr($rs['fecha'],8,2). substr($rs['fecha'],4,3)."-". substr($rs['fecha'],0,4);
+			$arr[]=array($f,$rs['programa'],$rs['nombre']);
+		}
+		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
+		return $arr;
+	}
+	function registrar_fitosanitario($um,$fecha,$prog,$met,$feno)
+	{
+		//modificar para nueva bd
+		$cons="insert into labores values ('$um','$fecha','$prog','$met','$feno');";
+		mysql_query($cons,$this->id_con);
+	}
+	function lista_ultimos10_fito($um)
+	{
+		//modificar para nueva bd
 		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))

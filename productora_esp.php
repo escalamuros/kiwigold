@@ -1,23 +1,6 @@
 <?php
 	require('clasekiwi.php');
 	$c=new basededatos();
-
-if(isset($_POST['prod'])){
-	
-      
-      $ruta='./documentos/'.$_POST['prod'].'/';
-      if(mkdir ($ruta ,0777)){chmod($ruta,0777);}
-      $archivo=$_FILES["archivo"]['name'];
-      $destino=$ruta.$archivo;
-      
-      if(copy($_FILES['archivo']['tmp_name'],$destino)){
-         
-         header('location:menu.php?ece=1');
-
-      }else{echo 'Error al cargar archivo';}
-      
-   }
-	
 ?>
 <html>
 <head>
@@ -59,6 +42,28 @@ $(document).ready(function(){
 			type:'POST',
 			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
 			success:function(a){$('#lis_cuarteles').html(a);}
+		});
+	});
+	$('#btn_guar_nu_arch').bind('click',function(){
+		var inputFile = document.getElementById('archivo');
+		var file = inputFile.files[0];
+		var datos = new FormData();
+		datos.append('archivo',file);
+		datos.append('prod',$('#prod_id').val());
+		$.ajax({
+			url:'subir.php',
+			type:'POST',
+			contentType:false,
+			data:datos,
+			processData:false,
+			cache:false,
+			success:function(ii){alert(ii);},
+		});
+		$.ajax({
+			url:'lista_archivos.php',
+			type:'POST',
+			data:{prod:$('#prod_id').val()},
+			success:function(oi){$('#m_arch').html(oi);},
 		});
 	});
 });
@@ -138,11 +143,15 @@ $(document).ready(function(){
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_arch' >";
 		echo "Lista de Archivos Adjuntos Productora:<br>";
-		$lum=$c->lista_um_productor($_POST['elegido']);
+		echo "<div id='m_arch'>";
+		$lum=$c->lista_archivos($_POST['elegido']);
 		foreach($lum as $v)	{echo "<div class='btn_color2' style='width:250px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
+		echo "</div>";		
 		echo "<br>";
 		echo "Agregar nuevo Archivo:<br>";
-		echo "<form method='post' action='productora_esp.php' enctype='multipart/form-data'><input type='hidden' name='prod' value='".$_POST['elegido']."'><input type='file' name='archivo'><input type='submit' value='Guardar'></form>";
+		echo "<input type='hidden' id='prod_id' value='".$_POST['elegido']."'>";
+		echo "<input type='file' id='archivo'>";
+		echo "<div class='btn_color' id='btn_guar_nu_arch'>Guardar</div>";
 		echo "</div>";
 		$c->desconexion();
 	}

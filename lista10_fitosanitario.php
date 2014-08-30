@@ -8,7 +8,7 @@
 		$c->desconexion();
 		echo "Ultimos eventos fitosanitarios Registrados";
 		echo "<table>";
-		echo "<tr><td>Fecha</td><td>Programa</td><td>Metodo</td></tr>";
+		echo "<tr><td>Fecha</td><td>Programa</td><td>Estado Fenologico</td></tr>";
 		foreach($ar as $p)
 		{
 			echo "<tr><td>".$p[0]."</td><td>".$p[1]."</td><td>".$p[2]."</td></tr>";

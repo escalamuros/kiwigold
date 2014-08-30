@@ -10,7 +10,7 @@ if(isset($_POST['usuario']))
 	{
 		case '-1':	echo "index.php?op=4";break;
 		case '0':	echo "index.php?op=1";break;
-		case '1':  	$_SESSION['id']=$resp[0];
+		default:  	$_SESSION['id']=$resp[0];
 						$_SESSION['nivel']=$resp[1];
 						$_SESSION['nombre']=$resp[2];
 						$_SESSION['empresa']=$resp[3];

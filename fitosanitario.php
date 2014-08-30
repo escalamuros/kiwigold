@@ -51,7 +51,7 @@ $(document).ready(function(){
     	$.ajax({
     		url:'ingreso_fitosanitario.php',
     		type:'post',
-    		data:{um:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val()},
+    		data:{um:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val(),est_f:$('#fen').val()},
     		success:function(a){$('#h_fito').html(a);}
     	});
     });
@@ -82,13 +82,24 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="expo_um" class="expo"><div class="etex">Unidad de Maduración :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:404px;height:250px;'>
+      <div id="h_fito" style='float:left;width:404px;height:220px;'>
       </div>
    	<div style="clear:both;"></div>
    	<div id="n_fito" style="width:950px;height:150px;">
    	Registrar nuevo evento Fitosanitario<br>
    	<table>
    	<tr><td>Fecha</td><td><input type="date" id="fechaf" style="width:700px;"></td></tr>
+   	<tr><td>Estado Fenologico</td><td>
+   	<select id="fen">
+   	<?php
+   	$d->conexion();
+   	$ar=$d->lista_estados_fenologicos();
+		foreach($ar as $v)
+		{echo "<option value='".$v[0]."'>".$v[1]."</option>";}
+		$d->desconexion();
+		?>
+   	</select>
+   	</td></tr>
 		<tr><td>Programa</td><td><input type="text" id="progf" style="width:700px;"></td></tr>
 		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="metodof" style="width:700px;height:55px"></textarea></td></tr>
 		<tr><td></td><td><div id="btn_guardar">Guardar evento Fitosanitario</div></td></tr>	
