@@ -4,13 +4,17 @@
 	//retorna option con id y nombre de productores segun la exportadora
 	if(isset($_POST['findprod'])){
 		$c->conexion();
-		$arreglo=$c->lista_productores_select($_POST['findprod']);
+		echo "<option selected='selected'>Seleccione</option>";
+		$arreglo=$c->lista_productores($_POST['findprod']);
+		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 		}
-	//retorna unidad de madurez segun el productor
+	//retorna unidad de madurez activas segun el productor
 	if(isset($_POST['findlab'])){
 		$c->conexion();
-		$arreglo=$c->lista_campos_select($_POST['findlab']);
+		echo "<option selected='selected'>Seleccione</option>";
+		$arreglo=$c->lista_um_activas($_POST['findlab']);
+		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 		} 
 		if(is_array($arreglo)){ foreach($arreglo as $arr){echo $arr;}}

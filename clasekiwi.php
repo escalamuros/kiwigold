@@ -55,25 +55,21 @@ class basededatos
 		return $lista;
 	}
 		
-	function lista_productores_select($po)
+	function lista_productores($po)
 	{	
 		$cons="select id,empresa from campos where exportadora=$po order by id;";
-		echo $cons;
-		$arreglo[]="<option selected='selected'>Seleccione</option>";
 		$ejec=mysql_query($cons,$this->id_con);		
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arreglo[]="<option value='".$rs['id']."'>".$rs['empresa']."</option>";
+		$arreglo[]=array($rs['id'],$rs['empresa']);
 		}
 		return $arreglo;
-		
 	}
-	function lista_campos_select($po)
+	function lista_um_activas($po)
 	{	
-		$cons="select id,um from um where campo=$po;";
+		$cons="select id,um from um where campo='$po' and estado='1';";
 		$ejec=mysql_query($cons,$this->id_con);
-		$arreglo[]="<option selected='selected'>Seleccione</option>";	
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arreglo[]="<option value='".$rs['id']."'>".$rs['um']."</option>";
+		$arreglo[]=array($rs['id'],$rs['um']);
 		}
 		return $arreglo;
 	}
@@ -198,21 +194,45 @@ class basededatos
 	}
 	function lista_um_productor($prod)
 	{
-		$cons="select id,um from um where campo='$prod';";
+		$cons="select id,um from um where campo='$prod' and estado='1';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arreglo[]=array($rs['id'],$rs['um']);
 		}
 		return $arreglo;
 	}
-	function datos_um($um)
+	function lista_todas_um_productor($prod)
 	{
-		$cons="select * from um where id=$um;";
+		$cons="select id,um,estado from um where campo='$prod' ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['um'],$rs['ubicacion'],$rs['superficie'],$rs['tipo'],$rs['año'],$rs['machos'],$rs['hembras'],$rs['marco'],$rs['replante'],$rs['cert_gg'],$rs['cert_kg']);
+		$arreglo[]=array($rs['id'],$rs['um'],$rs['estado']);
+		}
+		return $arreglo;
+	}
+	function datos_um($um)
+	{
+		$cons="select * from um where id='$um';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+		$arr=array($rs['um'],$rs['campo'],$rs['cuartel'],$rs['superficie'],$rs['año'],$rs['geo'],$rs['estado']);
 		}
 		return $arr;
+	}
+	function registrar_um($um,$prod,$cuar,$sup,$ao,$geo)
+	{
+		$cons="insert into um values (NULL,'$um','$prod','$cuar','$sup','$ao','$geo','1');";
+		mysql_query($cons,$this->id_con);
+	}
+	function cambia_estado_um($id)
+	{
+		$cons="select estado from um where id='$id';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{$e=$rs['estado'];}
+		if($e==1){$e=0;}else{$e=1;}
+		$cons="update um set estado='$e' where id='$id';";
+		mysql_query($cons,$this->id_con);
 	}
 	/*
 	function datos_ult_prod_um($um)
@@ -303,9 +323,10 @@ class basededatos
 		{$arr[]=array($rs['id'],$rs['productor'],$rs['fecha'],$rs['ton'],$rs['comercializadora'],$rs['calibre']);}
 		return $arr;
 	}
-	function editar_prod()
+	function editar_prod($id,$fech,$ton,$com,$cal)
 	{
-		
+		$cons="update produccion set fecha='$fech',ton='$ton',comercializadora='$com',calibre='$cal' where id='$id';";
+		mysql_query($cons,$this->id_con);
 	}
 	//funciones para usuarios, generar y editar, cambiar estado etc...
 	function registrar_usuario($nom,$usu,$pass,$niv,$emp)

@@ -10,8 +10,8 @@
 <!-- <script src="js/jquery.js"></script> -->
 <script>
 $(document).ready(function(){
-	$('#prod_prod').hide();
-	$('#hist_prod').hide();
+	$('#lista_um').hide();
+	$('#editar_um').hide();
 	$('#opex').bind('change',function(e) {	
 		sessionStorage['exportadora']=this.value;
 		$.ajax({
@@ -20,30 +20,22 @@ $(document).ready(function(){
 			data:{findprod:this.value},
 			success:function(re){		
 				$('#fprod').html(re);
-				$('#prod_prod').hide();
-				$('#hist_prod').hide();
+				$('#lista_um').hide();
+				$('#editar_um').hide();
 				}
 			});
 		$('#expo_prod').show();
     });
     $('#fprod').bind('change',function(e) {
 		sessionStorage['productor']=this.value;
-		$.ajax({
-			url:'lista10_producciones.php',
-			type:'POST',
-			data:{prod:$('select#fprod').val()},
-			success:function(dev){
-				$('#hist_prod').html(dev);
-				$('#prod_prod').show();
-				$('#hist_prod').show();
-			}
-		});
+		$('#lista_um').show();
+		$('#editar_um').show();
     });
     $('#guar_prod').bind('click',function(){
     	$.ajax({
-    		url:'ingreso_produccion.php',
+    		url:'cambiar.php',
     		type:'POST',
-    		data:{prod:$('select#fprod').val(),$fech:$('#f_p_p').val(),com:$('#com_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
+    		data:{prod:$('select#fprod').val(),com:$('#com_p_p').val(),$fech:$('#f_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
     		success:function(wa){$('#his_prod').html(wa);},
     	});
     	alert('exito');
@@ -57,7 +49,7 @@ $(document).ready(function(){
 ?>
 	<div id="contenedor" style="color:#567;">
 		<?php echo "<div class='id_prod' id='".$_SESSION['id']."'></div>" ?>
-		<div id="titulo_lab">Registro de Producciones Por Productor</div>
+		<div id="titulo_lab">Control de UM por Productor</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Exportadora :</div>
@@ -74,8 +66,11 @@ $(document).ready(function(){
 			</div>
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
 		</div>
-		<div id='hist_prod' style="float:left;width:370px;height:220px;overflow:auto;"></div>
-		<div id="prod_prod" style="clear:both;">
+		<div style="clear:both;"></div>
+		<div id='lista_um' style="float:left;width:400px;height:320px;overflow:auto;">
+		lista
+		</div>
+		<div id="editar_um" style="width:400px;height:320px;float:left;">
 			<table>
 			<tr><td colspan="2">Producción del Productor</td></tr>
 			<tr><td>Fecha:</td>     <td><input type="date" id="f_p_p"></td></tr>
