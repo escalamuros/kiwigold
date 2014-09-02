@@ -67,7 +67,7 @@ $(document).ready(function(){
 						$c->desconexion();
 			?></select></div>
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo"id="fprod"></select></div>
-        	<div id="expo_um" class="expo"><div class="etex">Laboratorio :</div> <select name="labexpo"id="flab"></select></div>
+        	<div id="expo_um" class="expo"><div class="etex">Unidad de Maduracion :</div> <select name="labexpo"id="flab"></select></div>
        </div>
        <div class="men_i" id="datos_2">
        		

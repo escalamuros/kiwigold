@@ -26,8 +26,14 @@ $(document).ready(function(){
 		$.ajax({
 			url:'modif_productora.php',
 			type:'POST',
-			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),enc:$('#enc').val(),rute:$('#rute').val(),fonoe:$('#fonoe').val(),maile:$('#maile').val()},
-			success:function(a){$('#1editar_prod').html('Cambios Aceptados, Reingrese a "Productores" para actualizar los datos correctamente.');}
+			async:false,
+			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val()},
+			success:function(a){alert('Cambios Aceptados');}
+		});
+		$.ajax({url:'productora_esp.php',
+			type:'POST',
+			data:{elegido:$('#ide').val()},
+			success:function(uk){$('#cont_productores').html(uk);}
 		});
 	});
 	$('.bit_cuartel').bind('click',function(){
@@ -80,13 +86,13 @@ $(document).ready(function(){
 		echo "<div id='a' style='float:left;width:400px;'>";
 		echo "Datos De la Productora<br>";
 		echo "<table>";
-		echo "<tr><td>Codigo Exportadora</td><td>".$lis[1]."</td> <td></td></tr>";
+		//echo "<tr><td>Codigo Exportadora</td><td>".$lis[1]."</td> <td></td></tr>";
 		echo "<tr><td>Nombre</td><td>".$lis[2]."</td>             <td></td></tr>";
 		echo "<tr><td>Razón Social</td><td>".$lis[3]."</td>       <td></td></tr>";
 		echo "<tr><td>Rut</td><td>".$lis[4]."</td>                <td></td></tr>";
 		echo "<tr><td>Giro</td><td>".$lis[5]."</td>               <td></td></tr>";
 		echo "<tr><td>Dirección</td><td>".$lis[6]."</td>          <td></td></tr>";
-		echo "<tr><td>Telefono</td><td>".$lis[7]."</td>           <td></td></tr>";
+		echo "<tr><td>Fono</td><td>".$lis[7]."</td>           <td></td></tr>";
 		echo "<tr><td>E Mail</td><td>".$lis[8]."</td>             <td></td></tr>";
 		echo "<tr><td>Representante Legal</td><td>".$lis[9]."</td><td></td></tr>";
 		echo "<tr><td>Rut Rep.</td><td>".$lis[10]."</td>          <td></td></tr>";

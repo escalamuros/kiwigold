@@ -7,7 +7,7 @@
 		$arreglo=$c->lista_productores_select($_POST['findprod']);
 		$c->desconexion();
 		}
-	//retorna unidad de medida segin el productor
+	//retorna unidad de madurez segun el productor
 	if(isset($_POST['findlab'])){
 		$c->conexion();
 		$arreglo=$c->lista_campos_select($_POST['findlab']);
@@ -55,12 +55,6 @@
 		$c->findum($_POST['findum']);
 		$c->desconexion();
 		}
-	//para ingresar evento fitosanitario
-	if(isset($_POST['metodo'])){
-		$c->conexion();
-		$c->registrar_fitosanitario($_POST['um'],$_POST['fecha'],$_POST['prog'],$_POST['metodo']);
-		$c->desconexion();
-		}
 	// cambiar el estado de un usuario de activo a inactivo y vice versa
 	if(isset($_POST['cam_est_usu'])){
 		$c->conexion();
@@ -68,19 +62,19 @@
 		else{$c->editar_usuario($_POST['cam_est_usu'],'estado','0');echo "Activo";}
 		$c->desconexion();
 	}
-	// cambiar el password de un usuario de activo a inactivo y vice versa
+	// cambiar el password de un usuario
 	if(isset($_POST['cam_pass_usu'])){
 		$c->conexion();
 		$c->editar_usuario($_POST['cam_est_usu'],'pass',$_POST['estado']);echo $_POST['estado'];
 		$c->desconexion();
 	}
-	// cambiar el password de un usuario de activo a inactivo y vice versa
+	// cambiar el nombre de un usuario 
 	if(isset($_POST['cam_nom_usu'])){
 		$c->conexion();
 		$c->editar_usuario($_POST['cam_nom_usu'],'nombre',$_POST['estado']);echo $_POST['estado'];
 		$c->desconexion();
 	}
-	// cambiar el password de un usuario de activo a inactivo y vice versa
+	// cambiar el usuario de un usuario
 	if(isset($_POST['cam_usr_usu'])){
 		$c->conexion();
 		$c->editar_usuario($_POST['cam_usr_usu'],'usuario',$_POST['estado']);echo $_POST['estado'];

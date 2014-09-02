@@ -170,7 +170,7 @@ class basededatos
 		}
 		return $arr;
 	}
-
+	//listado, ingreso y recuperacion de cuarteles
 	function lista_cuarteles_productor($prod)
 	{
 		$cons="select id,nombre from cuarteles where campo='$prod';";
@@ -187,15 +187,6 @@ class basededatos
 		$cons="insert into cuarteles values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$o');";
 		mysql_query($cons,$this->id_con);
 	}
-	function lista_um_productor($prod)
-	{
-		$cons="select id,um from um where campo='$prod';";
-		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arreglo[]=array($rs['id'],$rs['um']);
-		}
-		return $arreglo;
-	}
 	function recuperar_cuartel($cuar)
 	{
 		$cons="select * from cuarteles where id='$cuar';";
@@ -204,6 +195,15 @@ class basededatos
 		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmacho'],$rs['obs']);
 		}
 		return $arr;
+	}
+	function lista_um_productor($prod)
+	{
+		$cons="select id,um from um where campo='$prod';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+		$arreglo[]=array($rs['id'],$rs['um']);
+		}
+		return $arreglo;
 	}
 	function datos_um($um)
 	{
@@ -214,6 +214,7 @@ class basededatos
 		}
 		return $arr;
 	}
+	/*
 	function datos_ult_prod_um($um)
 	{
 		$cons="select * from prod_um where um=$um order by fecha asc limit 1;";
@@ -224,7 +225,7 @@ class basededatos
 		}
 		return $arr;
 	}
-	/*
+	
 	function lista_fenologico_actual_um($um,$anno)
 	{
 		$cons="select fenologicos.fecha,est_fen.nombre from fenologicos,est_fen where um=$um and fenologicos.estado_f=est_fen.id and fecha between '$anno-05-01' and '".$anno+1."-06-30' order by fecha asc ;";
@@ -281,6 +282,30 @@ class basededatos
 		}
 		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
 		return $arr;
+	}
+	//funciones para produccion
+	function ingresa_produccion($prod,$fecha,$com,$ton,$cal){
+		$cons="insert into produccion values (NULL,'$prod','$fecha','$com','$ton','$cal');";
+		mysql_query($cons,$this->id_con);
+	}
+	function lista_ultimos10_prod($prod)
+	{
+		$cons="select id,fecha,ton,calibre from produccion where productor='$prod' order by fecha desc limit 10;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
+		{$arr[]=array($rs['id'],$rs['fecha'],$rs['ton'],$rs['calibre']);}
+		return $arr;
+	}
+	function rescatar_produccion($esa)
+	{
+		$cons="select * from produccion where id='$esa';";
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
+		{$arr[]=array($rs['id'],$rs['productor'],$rs['fecha'],$rs['ton'],$rs['comercializadora'],$rs['calibre']);}
+		return $arr;
+	}
+	function editar_prod()
+	{
+		
 	}
 	//funciones para usuarios, generar y editar, cambiar estado etc...
 	function registrar_usuario($nom,$usu,$pass,$niv,$emp)
@@ -381,12 +406,22 @@ class basededatos
 		while(count($re) < 17){$re[]='';}
 		return $re;
 	}
-	function modif_productora($id,$empresa,$rs,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl,$enc,$rute,$fonoe,$maile)
+	function modif_productora($id,$empresa,$rs,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl)
 	{
 		$cons="update campos set empresa='$empresa' where id='$id';";
 		$ejec=mysql_query($cons,$this->id_con);
-		$cons="update datos_prod set rs='$rs',rut='$rut',giro='$giro',dir='$dir',fono='$fono',mail='$mail',rl='$rl',rutrl='$rutrl',fonorl='$fonorl',mailrl='$mailrl',encargado='$enc',rute='$rute',fonoe='$fonoe',maile='$maile' where campo='$id';";
-		$ejec=mysql_query($cons,$this->id_con);
+		$cons="select rs from datos_prod where campo='$id';";
+		$ejec=mysql_query($cons, $this->id_con);
+		if(mysql_num_rows($ejec)==1)
+		{
+			$cons="update datos_prod set rs='$rs',rut='$rut',giro='$giro',dir='$dir',fono='$fono',mail='$mail',rl='$rl',rutrl='$rutrl',fonorl='$fonorl',mailrl='$mailrl' where campo='$id';";
+			$ejec=mysql_query($cons,$this->id_con);
+		}
+		else
+		{
+			$cons="insert into datos_prod values ('$id','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
+			$ejec=mysql_query($cons,$this->id_con);
+		}
 	}
 }
 ?>

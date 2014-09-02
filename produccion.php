@@ -10,8 +10,8 @@
 <!-- <script src="js/jquery.js"></script> -->
 <script>
 $(document).ready(function(){
-	$('#prod_um').hide();
 	$('#prod_prod').hide();
+	$('#hist_prod').hide();
 	$('#opex').bind('change',function(e) {	
 		sessionStorage['exportadora']=this.value;
 		$.ajax({
@@ -20,31 +20,33 @@ $(document).ready(function(){
 			data:{findprod:this.value},
 			success:function(re){		
 				$('#fprod').html(re);
-				$('#prod_um').hide();
 				$('#prod_prod').hide();
+				$('#hist_prod').hide();
 				}
 			});
-		$('#expo_prod').show(100);
+		$('#expo_prod').show();
     });
     $('#fprod').bind('change',function(e) {
 		sessionStorage['productor']=this.value;
-		$('#flab').html('');
 		$.ajax({
-			url:'recibeajax.php',
+			url:'lista10_producciones.php',
 			type:'POST',
-			data:{findlab:this.value},
-			success:function(re){
-				$('#flab').html(re);
-				$('#prod_um').hide();
+			data:{prod:$('select#fprod').val()},
+			success:function(dev){
+				$('#hist_prod').html(dev);
 				$('#prod_prod').show();
-				}
-			});
-		$('#expo_um').show();
+				$('#hist_prod').show();
+			}
+		});
     });
-    $('#flab').bind('change',function(e) {
-		sessionStorage['um']=this.value;
-		$('#prod_um').show();
-		$('#prod_prod').hide();	
+    $('#guar_prod').bind('click',function(){
+    	$.ajax({
+    		url:,
+    		type:'POST',
+    		data:{prod:$('select#fprod').val(),com:$('#com_p_p').val(),$fech:$('#f_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
+    		success:function(wa){$('#his_prod').html(wa);},
+    	});
+    	alert('exito');
     });
 });   
 </script>
@@ -55,7 +57,7 @@ $(document).ready(function(){
 ?>
 	<div id="contenedor" style="color:#567;">
 		<?php echo "<div class='id_prod' id='".$_SESSION['id']."'></div>" ?>
-		<div id="titulo_lab">Registro de Producciones Por Productor o UM</div>
+		<div id="titulo_lab">Registro de Producciones Por Productor</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Exportadora :</div>
@@ -71,22 +73,17 @@ $(document).ready(function(){
 				</select>
 			</div>
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
-        	<div id="expo_um" class="expo"><div class="etex">Unidad de Medición :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-		<div style="float:left;width:350px;height:120px;overflow:auto;"></div>
+		<div id='hist_prod' style="float:left;width:370px;height:220px;overflow:auto;"></div>
 		<div id="prod_prod" style="clear:both;">
-			Producción del Productor<br>
-			Fecha:<input type="date" id="f_p_p"><br>
-			Toneladas: <input type="number" id="t_p_p"><br>
-			Calibre: <input type="numbre" id="c_p_p"><br>
-			<div class="btn_colo2">Guardar</div>
-		</div>
-      <div id="prod_um" style="clear:both;">
-			Producción de la Unidad de Medición<br>
-			Fecha:<input type="date" id="f_p_u"><br>
-			Toneladas: <input type="number" id="t_p_u"><br>
-			Calibre: <input type="numbre" id="c_p_u"><br>
-			<div class="btn_colo2">Guardar</div>
+			<table>
+			<tr><td colspan="2">Producción del Productor</td></tr>
+			<tr><td>Fecha:</td>     <td><input type="date" id="f_p_p"></td></tr>
+			<tr><td>Comercializadora:</td>     <td><input type="text" id="com_p_p"></td></tr>
+			<tr><td>Toneladas:</td> <td><input type="number" id="t_p_p"></td></tr>
+			<tr><td>Calibre:</td>   <td><input type="numbre" id="c_p_p"></td></tr>
+			<tr><td colspan="2"><div class="btn_color" id='guar_prod'>Guardar</div></td></tr>
+			</table>
 		</div>
    </div>
   <?php
