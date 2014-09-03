@@ -33,9 +33,9 @@ if(isset($_SESSION['id']))
 			echo "</table>";
 			$resp=$c->datos_ult_prod_um($_POST['um']);
 			echo "<table class=datos_um style='float:left;'>";
-			echo "<tr><td colspan='2'>Ultima Producción Ingresada</td></tr>";
+			echo "<tr><td colspan='2'>Última Producción Ingresada</td></tr>";
 			echo "<tr><td>Fecha</td>                 <td>".$resp[0]."</td></tr>";
-			echo "<tr><td>Consecionaria</td>         <td>".$resp[1]."</td></tr>";
+			echo "<tr><td>Concesionaria</td>         <td>".$resp[1]."</td></tr>";
 			echo "<tr><td>Toneladas por Hectarea</td><td>".$resp[2]."</td></tr>";
 			echo "<tr><td>Calibre</td>               <td>".$resp[3]."</td></tr>";
 			echo "</table>";
@@ -61,7 +61,7 @@ if(isset($_SESSION['id']))
 	}
 }
 else
-{echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";}
+{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>

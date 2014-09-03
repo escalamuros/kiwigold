@@ -20,7 +20,7 @@ No tiene nivel de acceso<br>
 <?php
 }
 }
-else{echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";}
+else{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>

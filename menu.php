@@ -29,8 +29,8 @@
       	{
       		case 1:
       			echo "<div class='nivel'>Superusuario</div>";
-      			echo "<div class='barra' id='fitosanitario'><img class='imgmenu' src='img/fenologico.png' />Fitosaitarios</div>";
-      			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Quimicas</div>";
+      			echo "<div class='barra' id='fitosanitario'><img class='imgmenu' src='img/fenologico.png' />Fitosanitarios</div>";
+      			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Químicas</div>";
       			echo "<div class='barra' id='laboratorio'><img class='imgmenu' src='img/laboratorio.png' />Laboratorio</div>";
       			echo "<div class='barra' id='lab_autorisa'><img class='imgmenu' src='img/autorisa.png' />Autorizar Laboratorio</div>";
       			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/registro.png' />Control de UM</div>";

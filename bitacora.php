@@ -38,15 +38,15 @@ if(isset($_SESSION['id']))
 			echo "<tr><td>Giro</td>               <td>".$resp[2]."</td></tr>";
 			echo "<tr><td>Dirección</td>          <td>".$resp[3]."</td></tr>";
 			echo "<tr><td>Fono</td>               <td>".$resp[4]."</td></tr>";
-			echo "<tr><td>Mail</td>               <td>".$resp[5]."</td></tr>";
-			echo "<tr><td>Reprecentante Legal</td><td>".$resp[6]."</td></tr>";
+			echo "<tr><td>EMail</td>               <td>".$resp[5]."</td></tr>";
+			echo "<tr><td>Representante Legal</td><td>".$resp[6]."</td></tr>";
 			echo "<tr><td>Rut</td>                <td>".$resp[7]."</td></tr>";
 			echo "<tr><td>Fono</td>               <td>".$resp[8]."</td></tr>";
 			echo "<tr><td>Mail</td>               <td>".$resp[9]."</td></tr>";
 			echo "<tr><td>Encargado</td>          <td>".$resp[10]."</td></tr>";
 			echo "<tr><td>Rut</td>                <td>".$resp[11]."</td></tr>";
 			echo "<tr><td>Fono</td>               <td>".$resp[12]."</td></tr>";
-			echo "<tr><td>Mail</td>               <td>".$resp[13]."</td></tr>";
+			echo "<tr><td>EMail</td>               <td>".$resp[13]."</td></tr>";
 			echo "</table>";
 			$resp=$c->lista_um_productor($_SESSION['empresa']);
 			echo "<div id='arch_prod'>";
@@ -63,7 +63,7 @@ if(isset($_SESSION['id']))
 	}
 }
 else
-{echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";}
+{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>

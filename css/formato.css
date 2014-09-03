@@ -364,4 +364,16 @@ td{
 	background: #ccc;
 	padding:4px;
 }
+#btn_guardar{
+	border:1px solid #345;
+	padding:2px 5px 2px 5px;
+	background-color: #789;
+	cursor: pointer;
+	color:white;
+	font-size: 14px;
+	width:250px;
+	text-align: center;
+	margin:0 auto 0 auto;
+	border-radius:8px;
+}
 
