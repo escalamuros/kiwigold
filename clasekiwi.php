@@ -215,7 +215,7 @@ class basededatos
 		$cons="select * from um where id='$um';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['um'],$rs['campo'],$rs['cuartel'],$rs['superficie'],$rs['año'],$rs['geo'],$rs['estado']);
+		$arr=array($rs['id'],$rs['um'],$rs['campo'],$rs['cuartel'],$rs['superficie'],$rs['año'],$rs['geo'],$rs['estado']);
 		}
 		return $arr;
 	}
@@ -274,6 +274,7 @@ class basededatos
 	}
 	function lista_ultimos10_labores($um)
 	{
+		//modificar para nueva bd
 		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
@@ -284,25 +285,24 @@ class basededatos
 		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
 		return $arr;
 	}
-	function registrar_fitosanitario($um,$fecha,$prog,$met,$feno)
+	function registrar_fitosanitario($um,$fecha,$ncom,$iac,$cad,$obs,$feno)
 	{
 		//modificar para nueva bd
-		$cons="insert into labores values ('$um','$fecha','$prog','$met','$feno');";
+		$cons="insert into fitosanitarios values ('$um','$fecha','$ncom','$iac','$cad','$obs','$feno');";
 		mysql_query($cons,$this->id_con);
 	}
 	function lista_ultimos10_fito($um)
 	{
-		//modificar para nueva bd
-		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
+		$cons="select fitosanitarios.fecha,fitosanitarios.n_comercial,est_fen.nombre from fitosanitarios,est_fen where fitosanitarios.estado_f=est_fen.id and fitosanitarios.um='$um' order by fitosanitarios.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$f=substr($rs['fecha'],8,2). substr($rs['fecha'],4,3)."-". substr($rs['fecha'],0,4);
-			$arr[]=array($f,$rs['programa'],$rs['nombre']);
+			$arr[]=array($f,$rs['n_comercial'],$rs['nombre']);
 		}
 		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
 		return $arr;
-	}
+	}	
 	//funciones para produccion
 	function ingresa_produccion($prod,$fecha,$com,$ton,$cal){
 		$cons="insert into produccion values (NULL,'$prod','$fecha','$com','$ton','$cal');";
