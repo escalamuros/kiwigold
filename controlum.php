@@ -92,7 +92,7 @@ $(document).ready(function(){
    </div>
   <?php
   }
-else{echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";}
+else{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?> 
 </body>
 </html>

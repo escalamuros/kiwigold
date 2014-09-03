@@ -22,8 +22,8 @@
            	<div id="algo">
            	<?php
            			if($_GET['op']=='1'){ echo "<span style='color:#345;'>Error de Usuario o Contraseña</span>";}
-           			if($_GET['op']=='2'){ echo "<span style='color:#345;'>Session cerrada por inactividad</span>";}
-           			if($_GET['op']=='3'){ echo "<span style='color:#345;'>Session cerrada </span>";}
+           			if($_GET['op']=='2'){ echo "<span style='color:#345;'>Sesión cerrada por inactividad</span>";}
+           			if($_GET['op']=='3'){ echo "<span style='color:#345;'>Sesión cerrada </span>";}
            			if($_GET['op']=='4'){ echo "<span style='color:#345;'>Usuario inactivo, comuniquese con administrador del sistema</span>";}
             ?>
            	</div>

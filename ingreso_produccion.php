@@ -16,7 +16,7 @@
 	}
 	$ar=$c->lista_ultimos10_prod($_POST['prod']);
 	$c->desconexion();
-	echo "Ultimas Producciones Registradas";
+	echo "Últimas Producciones Registradas";
 	echo "<table>";
 	echo "<tr><td>Fecha</td><td>Toneladas</td><td>Calibre</td></tr>";
 	foreach($ar as $p)

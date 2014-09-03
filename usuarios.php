@@ -108,7 +108,7 @@ No tiene premiso para Mantenedor de Usuarios<br>
 	<?php
 	}
 }
-else{echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";}
+else{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>
