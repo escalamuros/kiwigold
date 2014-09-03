@@ -12,6 +12,8 @@
 $(document).ready(function(){
 	$('#lista_um').hide();
 	$('#editar_um').hide();
+	$('#n_um').hide();
+	$('#nuevo_um').hide();
 	$('#opex').bind('change',function(e) {	
 		sessionStorage['exportadora']=this.value;
 		$.ajax({
@@ -22,6 +24,8 @@ $(document).ready(function(){
 				$('#fprod').html(re);
 				$('#lista_um').hide();
 				$('#editar_um').hide();
+				$('#n_um').hide();
+				$('#nuevo_um').hide();
 				}
 			});
 		$('#expo_prod').show();
@@ -29,7 +33,9 @@ $(document).ready(function(){
     $('#fprod').bind('change',function(e) {
 		sessionStorage['productor']=this.value;
 		$('#lista_um').show();
-		$('#editar_um').show();
+		$('#editar_um').hide();
+		$('#nuevo_um').hide();
+		$('#n_um').show();
     });
     $('#guar_prod').bind('click',function(){
     	$.ajax({
@@ -65,6 +71,9 @@ $(document).ready(function(){
 				</select>
 			</div>
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
+        	<div id="n_um" class="btn_color" style="width:180px;margin-left:130px;">Generar Nueva UM</div>
+		</div>
+		<div id='nuevo_um' style="float:left;width:400px;heigth:230px;overflow:auto;background-color:red;">
 		</div>
 		<div style="clear:both;"></div>
 		<div id='lista_um' style="float:left;width:400px;height:320px;overflow:auto;">
