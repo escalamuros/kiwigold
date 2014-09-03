@@ -55,6 +55,10 @@ $(document).ready(function(){
     		success:function(a){$('#h_fito').html(a);$('#fechaf').val('');$('#progf').val('');$('#metodof').val('');}
     	});
     });
+    $('#fen').bind('change',function(){
+    	var a=$('select#fen').val();
+    	$('#foto_fen').attr('src','img/if'+a+'.png');
+    });
 });   
 </script>
 </head>
@@ -82,15 +86,16 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="expo_um" class="expo"><div class="etex">Unidad de Maduración :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:404px;height:230px;'>
+      <div id="h_fito" style='float:left;width:300px;height:230px;overflow:auto;'>
       </div>
    	<div style="clear:both;"></div>
-   	<div id="n_fito" style="width:950px;height:150px;">
+   	<div id="n_fito" style="width:950px;height:150px;overflow:auto;">
    	Registrar nueva Labor No Quimica<br>
    	<table>
    	<tr><td>Fecha</td><td><input type="date" id="fechaf" style="width:700px;"></td></tr>
    	<tr><td>Estado Fenologico</td><td>
    	<select id="fen">
+   	<option value='0'>Seleccione</option>
    	<?php
    	$d->conexion();
    	$ar=$d->lista_estados_fenologicos();
@@ -99,7 +104,7 @@ $(document).ready(function(){
 		$d->desconexion();
 		?>
    	</select>
-   	</td></tr>
+   	<img id='foto_fen' src='img/if0.png' width="50px"></td></tr>
 		<tr><td>Programa</td><td><input type="text" id="progf" style="width:700px;"></td></tr>
 		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="metodof" style="width:700px;height:55px"></textarea></td></tr>
 		<tr><td></td><td><div id="btn_guardar">Guardar Labor No Quimica</div></td></tr>	

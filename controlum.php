@@ -32,11 +32,18 @@ $(document).ready(function(){
     });
     $('#fprod').bind('change',function(e) {
 		sessionStorage['productor']=this.value;
+		$.ajax({
+			url:'ingreso_um.php',
+			type:'POST',
+			data:{prod:$('select#fprod').val()},
+			success:function(a){$('#lista_um').html(a);}
+		});
 		$('#lista_um').show();
 		$('#editar_um').hide();
 		$('#nuevo_um').hide();
 		$('#n_um').show();
     });
+    
     $('#guar_prod').bind('click',function(){
     	$.ajax({
     		url:'cambiar.php',
@@ -73,14 +80,8 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="n_um" class="btn_color" style="width:180px;margin-left:130px;">Generar Nueva UM</div>
 		</div>
-		<div id='nuevo_um' style="float:left;width:400px;heigth:230px;overflow:auto;background-color:red;">
-		</div>
-		<div style="clear:both;"></div>
-		<div id='lista_um' style="float:left;width:400px;height:320px;overflow:auto;">
-		lista
-		</div>
-		<div id="editar_um" style="width:400px;height:320px;float:left;">
-			<table>
+		<div id='nuevo_um' style="float:left;width:400px;heigth:230px;overflow:auto;">
+		<table>
 			<tr><td colspan="2">Producción del Productor</td></tr>
 			<tr><td>Fecha:</td>     <td><input type="date" id="f_p_p"></td></tr>
 			<tr><td>Comercializadora:</td>     <td><input type="text" id="com_p_p"></td></tr>
@@ -88,6 +89,13 @@ $(document).ready(function(){
 			<tr><td>Calibre:</td>   <td><input type="numbre" id="c_p_p"></td></tr>
 			<tr><td colspan="2"><div class="btn_color" id='guar_prod'>Guardar</div></td></tr>
 			</table>
+		</div>
+		<div style="clear:both;"></div>
+		<div id='lista_um' style="float:left;width:400px;height:320px;overflow:auto;">
+		lista
+		</div>
+		<div id="editar_um" style="width:400px;height:320px;float:left;">
+		editar
 		</div>
    </div>
   <?php

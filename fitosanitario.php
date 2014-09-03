@@ -39,9 +39,9 @@ $(document).ready(function(){
     $('#flab').bind('change',function(e) {
 		sessionStorage['um']=this.value;
 		$.ajax({
-			url:'lista10_fitosanitario.php',
+			url:'ingreso_fitosanitario.php',
 			type:'POST',
-			data:'&um='+$('select#flab').val(),
+			data:{um:$('select#flab').val()},
 			success:function(op){$('#h_fito').html(op);}
 		});
 		$('#h_fito').show(100);
@@ -51,9 +51,13 @@ $(document).ready(function(){
     	$.ajax({
     		url:'ingreso_fitosanitario.php',
     		type:'post',
-    		data:{um:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val(),est_f:$('#fen').val()},
+    		data:{um:$('select#flab').val(),fecha:$('#fecha').val(),ncom:$('#ncom').val(),iac:$('#iac').val(),cad:$('#cad').val(),obs:$('#obs').val(),est_f:$('#fen').val()},
     		success:function(a){$('#h_fito').html(a);}
     	});
+    });
+    $('#fen').bind('change',function(){
+    	var a=$('select#fen').val();
+    	$('#foto_fen').attr('src','img/if'+a+'.png');
     });
 });   
 </script>
@@ -82,15 +86,16 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="expo_um" class="expo"><div class="etex">Unidad de Maduración :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:404px;height:220px;'>
+      <div id="h_fito" style='float:left;width:300px;height:220px;overflow:auto;'>
       </div>
    	<div style="clear:both;"></div>
-   	<div id="n_fito" style="width:950px;height:150px;">
+   	<div id="n_fito" style="width:950px;height:150px;overflow:auto;">
    	Registrar nuevo evento Fitosanitario<br>
    	<table>
-   	<tr><td>Fecha</td><td><input type="date" id="fechaf" style="width:700px;"></td></tr>
+   	<tr><td>Fecha</td><td><input type="date" id="fecha" style="width:700px;"></td></tr>
    	<tr><td>Estado Fenologico</td><td>
    	<select id="fen">
+   	<option value='0'>Seleccione</option>
    	<?php
    	$d->conexion();
    	$ar=$d->lista_estados_fenologicos();
@@ -99,9 +104,11 @@ $(document).ready(function(){
 		$d->desconexion();
 		?>
    	</select>
-   	</td></tr>
-		<tr><td>Programa</td><td><input type="text" id="progf" style="width:700px;"></td></tr>
-		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="metodof" style="width:700px;height:55px"></textarea></td></tr>
+   	<img id='foto_fen' src='img/if0.png' width="50px"></td></tr>
+		<tr><td>Nombre Comercial</td><td><input type="text" id="ncom" style="width:700px;"></td></tr>
+		<tr><td>Ingrediente Activo</td><td><input type="text" id="iac" style="width:700px;"></td></tr>
+		<tr><td>Cadencia</td><td><input type="text" id="cad" style="width:700px;"></td></tr>
+		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="obs" style="width:700px;height:55px"></textarea></td></tr>
 		<tr><td></td><td><div id="btn_guardar">Guardar evento Fitosanitario</div></td></tr>	
 		</table>
 		</div>
