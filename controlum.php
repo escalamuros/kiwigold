@@ -46,7 +46,7 @@ $(document).ready(function(){
     
     $('#guar_prod').bind('click',function(){
     	$.ajax({
-    		url:'cambiar.php',
+    		url:'ingreso_um.php',
     		type:'POST',
     		data:{prod:$('select#fprod').val(),com:$('#com_p_p').val(),$fech:$('#f_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
     		success:function(wa){$('#his_prod').html(wa);},

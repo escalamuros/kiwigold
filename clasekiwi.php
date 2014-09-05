@@ -192,6 +192,16 @@ class basededatos
 		}
 		return $arr;
 	}
+	function editar_cuartel($cuar,$nombre,$ano,$sup,$nplan,$zona,$d,$enc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
+	{
+		$cons="update cuarteles set nombre='$nombre',año='$ano',superficie='$sup',nplantas='$nplan',zona='$zona',direccion='$d',nenc='$enc',fenc='$fenc',eenc='$eenc',geo='$geo',dentreh='$dth',denh='$deh',pmachos='$pm',obs='$o' where id='$cuar' ; ";
+		mysql_query($cons,$this->id_con);
+	}
+	function eliminar_cuartel($cuar)
+	{
+		$cons="delete from cuarteles where id='$cuar' ; ";
+		mysql_query($cons,$this->id_con);
+	}
 	function lista_plantas($cuar){return array(array('0','No Hay Registro',''));}
 	function lista_um_productor($prod)
 	{

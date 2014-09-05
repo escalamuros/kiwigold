@@ -17,7 +17,7 @@
 	}
 	$c->desconexion();
 	echo "Editar Cuartel:<br>";
-	echo "<input type='hidden' id='p' value='".$ar[0]."' >";
+	echo "<input type='hidden' id='ppp' value='".$ar[0]."' >";
 	echo "<table>";
 	echo "<tr><td>Nombre:</td><td>                  <input type='text' id='enom' value='".$ar[3]."'></td></tr>";
 	echo "<tr><td>Año:</td><td>                     <input type='text' id='eano' value='".$ar[2]."'></td></tr>";
@@ -41,7 +41,12 @@
 ?>
 <script>
 $('#btn_guar_edi_cuar').bind('click',function(){
-		alert('aaa');
+	$.ajax({
+		url:'recibeajax.php',
+		type:'POST',
+		data:{editar_cuar:$('#ppp').val(),nombre:$('#enom').val(),ano:$('#eano').val(),sup:$('#esup').val(),nplan:$('#enplan').val(),zona:$('#ez').val(),d:$('#ed').val(),enc:$('#enenc').val(),fenc:$('#efenc').val(),eenc:$('#eeenc').val(),geo:$('#egeo').val(),dth:$('#edth').val(),deh:$('#edeh').val(),pm:$('#epm').val(),o:$('#eo').val()},
+		success:function(){alert('Datos Aceptados y Actualizados');}
+	});
 	});
 </script>
 </body>

@@ -50,6 +50,24 @@ $(document).ready(function(){
 		$('#form_edi_cuar').show();
 		$('#form_nu_cuar').hide();
 	});
+	$('.elim_cuar').bind('click',function(){
+		var e_c=$(this).attr('id').substring(1);
+		if(confirm('Eliminar Cuartel, conlleva a eliminación de Unidades de Maduración Asociados, ademas de Labores, Fitosanitario y Laboratorio.\nEsta seguro?'))
+		{
+			$.ajax({
+				url:'recibeajax.php',
+				type:'POST',
+				data:{eliminar_cuar:e_c},
+				success:function(){alert('Cuartel Eliminado');}
+			});
+			$.ajax({
+			url:'ingreso_cuartel.php',
+			type:'POST',
+			data:{prod:$('#prod_id').val()},
+			success:function(oi){$('#lis_cuarteles').html(oi);$('#form_edi_cuar').hide();$('#form_nu_cuar').hide();},
+		});
+		}
+	});
 	$('#agregar_cuartel').bind('click',function(){
 		$('#form_nu_cuar').show();
 	});
@@ -58,7 +76,7 @@ $(document).ready(function(){
 			url:'ingreso_cuartel.php',
 			type:'POST',
 			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
-			success:function(a){$('#lis_cuarteles').html(a);}
+			success:function(a){$('#lis_cuarteles').html(a);$('#form_edi_cuar').hide();$('#form_nu_cuar').hide();}
 		});
 	});
 	$('#btn_guar_nu_arch').bind('click',function(){
@@ -134,7 +152,11 @@ $(document).ready(function(){
 		echo "<div id='lis_cuarteles'>";
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
-		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
+		foreach($lum as $v)
+		{
+			echo "<div class='bit_cuartel btn_color' style='width:230px;margin-top:3px;float:left;' id='".$v[0]."'>".$v[1]."</div>";
+			echo "<div style='width:20px;margin-top:3px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
+		}
 		echo "</div>";
 		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
 		echo "<div id='form_nu_cuar' style='margin-top:10px;'>";
