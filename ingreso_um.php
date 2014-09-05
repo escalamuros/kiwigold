@@ -28,7 +28,7 @@
 <script>
 $('.bit_um').bind('click',function(){
 	$.ajax({
-		url:'edicion_um.php',
+		url:'editar_um.php',
 		type:'POST',
 		data:{um_elegida:$(this).attr('id')},
 		success:function(o){$('#editar_um').html(o);}
