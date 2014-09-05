@@ -17,11 +17,18 @@
 	$ar=$c->lista_cuarteles_productor($_POST['prod']);
 	$c->desconexion();
 	echo "Lista de Cuarteles asociado a la productora:<br>";
-	foreach($ar as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
+	foreach($ar as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
 ?>
 <script>
 $('.bit_cuartel').bind('click',function(){
-		alert($(this).attr('id'));
+		$.ajax({
+			url:'recuperar_cuartel.php',
+			type:'POST',
+			data:{cuartel:$(this).attr('id')},
+			success:function(asd){$('#form_edi_cuar').html(asd);}
+		});
+		$('#form_edi_cuar').show();
+		$('#form_nu_cuar').hide();
 	});
 </script>
 </body>

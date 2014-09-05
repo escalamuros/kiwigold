@@ -171,11 +171,11 @@ class basededatos
 	{
 		$cons="select id,nombre from cuarteles where campo='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
-		//$arreglo[]=array('0','No hay Cuarteles');
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$arreglo[]=array($rs['id'],$rs['nombre']);
 		}
+		if(count($arreglo)==0){$arreglo=array(array('0','No hay Cuarteles'));}
 		return $arreglo;
 	}
 	function agregar_cuartel_productor($prod,$ano,$nom,$sup,$nplan,$z,$d,$nenc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
@@ -192,6 +192,7 @@ class basededatos
 		}
 		return $arr;
 	}
+	function lista_plantas($cuar){return array(array('0','No Hay Registro',''));}
 	function lista_um_productor($prod)
 	{
 		$cons="select id,um from um where campo='$prod' and estado='1';";

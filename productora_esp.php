@@ -8,6 +8,7 @@
 $(document).ready(function(){
 	$('.mod').hide();
 	$('#form_nu_cuar').hide();
+	$('#form_edi_cuar').hide();
 	$('#Editar').bind('click',function(){
 		$('.mod').hide();
 		$('#editar_prod').show();
@@ -15,11 +16,13 @@ $(document).ready(function(){
 	$('#MostrarCuarteles').bind('click',function(){
 		$('.mod').hide();
 		$('#form_nu_cuar').hide();
+		$('#form_edi_cuar').hide();
 		$('#mantenedor_cuarteles').show();
 	});
 	$('#ArchadjEditar').bind('click',function(){
 		$('.mod').hide();
 		$('#form_nu_cuar').hide();
+		$('#form_edi_cuar').hide();
 		$('#mantenedor_arch').show();
 	});
 	$('#guar_datos').bind('click',function(){
@@ -30,14 +33,22 @@ $(document).ready(function(){
 			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val()},
 			success:function(a){alert('Cambios Aceptados');}
 		});
-		$.ajax({url:'productora_esp.php',
+		$.ajax({
+			url:'productora_esp.php',
 			type:'POST',
 			data:{elegido:$('#ide').val()},
 			success:function(uk){$('#cont_productores').html(uk);}
 		});
 	});
 	$('.bit_cuartel').bind('click',function(){
-		alert($(this).attr('id'));
+		$.ajax({
+			url:'editar_cuartel.php',
+			type:'POST',
+			data:{cuartel:$(this).attr('id')},
+			success:function(asd){$('#form_edi_cuar').html(asd);}
+		});
+		$('#form_edi_cuar').show();
+		$('#form_nu_cuar').hide();
 	});
 	$('#agregar_cuartel').bind('click',function(){
 		$('#form_nu_cuar').show();
@@ -123,10 +134,11 @@ $(document).ready(function(){
 		echo "<div id='lis_cuarteles'>";
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
-		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;' id='".$v[0]."'>".$v[1]."</div>";}
+		foreach($lum as $v)	{echo "<div class='bit_cuartel btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
 		echo "</div>";
 		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
-		echo "<div id='form_nu_cuar'>";
+		echo "<div id='form_nu_cuar' style='margin-top:10px;'>";
+		echo "Nuevo Cuartel<br>";
 		echo "<input type='hidden' id='p' value='".$lis[0]."' >";
 		echo "<table>";
 		echo "<tr><td>Nombre:</td><td>                  <input type='text' id='nom'></td></tr>";
@@ -143,9 +155,10 @@ $(document).ready(function(){
 		echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='deh'></td></tr>";
 		echo "<tr><td>% Machos:</td><td>                <input type='text' id='pm'></td></tr>";
 		echo "<tr><td>Observación:</td><td>             <input type='text' id='o'></td></tr>";
+		echo "<tr><td colspan='2'><div class='btn_color' id='btn_guar_nu_cuar'>Guardar</div></td></tr>";
 		echo "</table>";
-		echo "<div class='btn_color' id='btn_guar_nu_cuar' style='width:120px;'>Guardar</div>";
 		echo "</div>";
+		echo "<div id='form_edi_cuar' style='margin-top:10px;'>Editar Cuartel</div>";
 		echo "</div>";
 		echo "<div class='mod' id='mantenedor_arch' >";
 		echo "Lista de Archivos Adjuntos Productora:<br>";
