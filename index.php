@@ -19,7 +19,7 @@
             <div class="linea"><input id="user" type="text" class="ibox" placeholder="Usuario" /></div>
             <div class="linea"><input id="pass" type="password" class="ibox" placeholder="Contraseña" /></div>
            	<div id="btningresar" class="btnstdr">INGRESAR</div>
-           	<div id="algo">
+           	<div id="algo" style="margin-top:8px;">
            	<?php
            			if($_GET['op']=='1'){ echo "<span style='color:#345;'>Error de Usuario o Contraseña</span>";}
            			if($_GET['op']=='2'){ echo "<span style='color:#345;'>Sesión cerrada por inactividad</span>";}

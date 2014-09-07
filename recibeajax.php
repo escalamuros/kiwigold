@@ -18,7 +18,14 @@
 		$c->desconexion();
 		} 
 		if(is_array($arreglo)){ foreach($arreglo as $arr){echo $arr;}}
-		
+	//retorna id y nombre de cuarteles segun el productor seleccionado
+	if(isset($_POST['prod_elegido'])){
+		$c->conexion();
+		echo "<option selected='selected'>Seleccione</option>";
+		$arreglo=$c->lista_cuarteles_productor($_POST['prod_elegido']);
+		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
+		$c->desconexion();
+	}	
 	if(isset($_POST['peso'])){
 		$c->conexion();
 		$c->ingresolab($_POST['numm'],$_POST['peso'],$_POST['presion1'],$_POST['presion2'],$_POST['ss'],$_POST['color1'],$_POST['color2'],$_POST['pesoi'],$_POST['pesof'],$_POST['obs'],$_POST['ingbd']);
@@ -95,7 +102,17 @@
 		$c->conexion();
 		$c->eliminar_cuartel($_POST['eliminar_cuar']);
 		$c->desconexion();
-	
 	}
-	
+	//actualiza los datos de un UM
+	if(isset($_POST['editar_um'])){
+		$c->conexion();
+		$c->editar_um($_POST['editar_um'],$_POST['nombre'],$_POST['cuartel'],$_POST['sup'],$_POST['ano'],$_POST['geo']);
+		$c->desconexion();
+	}
+	// cambia el estado de un UM, de activo a inactivo y viceversa
+	if(isset($_POST['cambia_estado_um'])){
+		$c->conexion();
+		echo $c->cambia_estado_um($_POST['cambia_estado_um']);
+		$c->desconexion();
+	}
 ?>

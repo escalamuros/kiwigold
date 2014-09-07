@@ -244,6 +244,13 @@ class basededatos
 		if($e==1){$e=0;}else{$e=1;}
 		$cons="update um set estado='$e' where id='$id';";
 		mysql_query($cons,$this->id_con);
+		switch($e){case 1:$ho="Activa";break;case 0:$ho="Inactiva";break;};
+		return $ho;
+	}
+	function editar_um($um,$nom,$cuar,$sup,$ano,$geo)
+	{
+		$cons="update um set um='$nom',cuartel='$cuar',superficie='$sup',año='$ano',geo='$geo' where id='$um';";
+		mysql_query($cons,$this->id_con);
 	}
 	/*
 	function datos_ult_prod_um($um)
@@ -316,7 +323,7 @@ class basededatos
 	}	
 	//funciones para produccion
 	function ingresa_produccion($prod,$fecha,$com,$ton,$cal){
-		$cons="insert into produccion values (NULL,'$prod','$fecha','$com','$ton','$cal');";
+		$cons="insert into produccion values (NULL,'$prod','$fecha','$ton','$com','$cal');";
 		mysql_query($cons,$this->id_con);
 	}
 	function lista_ultimos10_prod($prod)
@@ -325,6 +332,7 @@ class basededatos
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
 		{$arr[]=array($rs['id'],$rs['fecha'],$rs['ton'],$rs['calibre']);}
+		if(count($arr)==0){$arr[]=array('0','','No Hay registro','');}
 		return $arr;
 	}
 	function rescatar_produccion($esa)

@@ -10,9 +10,9 @@
 </head>
 <body>
 <?php 
-	if((isset($_POST['prod']))&&(isset($_POST['cuar'])))
+	if((isset($_POST['um']))&&(isset($_POST['prod'])))
 	{
-		$c->agregar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
+		$c->registrar_um($_POST['um'],$_POST['prod'],$_POST['cuartel'],$_POST['sup'],$_POST['ano'],$_POST['geo']);
 	}
 	$ar=$c->lista_todas_um_productor($_POST['prod']);
 	$c->desconexion();
@@ -23,7 +23,6 @@
 		if($v[2]==1){echo "(Activa)";}else {echo "(Inactiva)";}
 		echo "</div>";
 	}
-	
 ?>
 <script>
 $('.bit_um').bind('click',function(){

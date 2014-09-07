@@ -10,9 +10,9 @@
 </head>
 <body>
 <?php 
-	if(isset($_POST['prod']))
+	if((isset($_POST['prod']))&&(isset($_POST['fech'])))
 	{
-		$c->ingresar_produccion($_POST['prod'],$_POST['fech'],$_POST['com'],$_POST['ton'],$_POST['cal']);
+		$c->ingresa_produccion($_POST['prod'],$_POST['fech'],$_POST['com'],$_POST['ton'],$_POST['cal']);
 	}
 	$ar=$c->lista_ultimos10_prod($_POST['prod']);
 	$c->desconexion();
@@ -21,7 +21,7 @@
 	echo "<tr><td>Fecha</td><td>Toneladas</td><td>Calibre</td></tr>";
 	foreach($ar as $p)
 	{
-		echo "<tr><td>".$p[0]."</td><td>".$p[1]."</td><td>".$p[2]."</td></tr>";
+		echo "<tr><td>".$p[1]."</td><td>".$p[2]."</td><td>".$p[3]."</td></tr>";
 	}
 	echo "</table>";
 ?>
