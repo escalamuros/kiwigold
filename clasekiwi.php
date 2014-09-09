@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		/*
+		
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		*/
+		/*
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 	}
 	function conexion()
 	{
@@ -202,7 +202,32 @@ class basededatos
 		$cons="delete from cuarteles where id='$cuar' ; ";
 		mysql_query($cons,$this->id_con);
 	}
-	function lista_plantas($cuar){return array(array('0','No Hay Registro',''));}
+	function lista_plantas($cuar){
+		$cons="select tipo,cantidad,año from plantas where cuartel=$cuar;";
+
+		$ejec=mysql_query($cons,$this->id_con);
+		$totalp='No hay resgistro';
+		while($rs=mysql_fetch_array($ejec,$this->idb)){
+			
+			$tipo=$rs['tipo'];
+			$cantidad=$rs['cantidad'];
+			$año=$rs['año'];
+
+			$plantas[]=array($tipo,$cantidad,$año);
+			
+			$totalp=array($plantas);
+
+
+		}
+
+		 return $totalp;
+	}
+	function add_plantas($cuar,$tipo,$cantidad,$año){
+		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$año');";
+		echo $cons;
+		mysql_query($cons,$this->id_con);
+
+	}
 	function lista_um_productor($prod)
 	{
 		$cons="select id,um from um where campo='$prod' and estado='1';";
