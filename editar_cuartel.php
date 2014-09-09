@@ -43,17 +43,16 @@
 	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td><td>Editar</td><td>Eliminar</tr>";}
 	echo "</table>";
 	echo "<div id='add_tira_planta'>+ Agregar Plantas</div>";
-	echo "<div id='add_plantas1'>";
 	echo "<input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'>";
-	echo "<div class='tira_plan'>Tipo: </div>";
-	echo "<select id='ap_tipo'>";
+	echo "<table>";
+	echo "<tr><td>Tipo: </td>";
+	echo "<td><select id='ap_tipo'>";
 	foreach($lu as $ey){echo "<option value='".$ey[0]."'>".$ey[1]."</option>";}
-	echo "</select></br>";
-	echo "<div class='tira_plan'>Cantidad: </div>";
-	echo "<input type='text' id='ap_cant'></br>";
-	echo "<div class='tira_plan'>Año:</div>";
-	echo "<input type='text' id='ap_año'></br>";
-	echo "<input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></div>";
+	echo "</select></td></tr>";
+	echo "<tr><td>Cantidad: </td><td><input type='text' id='ap_cant'></td></tr>";
+	echo "<tr><td>Año:</td><td><input type='text' id='ap_año'></td></tr>";
+	echo "<tr><td colspan='2'><input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></td></tr>";
+	echo "</table>";
 ?>
 <script>
 $('#add_tira_planta').bind('click',function(){

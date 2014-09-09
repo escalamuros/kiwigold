@@ -156,9 +156,9 @@ $(document).ready(function(){
 		foreach($lum as $v)
 		{
 			echo "<tr><td>";
-			echo "<div class='bit_cuartel btn_color' style='width:230px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";
+			echo "<div class='bit_cuartel btn_color' style='width:230px;' id='".$v[0]."'>".$v[1]."</div>";
 			echo "</td><td>";
-			echo "<div style='width:20px;margin-top:3px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
+			echo "<div style='width:20px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
 			echo "</td></tr>";
 		}
 		echo "</table>";
