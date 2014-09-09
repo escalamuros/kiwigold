@@ -287,16 +287,15 @@ class basededatos
 		}
 		return $arr;
 	}
-	function registrar_labores($um,$fecha,$prog,$met,$feno)
+	function registrar_labores($cuar,$fecha,$prog,$met,$feno)
 	{
-		//$f=substr($fecha,6,4)."-". substr($fecha,3,2)."-". substr($fecha,0,2);
-		$cons="insert into labores values ('$um','$fecha','$prog','$met','$feno');";
+		$cons="insert into labores values ('$cuar','$fecha','$prog','$met','$feno');";
 		mysql_query($cons,$this->id_con);
 	}
-	function lista_ultimos10_labores($um)
+	function lista_ultimos10_labores($cuar)
 	{
 		//modificar para nueva bd
-		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.um='$um' order by labores.fecha asc limit 10;";
+		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.cuartel='$cuar' order by labores.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
@@ -306,15 +305,15 @@ class basededatos
 		if(count($arr)==0){ $arr=array(array('0','No hay registro',' ')); }
 		return $arr;
 	}
-	function registrar_fitosanitario($um,$fecha,$ncom,$iac,$cad,$obs,$feno)
+	function registrar_fitosanitario($cuar,$fecha,$ncom,$iac,$cad,$obs,$feno)
 	{
 		//modificar para nueva bd
-		$cons="insert into fitosanitarios values ('$um','$fecha','$ncom','$iac','$cad','$obs','$feno');";
+		$cons="insert into fitosanitarios values ('$cuar','$fecha','$ncom','$iac','$cad','$obs','$feno');";
 		mysql_query($cons,$this->id_con);
 	}
-	function lista_ultimos10_fito($um)
+	function lista_ultimos10_fito($cuar)
 	{
-		$cons="select fitosanitarios.fecha,fitosanitarios.n_comercial,est_fen.nombre from fitosanitarios,est_fen where fitosanitarios.estado_f=est_fen.id and fitosanitarios.um='$um' order by fitosanitarios.fecha asc limit 10;";
+		$cons="select fitosanitarios.fecha,fitosanitarios.n_comercial,est_fen.nombre from fitosanitarios,est_fen where fitosanitarios.estado_f=est_fen.id and fitosanitarios.cuartel='$cuar' order by fitosanitarios.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{

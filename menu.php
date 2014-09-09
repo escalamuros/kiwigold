@@ -41,7 +41,9 @@
       			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes</div>";
       		break;
       		case 2:
-      			echo "<div class='nivel'>Supervisor</div>";
+      			echo "<div class='nivel'>Supervisor Lab</div>";
+      			echo "<div class='barra' id='lab_autorisa'><img class='imgmenu' src='img/autorisa.png' />Autorizar Laboratorio</div>";
+      			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/registro.png' />Control de UM</div>";
       		break;
       		case 3: 
       			echo "<div class='nivel'>Digitador</div>";

@@ -11,23 +11,21 @@
 $(document).ready(function(){
 	$('#h_fito').hide();
 	$('#n_fito').hide();
-	$('#opex').bind('change',function(e) {	
-		sessionStorage['exportadora']=this.value;
+	$('#opex').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:this.value},
+			data:{findprod:$('select#opex').val()},
 			success:function(re){ $('#fprod').html(re);$('#h_fito').hide();	$('#n_fito').hide();	}
 		});
 		$('#expo_prod').show(100);
     });
     $('#fprod').bind('change',function(e) {
-		sessionStorage['productor']=this.value;
 		$('#flab').html('');
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findlab:this.value},
+			data:{findcuar:$('select#fprod').val()},
 			success:function(re){
 				$('#flab').html(re);
 				$('#h_fito').hide();
@@ -37,11 +35,10 @@ $(document).ready(function(){
 		$('#expo_um').show(100);
     });
     $('#flab').bind('change',function(e) {
-		sessionStorage['um']=this.value;
 		$.ajax({
 			url:'ingreso_labores.php',
 			type:'POST',
-			data:'&um='+$('select#flab').val(),
+			data:{cuar:$('select#flab').val()},
 			success:function(op){$('#h_fito').html(op);}
 		});
 		$('#h_fito').show(100);
@@ -51,7 +48,7 @@ $(document).ready(function(){
     	$.ajax({
     		url:'ingreso_labores.php',
     		type:'post',
-    		data:{um:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val(),ef:$('select#fen').val()},
+    		data:{cuar:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val(),ef:$('select#fen').val()},
     		success:function(a){$('#h_fito').html(a);$('#fechaf').val('');$('#progf').val('');$('#metodof').val('');}
     	});
     });
@@ -84,7 +81,7 @@ $(document).ready(function(){
 				</select>
 			</div>
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
-        	<div id="expo_um" class="expo"><div class="etex">Unidad de Maduración :</div> <select name="labexpo" id="flab"></select></div>
+        	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
       <div id="h_fito" style='float:left;width:300px;height:230px;overflow:auto;'>
       </div>

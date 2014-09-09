@@ -2,11 +2,11 @@
 	require('clasekiwi.php');
 	$c=new basededatos();
 	$c->conexion();
-	if((isset($_POST['um']))&&(isset($_POST['fecha'])))
+	if((isset($_POST['cuar']))&&(isset($_POST['fecha'])))
 	{
-		$c->registrar_fitosanitario($_POST['um'],$_POST['fecha'],$_POST['ncom'],$_POST['iac'],$_POST['cad'],$_POST['obs'],$_POST['est_f']);
+		$c->registrar_fitosanitario($_POST['cuar'],$_POST['fecha'],$_POST['ncom'],$_POST['iac'],$_POST['cad'],$_POST['obs'],$_POST['est_f']);
 	}
-	$ar=$c->lista_ultimos10_fito($_POST['um']);
+	$ar=$c->lista_ultimos10_fito($_POST['cuar']);
 	$c->desconexion();
 	echo "Ultimos eventos fitosanitarios Registrados, por Fecha";
 	echo "<table>";

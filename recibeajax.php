@@ -10,10 +10,10 @@
 		$c->desconexion();
 		}
 	//retorna unidad de madurez activas segun el productor
-	if(isset($_POST['findlab'])){
+	if(isset($_POST['findcuar'])){
 		$c->conexion();
 		echo "<option selected='selected'>Seleccione</option>";
-		$arreglo=$c->lista_um_activas($_POST['findlab']);
+		$arreglo=$c->lista_cuarteles_productor($_POST['findcuar']);
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 		} 

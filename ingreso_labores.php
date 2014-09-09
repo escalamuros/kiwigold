@@ -2,11 +2,11 @@
 	require('clasekiwi.php');
 	$c=new basededatos();
 	$c->conexion();
-	if((isset($_POST['um']))&&(isset($_POST['fecha'])))
+	if((isset($_POST['cuar']))&&(isset($_POST['fecha'])))
 	{
-		$c->registrar_labores($_POST['um'],$_POST['fecha'],$_POST['prog'],$_POST['metodo'],$_POST['ef']);
+		$c->registrar_labores($_POST['cuar'],$_POST['fecha'],$_POST['prog'],$_POST['metodo'],$_POST['ef']);
 	}
-	$ar=$c->lista_ultimos10_labores($_POST['um']);
+	$ar=$c->lista_ultimos10_labores($_POST['cuar']);
 	$c->desconexion();
 	echo "Ultimas labores no quimicas Registrados, por Fecha";
 	echo "<table>";
