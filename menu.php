@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Kiwi Gold - Home</title>
+<link rel="icon" href="img/favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="css/formato.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery.js"></script>

@@ -202,25 +202,16 @@ class basededatos
 		$cons="delete from cuarteles where id='$cuar' ; ";
 		mysql_query($cons,$this->id_con);
 	}
+	//retorna total de plantas
 	function lista_plantas($cuar){
 		$cons="select tipo,cantidad,año from plantas where cuartel=$cuar;";
-
 		$ejec=mysql_query($cons,$this->id_con);
-		$totalp='No hay resgistro';
-		while($rs=mysql_fetch_array($ejec,$this->idb)){
-			
-			$tipo=$rs['tipo'];
-			$cantidad=$rs['cantidad'];
-			$año=$rs['año'];
-
-			$plantas[]=array($tipo,$cantidad,$año);
-			
-			$totalp=array($plantas);
-
-
+		while($rs=mysql_fetch_array($ejec,$this->idb))
+		{
+			$plantas[]=array($rs['tipo'],$rs['cantidad'],$rs['año']);
 		}
-
-		 return $totalp;
+		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','');}
+		return $plantas;
 	}
 	function add_plantas($cuar,$tipo,$cantidad,$año){
 		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$año');";

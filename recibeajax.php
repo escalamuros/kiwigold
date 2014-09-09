@@ -115,6 +115,7 @@
 		echo $c->cambia_estado_um($_POST['cambia_estado_um']);
 		$c->desconexion();
 	}
+	//agrega plantas a un cuartel
 	if(isset($_POST['agrega_plantas'])){
 		$c->conexion();
 		$c->add_plantas($_POST['cuartel'],$_POST['tipo'],$_POST['cantidad'],$_POST['año']);

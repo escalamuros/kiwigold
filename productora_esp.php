@@ -152,11 +152,16 @@ $(document).ready(function(){
 		echo "<div id='lis_cuarteles'>";
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
+		echo "<table>";
 		foreach($lum as $v)
 		{
-			echo "<div class='bit_cuartel btn_color' style='width:230px;margin-top:3px;float:left;' id='".$v[0]."'>".$v[1]."</div>";
+			echo "<tr><td>";
+			echo "<div class='bit_cuartel btn_color' style='width:230px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";
+			echo "</td><td>";
 			echo "<div style='width:20px;margin-top:3px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
+			echo "</td></tr>";
 		}
+		echo "</table>";
 		echo "</div>";
 		echo "<div class='btn_color' id='agregar_cuartel' style='width:300px;margin-top:10px;'>Agregar nuevo Cuartel</div>";
 		echo "<div id='form_nu_cuar' style='margin-top:10px;'>";

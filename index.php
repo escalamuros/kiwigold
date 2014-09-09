@@ -10,6 +10,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/js_login.js"></script>
 <title>Kiwi Gold - Login</title>
+<link rel="icon" href="img/favicon.ico">
 </head>
 
 <body>
