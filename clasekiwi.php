@@ -206,7 +206,7 @@ class basededatos
 		$cons="select tipo,cantidad,año from plantas where cuartel=$cuar;";
 
 		$ejec=mysql_query($cons,$this->id_con);
-		$totalp='No hay resgistro';
+		$totalp='No hay registro';
 		while($rs=mysql_fetch_array($ejec,$this->idb)){
 			
 			$tipo=$rs['tipo'];
@@ -220,7 +220,7 @@ class basededatos
 
 		}
 
-		 return $totalp;
+		 return $plantas;
 	}
 	function add_plantas($cuar,$tipo,$cantidad,$año){
 		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$año');";

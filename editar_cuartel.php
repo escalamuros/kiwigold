@@ -40,7 +40,7 @@
 	echo "Lista de Plantas:<br>";
 	echo "<table border='1' ><tr><td>Tipo</td><td>Cantidad</td><td>Año</td></td>";
 
-	foreach($or as $ee){echo "<tr><td>".$ee[0][0]."</td><td>".$ee[0][1]."</td><td> ".$ee[0][2]."</td></tr>";}
+	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td></tr>";}
 	echo "</table>";
 	echo "<div id='add_tira_planta'>+ Agregar Plantas</div>";
 	echo "<div id='add_plantas1'><input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'><div class='tira_plan'>Tipo: </div><input type='text' id='ap_tipo'></br><div class='tira_plan'>Cantidad: </div><input type='text' id='ap_cant'></br><div class='tira_plan'>Año:</div> <input type='text' id='ap_año'></br><input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></div>";
@@ -55,7 +55,7 @@ $('#btn_add_planta').bind('click',function(){
 		url:'recibeajax.php',
 		type:'POST',
 		data:{agrega_plantas:1,cuartel:$('#ap_cuartel').val(),tipo:$('#ap_tipo').val(),cantidad:$('#ap_cant').val(),año:$('#ap_año').val()},
-		success:function(){alert ('Datos guardados con exito')}
+		success:function(){alert ('Datos guardados con exito');$('#add_plantas1').css('display','none')}
 
 	});
 
