@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		*/
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -85,7 +85,7 @@ class basededatos
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
-			$arreglo[]=array($rs['id'],basename($rs['archivo']));
+			$arreglo[]=array($rs['id'],$rs['archivo']);
 		}
 		return $arreglo;
 	}

@@ -191,7 +191,7 @@ $(document).ready(function(){
 		echo "Lista de Archivos Adjuntos Productora:<br>";
 		echo "<div id='m_arch'>";
 		$lum=$c->lista_archivos($_POST['elegido']);
-		foreach($lum as $v)	{echo "<div class='btn_color2' style='width:250px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";}
+		foreach($lum as $v)	{echo "<a class='btn_color2' style='width:250px;margin-top:3px;' href='bajar.php?arch=".$v[1],"' >". basename($v[1])."</a>";}
 		echo "</div>";		
 		echo "<br>";
 		echo "Agregar nuevo Archivo:<br>";
