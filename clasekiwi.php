@@ -202,15 +202,25 @@ class basededatos
 		$cons="delete from cuarteles where id='$cuar' ; ";
 		mysql_query($cons,$this->id_con);
 	}
-	//retorna total de plantas
-	function lista_plantas($cuar){
-		$cons="select tipo,cantidad,año from plantas where cuartel=$cuar;";
+	function lista_tipo_plantas()
+	{
+		$cons="select id,nombre from tipo_plantas order by id asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->idb))
 		{
-			$plantas[]=array($rs['tipo'],$rs['cantidad'],$rs['año']);
+			$l_p[]=array($rs['id'],$rs['nombre']);
 		}
-		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','');}
+		return $l_p;
+	}
+	//retorna de lista de plantas
+	function lista_plantas($cuar){
+		$cons="select tipo_plantas.nombre,plantas.cantidad,plantas.año from plantas,tipo_plantas where tipo_plantas.id=plantas.tipo and plantas.cuartel='$cuar';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->idb))
+		{
+			$plantas[]=array($rs['nombre'],$rs['cantidad'],$rs['año']);
+		}
+		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','-');}
 		return $plantas;
 	}
 	function add_plantas($cuar,$tipo,$cantidad,$año){
@@ -268,29 +278,6 @@ class basededatos
 		$cons="update um set um='$nom',cuartel='$cuar',superficie='$sup',año='$ano',geo='$geo' where id='$um';";
 		mysql_query($cons,$this->id_con);
 	}
-	/*
-	function datos_ult_prod_um($um)
-	{
-		$cons="select * from prod_um where um=$um order by fecha asc limit 1;";
-		$ejec=mysql_query($cons,$this->id_con);
-		$arr=array('0','No hay registro','','');
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['fecha'],$rs['tonha'],$rs['comercializadora'],$rs['calibre']);
-		}
-		return $arr;
-	}
-	
-	function lista_fenologico_actual_um($um,$anno)
-	{
-		$cons="select fenologicos.fecha,est_fen.nombre from fenologicos,est_fen where um=$um and fenologicos.estado_f=est_fen.id and fecha between '$anno-05-01' and '".$anno+1."-06-30' order by fecha asc ;";
-		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr[]=array($rs['fecha'],$rs['nombre']);
-		}
-		if(count($arr)==0){ $arr=array(array('0','No hay registro')); }
-		return $arr;
-	}
-	*/
 	function lista_estados_fenologicos()
 	{
 		$cons="select id,nombre from est_fen order by id asc ;";

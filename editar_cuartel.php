@@ -15,6 +15,7 @@
 		
 		$ar=$c->recuperar_cuartel($_POST['cuartel']);
 		$or=$c->lista_plantas($_POST['cuartel']);
+		$lu=$c->lista_tipo_plantas();
 	}
 	$c->desconexion();
 	echo "Editar Cuartel:<br>";
@@ -38,11 +39,21 @@
 	echo "</table>";
 	
 	echo "Lista de Plantas:<br>";
-	echo "<table border='1' ><tr><td>Tipo</td><td>Cantidad</td><td>Año</td></td>";
-	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td></tr>";}
+	echo "<table border='1' ><tr><td>Tipo</td><td>Cantidad</td><td>Año</td><td>Editar</td><td>Eliminar</td>";
+	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td><td>Editar</td><td>Eliminar</tr>";}
 	echo "</table>";
 	echo "<div id='add_tira_planta'>+ Agregar Plantas</div>";
-	echo "<div id='add_plantas1'><input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'><div class='tira_plan'>Tipo: </div><input type='text' id='ap_tipo'></br><div class='tira_plan'>Cantidad: </div><input type='text' id='ap_cant'></br><div class='tira_plan'>Año:</div> <input type='text' id='ap_año'></br><input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></div>";
+	echo "<div id='add_plantas1'>";
+	echo "<input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'>";
+	echo "<div class='tira_plan'>Tipo: </div>";
+	echo "<select id='ap_tipo'>";
+	foreach($lu as $ey){echo "<option value='".$ey[0]."'>".$ey[1]."</option>";}
+	echo "</select></br>";
+	echo "<div class='tira_plan'>Cantidad: </div>";
+	echo "<input type='text' id='ap_cant'></br>";
+	echo "<div class='tira_plan'>Año:</div>";
+	echo "<input type='text' id='ap_año'></br>";
+	echo "<input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></div>";
 ?>
 <script>
 $('#add_tira_planta').bind('click',function(){
@@ -53,11 +64,9 @@ $('#btn_add_planta').bind('click',function(){
 	$.ajax({
 		url:'recibeajax.php',
 		type:'POST',
-		data:{agrega_plantas:1,cuartel:$('#ap_cuartel').val(),tipo:$('#ap_tipo').val(),cantidad:$('#ap_cant').val(),año:$('#ap_año').val()},
-		success:function(){alert ('Datos guardados con exito');}
-
+		data:{agrega_plantas:1,cuartel:$('#ap_cuartel').val(),tipo:$('select#ap_tipo').val(),cantidad:$('#ap_cant').val(),año:$('#ap_año').val()},
+		success:function(){alert ('Datos guardados con exito');$('#add_plantas1').hide()}
 	});
-
 });
 
 $('#btn_guar_edi_cuar').bind('click',function(){
