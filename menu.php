@@ -33,10 +33,11 @@
       			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Químicas</div>";
       			echo "<div class='barra' id='laboratorio'><img class='imgmenu' src='img/laboratorio.png' />Laboratorio</div>";
       			echo "<div class='barra' id='lab_autorisa'><img class='imgmenu' src='img/autorisa.png' />Autorizar Laboratorio</div>";
-      			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/registro.png' />Control de UM</div>";
+      			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/etiqueta_b.png' />Control de UM</div>";
       			echo "<div class='barra' id='produccion'><img class='imgmenu' src='img/registro.png' />Producción</div>";
       			echo "<div class='barra' id='usuarios'><img class='imgmenu' src='img/usuarios.png' />Usuarios</div>";
       			echo "<div class='barra' id='productores'><img class='imgmenu' src='img/campos.png' />Productores</div>";
+      			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes</div>";
       		break;
       		case 2:
       			echo "<div class='nivel'>Supervisor</div>";
