@@ -96,6 +96,7 @@ input{
 	min-height:450px;
 	float:left;
 	padding:5px 10px 5px 10px;
+	margin-left: 10px;
 }
 #expo_prod{
 	display:none;
@@ -390,4 +391,22 @@ td{
 }
 .tira_plan{
 	width:70px;
+}
+.btn_el{
+	cursor:pointer;
+}
+.btn_ed{
+	cursor:pointer;
+}
+#editar_plantas{
+	display:none;
+	background: white;
+	border:1px solid #789;
+	width:200px;
+	padding:3px;
+	position:relative;
+	top:-100px;
+}
+#mantenedor_cuarteles{
+	margin-left: 20px;
 }

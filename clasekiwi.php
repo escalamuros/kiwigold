@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		/*
+		
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		*/
+		/*
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 	}
 	function conexion()
 	{
@@ -205,20 +205,32 @@ class basededatos
 	}
 	//retorna de lista de plantas
 	function lista_plantas($cuar){
-		$cons="select tipo_plantas.nombre,plantas.cantidad,plantas.año from plantas,tipo_plantas where tipo_plantas.id=plantas.tipo and plantas.cuartel='$cuar';";
+		$cons="select tipo_plantas.nombre,plantas.cantidad,plantas.año,plantas.id from plantas,tipo_plantas where tipo_plantas.id=plantas.tipo and plantas.cuartel='$cuar';";
 		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->idb))
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
-			$plantas[]=array($rs['nombre'],$rs['cantidad'],$rs['año']);
+			$plantas[]=array($rs['nombre'],$rs['cantidad'],$rs['año'],$rs['id']);
 		}
-		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','-');}
+		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','-','-');}
 		return $plantas;
 	}
 	function add_plantas($cuar,$tipo,$cantidad,$año){
 		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$año');";
-		echo $cons;
 		mysql_query($cons,$this->id_con);
 
+	}
+	function elimina_plantas($elim){
+		$cons="delete from plantas where id='$elim'";
+		mysql_query($cons,$this->id_con);
+	}
+	function traer_edi($ed){
+		$cons="select plantas.cantidad,plantas.año,tipo_plantas.nombre from plantas,tipo_plantas where plantas.id='$ed' and plantas.tipo=tipo_plantas.id";
+		$ejec=mysql_query($cons,$this->id_con);
+		if($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$ret=array('id'=>$ed,'tipo'=>$rs['nombre'],'cantidad'=>$rs['cantidad'],'año'=>$rs['año']);
+
+		}
+		echo json_encode($ret);
 	}
 	function lista_um_productor($prod)
 	{
@@ -455,6 +467,11 @@ class basededatos
 			$cons="insert into datos_prod values ('$id','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
+	}
+	function editar_plantas($id,$tipo,$año,$cant){
+		$cons="update plantas set tipo='$tipo',año='$año',cantidad='$cant' where id='$id';";
+		mysql_query($cons,$this->id_con);
+
 	}
 }
 ?>
