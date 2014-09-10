@@ -40,10 +40,10 @@
 	
 	echo "Lista de Plantas:<br>";
 	echo "<table border='1' ><tr><td>Tipo</td><td>Cantidad</td><td>Año</td><td>Editar</td><td>Eliminar</td>";
-	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td><td>Editar</td><td>Eliminar</tr>";}
+	foreach($or as $ee){echo "<tr><td>".$ee[0]."</td><td>".$ee[1]."</td><td> ".$ee[2]."</td><td class='btn_ed' id='ed".$ee[3]."'>Editar</td><td class='btn_el' id='el".$ee[3]."'>Eliminar</tr>";}
 	echo "</table>";
 	echo "<div id='add_tira_planta'>+ Agregar Plantas</div>";
-	echo "<input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'>";
+	echo "<div id='add_plantas1'><input type='hidden' value='".$_POST['cuartel']."' id='ap_cuartel'>";
 	echo "<table>";
 	echo "<tr><td>Tipo: </td>";
 	echo "<td><select id='ap_tipo'>";
@@ -52,9 +52,63 @@
 	echo "<tr><td>Cantidad: </td><td><input type='text' id='ap_cant'></td></tr>";
 	echo "<tr><td>Año:</td><td><input type='text' id='ap_año'></td></tr>";
 	echo "<tr><td colspan='2'><input type='button' value='Agregar' class='btn_color' id='btn_add_planta'></td></tr>";
-	echo "</table>";
+	echo "</table></div>";
+	echo "<div id='editar_plantas'><table>";
+	echo "<tr><td>Tipo: </td>";
+	echo "<td><select id='ed_tipo'>";
+	foreach($lu as $ey){echo "<option value='".$ey[0]."'>".$ey[1]."</option>";}
+	echo "</select></td></tr>";
+	echo "<tr><td>Cantidad: </td><td><input type='text' id='ed_cant' size='5'></td></tr>";
+	echo "<tr><td>Año:</td><td><input type='text' id='ed_año' size='5'></td></tr>";
+	echo "<tr><td><input type='bottom' id='btn_cancel'value='Cancelar' size='5'></td><td><input type='bottom' id='btn_editar'value='Guardar' size='5'></td></tr></table>";
+
+	echo "</div>";
 ?>
 <script>
+$('.btn_el').bind('click',function(){
+
+	var elim=this.id.substr(2);
+	conf_elim=confirm('Esta seguro de eliminar esta entrada?');
+	if(conf_elim){
+		$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			data:{to_del:elim},
+			success:function(){alert ('Datos eliminados con exito')}
+
+		});
+	}
+});
+$('.btn_ed').bind('click',function(){
+	$('#editar_plantas').show();
+	var edi=this.id.substr(2);
+
+	$('#add_tira_planta').hide();
+	$.ajax({
+		url:'recibeajax.php',
+		type:'POST',
+		dataType:'json',
+		data:{traer_datos:edi},
+		success:function(e){
+			sessionStorage['ed_id']=e['id'];
+			$('#ed_cant').val(e['cantidad']);
+			$('#ed_año').val(e['año']);
+		}
+	})
+});
+$('#btn_editar').bind('click',function(){
+	
+	$.ajax({
+		url:'recibeajax.php',
+		type:'POST',
+		data:{ed_id:sessionStorage['ed_id'],ed_año:$('#ed_año').val(),ed_tipo:$('#ed_tipo').val(),ed_cant:$('#ed_cant').val()},
+		success:function(){$('#editar_plantas').hide(); alert ('Datos editados con exito')}
+
+	});
+
+});
+
+
 $('#add_tira_planta').bind('click',function(){
 	$('#add_plantas1').show();
 

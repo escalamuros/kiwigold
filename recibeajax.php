@@ -121,4 +121,20 @@
 		$c->add_plantas($_POST['cuartel'],$_POST['tipo'],$_POST['cantidad'],$_POST['año']);
 		$c->desconexion();
 	}
+	if(isset($_POST['to_del'])){
+		$c->conexion();
+		$c->elimina_plantas($_POST['to_del']);
+		$c->desconexion();
+	}
+	if(isset($_POST['traer_datos'])){
+		$c->conexion();
+		$c->traer_edi($_POST['traer_datos']);
+		$c->desconexion();
+	}
+	if(isset($_POST['ed_id'])){
+		$c->conexion();
+		$c->editar_plantas($_POST['ed_id'],$_POST['ed_tipo'],$_POST['ed_año'],$_POST['ed_cant']);
+		$c->desconexion();
+
+	}
 ?>
