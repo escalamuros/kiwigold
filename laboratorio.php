@@ -1,9 +1,8 @@
 <?php
-	require('clasekiwi.php');
 	session_start();
+	require_once 'clasekiwi.php';
 	$c=new basededatos();
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -13,41 +12,31 @@
 <!-- <script src="js/jquery.js"></script> -->
 <script>
 $(document).ready(function(){
-    $('#opex').bind('change',function(e) {	
-		sessionStorage['exportadora']=this.value;
+	$('#opex').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:this.value},
-			success:function(re){		
-				$('#fprod').html(re);
-				$('#datos_2').hide();
-				$('#add_data').hide();
-				}
-			});
-		$('#expo_prod').show(100);
-    });
-    $('#fprod').bind('change',function(e) {
-		sessionStorage['productor']=this.value;
+			data:{findprod:$('select#opex').val()},
+			success:function(re){ $('#fprod').html(re);$('#datos_2').hide();$('#add_data').hide();	}
+		});
+		$('#expo_prod').show();
+	});
+	
+	$('#fprod').bind('change',function(e) {
 		$('#flab').html('');
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findlab:this.value},
-			success:function(re){
-				$('#flab').html(re);
-				$('#datos_2').hide();
-				$('#add_data').hide();
-				}
-			});
-		$('#expo_um').show(100);
-    });
-    $('#flab').bind('change',function(e) {
-		sessionStorage['um']=this.value;
-		$('#datos_2').show(100);
-		$('#add_data').show(100);
-		//$('#add_data').show(200);	
-    });
+			data:{findlab:$('select#fprod').val()},
+			success:function(re){ $('#flab').html(re);$('#datos_2').hide();$('#add_data').hide(); }
+		});
+		$('#expo_um').show();
+	});
+    
+	$('#flab').bind('change',function(e) {
+		$('#datos_2').show();
+		$('#add_data').show();	
+	});
 });
 </script>
 </head>
@@ -80,24 +69,21 @@ $(document).ready(function(){
        		<table border="0">
             	<tr><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td><td >Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td><td>Promedio Color 1-2</td><td>Peso Neto inicial(g)</td><td>Peso Neto final(g)</td><td>Mat Seca</td><td>Observaciones</td></tr>
                 <?php
-					$c->conexion();
-					$c->llenartabla();
-					$c->desconexion()
-				?>
-             	
+                	for($a=1;$a<=48;$a++){
+                		echo'<tr><td><div id="nummer'.$a.'">'.$a.'</div></td><td><input type="text" id="l_peso'.$a.'" size="3" class="cuadrito" /></td><td><input type="text" id="l_pre1'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_pre2'.$a.'" class="cuadrito" size="3"/></td><td><div id="p_pres'.$a.'" class="es_1"></div></td><td><input type="text" id="l_solu'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_col1'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_col2'.$a.'" class="cuadrito" size="3"/></td><td><div id="p_colo'.$a.'" class="es_1"></div></td><td><input type="text" id="l_pesi'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_pesf'.$a.'" class="cuadrito" size="3"/></td><td><div id="m_seca'.$a.'" class="es_1"></div></td><td><input type="text" id="l_obse'.$a.'" class="cuadrito" size="8"/></td></tr>';	
+						}	
+					?>
            	</table>
-            
             <div id="masdatos" class="adder">Guardar Datos</div>
        </div>
        <div id="resultados">
        <table border="0">
-            	<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
-                <tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
-                <tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
-                <tr><td>Min</td><td><div id="resmin" class="resul"></div></td><td><div id="resminp" class="resul"></td><td><div id="resmins" class="resul"></td><td><div id="resminc" class="resul"></td><td><div id="resminm" class="resul"></td></tr>
-                <tr><td>Max</td><td><div id="resmax" class="resul"></div></td><td><div id="resmaxp" class="resul"></td><td><div id="resmaxs" class="resul"></td><td><div id="resmaxc" class="resul"></td><td><div id="resmaxm" class="resul"></td></tr>
-                <tr><td>Desv.Estandar</td><td><div id="resdesv" class="resul"></div></td><td><div id="resdesvp" class="resul"></td><td><div id="resdesvs" class="resul"></td><td><div id="resdesvc" class="resul"></td><td><div id="resdesvm" class="resul"></td></tr>
-                
+			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
+			<tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
+			<tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
+			<tr><td>Min</td><td><div id="resmin" class="resul"></div></td><td><div id="resminp" class="resul"></td><td><div id="resmins" class="resul"></td><td><div id="resminc" class="resul"></td><td><div id="resminm" class="resul"></td></tr>
+			<tr><td>Max</td><td><div id="resmax" class="resul"></div></td><td><div id="resmaxp" class="resul"></td><td><div id="resmaxs" class="resul"></td><td><div id="resmaxc" class="resul"></td><td><div id="resmaxm" class="resul"></td></tr>
+			<tr><td>Desv.Estandar</td><td><div id="resdesv" class="resul"></div></td><td><div id="resdesvp" class="resul"></td><td><div id="resdesvs" class="resul"></td><td><div id="resdesvc" class="resul"></td><td><div id="resdesvm" class="resul"></td></tr>
        </table>  
        <br />
        <table border='0'>

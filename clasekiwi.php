@@ -93,69 +93,60 @@ class basededatos
 	function ingresolab($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
 		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
 		mysql_query($cons,$this->id_con);
-		if ($numm==48){
-		echo $numm;}
-		
+		if ($numm==48){ echo $numm; }
+	}
+
+	function buscaAnalisis($um,$fecha){
+		$cons="select id from f_analisis where um='$um' and fecha='$fecha';";
+		$ejec=mysql_query($cons,$this->id_con);
+		if($rs=mysql_fetch_array($ejec,$this->id_bd)){ echo $rs['id']; }
+	}
+	function crearAnalisis($lab,$fecha){
+		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fecha',0);";
+		mysql_query($cons,$this->id_con);
+		$po=mysql_insert_id();
+		for($aa=1;$aa<=48;$aa++) {
+		$cons="insert into analisis values (NULL,$po,$aa,'','','','','','','','','');";
+		mysql_query($cons,$this->id_con);
 		}
-		function llenartabla(){
-			for($a=1;$a<=48;$a++){
-				echo'<tr><td><div id="nummer'.$a.'">'.$a.'</div></td><td><input type="text" id="l_peso'.$a.'" size="3" class="cuadrito" /></td><td><input type="text" id="l_pre1'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_pre2'.$a.'" class="cuadrito" size="3"/></td><td><div id="p_pres'.$a.'" class="es_1"></div></td><td><input type="text" id="l_solu'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_col1'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_col2'.$a.'" class="cuadrito" size="3"/></td><td><div id="p_colo'.$a.'" class="es_1"></div></td><td><input type="text" id="l_pesi'.$a.'" class="cuadrito" size="3"/></td><td><input type="text" id="l_pesf'.$a.'" class="cuadrito" size="3"/></td><td><div id="m_seca'.$a.'" class="es_1"></div></td><td><input type="text" id="l_obse'.$a.'" class="cuadrito" size="8"/></td></tr>';	
-				}	
-			}
-		function buscaAnalisis($um,$fecha){
-			$cons="select id from f_analisis where um='$um' and fecha='$fecha';";
+		echo $po;
+	}
 			
-			$ejec=mysql_query($cons,$this->id_con);
-			if($rs=mysql_fetch_array($ejec,$this->id_bd)){
-				$id=$rs['id'];
-				echo $id;
-				}
-			}
-		function crearAnalisis($lab,$fecha){
-			$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fecha',0);";
-			mysql_query($cons,$this->id_con);
-			$po=mysql_insert_id();
-			for($aa=1;$aa<=48;$aa++){
-				$cons="insert into analisis values (NULL,$po,$aa,'','','','','','','','','');";
-				mysql_query($cons,$this->id_con);
-				}
-			echo $po;
-			}
-			function traerDatos($re){
-				$con=1;
-				$cons="select * from analisis where f_analisis=$re order by numm";
-				$ejec=mysql_query($cons,$this->id_con);
-				while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-					$arreglo[$con][]=$rs['numm'];
-					$arreglo[$con][]=$rs['peso'];
-					$arreglo[$con][]=$rs['presion1'];
-					$arreglo[$con][]=$rs['presion2'];
-					$arreglo[$con][]=$rs['ss'];
-					$arreglo[$con][]=$rs['color1'];
-					$arreglo[$con][]=$rs['color2'];
-					$arreglo[$con][]=$rs['pesoi'];
-					$arreglo[$con][]=$rs['pesof'];
-					$arreglo[$con][]=$rs['obs'];
-					$con++;
-					
-					}
-				print_r(json_encode($arreglo));
-				}
-			function nuevafecha($pom,$pe){
-				$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
-				mysql_query($cons,$this->id_con);
-				}
-		function updata($cas){
-			$cons="update f_analisis set estado='1' where id='$cas';";
-			mysql_query($cons,$this->id_con);
-			}
-		function findum($re){
-			$cons="select id,um,campo from um where um like '$re%';";
-			$ejec=mysql_query($cons,$this->id_con);
-				while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-					echo "<div class='resul_ind'>".$rs['um']."</div>";
-					}
-			}
+	function traerDatos($re){
+		$con=1;
+		$cons="select * from analisis where f_analisis=$re order by numm";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$arreglo[$con][]=$rs['numm'];
+			$arreglo[$con][]=$rs['peso'];
+			$arreglo[$con][]=$rs['presion1'];
+			$arreglo[$con][]=$rs['presion2'];
+			$arreglo[$con][]=$rs['ss'];
+			$arreglo[$con][]=$rs['color1'];
+			$arreglo[$con][]=$rs['color2'];
+			$arreglo[$con][]=$rs['pesoi'];
+			$arreglo[$con][]=$rs['pesof'];
+			$arreglo[$con][]=$rs['obs'];
+			$con++;
+		}
+		print_r(json_encode($arreglo));
+	}
+				
+	function nuevafecha($pom,$pe){
+		$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
+		mysql_query($cons,$this->id_con);
+	}
+	
+	function updata($cas){
+		$cons="update f_analisis set estado='1' where id='$cas';";
+		mysql_query($cons,$this->id_con);
+	}
+	
+	function findum($re){
+		$cons="select id,um,campo from um where um like '$re%';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ echo "<div class='resul_ind'>".$rs['um']."</div>"; 	}
+	}
 	//nueva funciones para productor de un campo
 	function datos_legales_productor($prod)
 	{

@@ -97,7 +97,7 @@ $(document).ready(function(){
 		$.ajax({
 			url:'lista_archivos.php',
 			type:'POST',
-			data:{prod:$('#prod_id').val()},
+			data:{elegido:$('#prod_id').val()},
 			success:function(oi){$('#m_arch').html(oi);},
 		});
 	});
@@ -191,13 +191,18 @@ $(document).ready(function(){
 		echo "Lista de Archivos Adjuntos Productora:<br>";
 		echo "<div id='m_arch'>";
 		$lum=$c->lista_archivos($_POST['elegido']);
-		foreach($lum as $v)	{echo "<a class='btn_color2' style='width:250px;margin-top:3px;' href='bajar.php?arch=".$v[1],"' >". basename($v[1])."</a>";}
+		echo "<table>";
+		foreach($lum as $v)	{
+			echo "<tr><td><a href='bajar.php?arch=".$v[1],"' >". basename($v[1])."</a></td>";
+			echo "<td>X</td></tr>";
+		}
+		echo "<table>";
 		echo "</div>";		
 		echo "<br>";
 		echo "Agregar nuevo Archivo:<br>";
 		echo "<input type='hidden' id='prod_id' value='".$_POST['elegido']."'>";
 		echo "<input type='file' id='archivo'>";
-		echo "<div class='btn_color' id='btn_guar_nu_arch'>Guardar</div>";
+		echo "<div class='btn_color' style='width:300px' id='btn_guar_nu_arch'>Guardar</div>";
 		echo "</div>";
 		$c->desconexion();
 	}

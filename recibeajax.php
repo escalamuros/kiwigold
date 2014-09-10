@@ -16,8 +16,15 @@
 		$arreglo=$c->lista_cuarteles_productor($_POST['findcuar']);
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
-		} 
-		if(is_array($arreglo)){ foreach($arreglo as $arr){echo $arr;}}
+		}
+	if(isset($_POST['findlab'])){
+		$c->conexion();
+		echo "<option selected='selected'>Seleccione</option>";
+		$arreglo=$c->lista_um_activas($_POST['findlab']);
+		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
+		$c->desconexion();
+		}
+		//if(is_array($arreglo)){ foreach($arreglo as $arr){echo $arr;}}
 	//retorna id y nombre de cuarteles segun el productor seleccionado
 	if(isset($_POST['prod_elegido'])){
 		$c->conexion();

@@ -1,7 +1,6 @@
 <?php 
 require('clasekiwi.php');
-$return ="Archivo subido con exito.";
-$nombre_archivo =str_replace(" ","_",basename($_FILES['archivo']['name'])) ;
+$nombre_archivo =basename($_FILES['archivo']['name']) ;
 $tmp_archivo = $_FILES['archivo']['tmp_name'];
 $ruta='./documentos/'.$_POST['prod'].'/';
 if(mkdir ($ruta ,0777)){chmod($ruta,0777);}
@@ -14,10 +13,11 @@ while(file_exists($temp));
 $archivador = $temp;
 if (!move_uploaded_file($tmp_archivo, $archivador))
 {
-	$return = "Ocurrio un error al subir el archivo. No pudo guardarse.";
+	$return = "Ocurrio un error al subir el archivo\n".$nombre_archivo."\n. No pudo guardarse.";
 }
 else
 {
+	$return ="Archivo subido con exito.";
 	$c=new basededatos();
 	$c->conexion();
 	$c->guardar_archivo($_POST['prod'],$archivador);
