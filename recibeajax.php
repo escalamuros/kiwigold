@@ -57,7 +57,7 @@
 		$c->traerDatos($_POST['ning']);
 		$c->desconexion();
 		}
-
+	//genera una nueva fecha en f_analisis
 	if(isset($_POST['nuevafecha'])){
 		$c->conexion();
 		$c->nuevafecha($_POST['nuevafecha'],$_POST['fin']);
@@ -66,11 +66,6 @@
 	if(isset($_POST['subir_data'])){
 		$c->conexion();
 		$c->updata($_POST['subir_data']);
-		$c->desconexion();
-		}
-	if(isset($_POST['findum'])){
-		$c->conexion();
-		$c->findum($_POST['findum']);
 		$c->desconexion();
 		}
 	// cambiar el estado de un usuario de activo a inactivo y vice versa

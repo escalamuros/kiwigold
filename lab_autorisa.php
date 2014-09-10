@@ -8,17 +8,11 @@
 <?php
 if(isset($_SESSION['id']))
 {
-if($_SESSION['nivel']=='1')
-{?>
-lab_autorisa<br>
-<?php
-if($_SESSION['empresa']==0){echo "No tiene asignada";}
-}
-else
-{?>
-No tiene nivel de acceso<br>
-<?php
-}
+	if(($_SESSION['nivel']=='1')||($_SESSION['nivel']=='2'))
+	{?>
+	lab_autorisa<br>
+	<?php 
+	}
 }
 else{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>

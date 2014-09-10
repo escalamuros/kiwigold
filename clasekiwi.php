@@ -131,7 +131,7 @@ class basededatos
 		}
 		print_r(json_encode($arreglo));
 	}
-				
+	//genera nueva fecha en fechas de analisis			
 	function nuevafecha($pom,$pe){
 		$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
 		mysql_query($cons,$this->id_con);

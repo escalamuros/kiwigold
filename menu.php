@@ -14,9 +14,7 @@
 <link href="css/formato.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery.js"></script>
 <script src="js/js_menu.js"></script>
-<script src="js/jquery-ui.js"></script>
 </head>
-
 <body>
 	<div id="contenedor">
 		<div id="header">
