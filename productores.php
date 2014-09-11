@@ -89,7 +89,7 @@ if(isset($_SESSION['id']))
 }
 else
 {
-	echo "<a href='index.php' style='color:black'>Session cerrada, Reingrese</a>";
+	echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";
 }
 ?>
 </body>

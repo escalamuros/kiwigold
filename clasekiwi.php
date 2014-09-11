@@ -473,5 +473,17 @@ class basededatos
 		mysql_query($cons,$this->id_con);
 
 	}
+	function contar_machos($fe){
+		$cons="select cantidad,tipo from plantas where cuartel='$fe';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->idb)){
+			$cantidad=$rs['cantidad'];
+			$tipo=$rs['tipo'];
+			if($tipo==1){$hembras=$cantidad;}
+			$total=$total+$cantidad;
+		}
+		$porc=(100-($hembras*100/$total));
+		return round($porc*100)/100;
+	}
 }
 ?>

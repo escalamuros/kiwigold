@@ -16,6 +16,7 @@
 		$ar=$c->recuperar_cuartel($_POST['cuartel']);
 		$or=$c->lista_plantas($_POST['cuartel']);
 		$lu=$c->lista_tipo_plantas();
+		$conteo=$c->contar_machos($_POST['cuartel']);
 	}
 	$c->desconexion();
 	echo "Editar Cuartel:<br>";
@@ -33,7 +34,7 @@
 	echo "<tr><td>Geolocalización:</td><td>         <input type='text' id='egeo' value='".$ar[11]."'></td></tr>";
 	echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='edth' value='".$ar[12]."'></td></tr>";
 	echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='edeh' value='".$ar[13]."'></td></tr>";
-	echo "<tr><td>% Machos:</td><td>                <input type='text' id='epm' value='".$ar[14]."'></td></tr>";
+	echo "<tr><td>% Machos:</td><td>                <input type='text' id='epm' value='".$conteo."'></td></tr>";
 	echo "<tr><td>Observación:</td><td>             <input type='text' id='eo' value='".$ar[15]."'></td></tr>";
 	echo "<tr><td colspan='2'><div id='btn_guar_edi_cuar' class='btn_color'>Guardar Cambio</td></tr></div>";
 	echo "</table>";
@@ -65,6 +66,8 @@
 	echo "</div>";
 ?>
 <script>
+
+
 $('.btn_el').bind('click',function(){
 
 	var elim=this.id.substr(2);
@@ -102,13 +105,15 @@ $('#btn_editar').bind('click',function(){
 		url:'recibeajax.php',
 		type:'POST',
 		data:{ed_id:sessionStorage['ed_id'],ed_año:$('#ed_año').val(),ed_tipo:$('#ed_tipo').val(),ed_cant:$('#ed_cant').val()},
-		success:function(){$('#editar_plantas').hide(); alert ('Datos editados con exito')}
+		success:function(){$('#editar_plantas').hide(); alert ('Datos editados con exito');location.reload();	}
 
 	});
 
 });
 
-
+$('#btn_cancel').bind('click',function(){
+	$('#editar_plantas').hide();
+});
 $('#add_tira_planta').bind('click',function(){
 	$('#add_plantas1').show();
 
@@ -131,6 +136,7 @@ $('#btn_guar_edi_cuar').bind('click',function(){
 	});
 	$('#form_edi_cuar').hide();
 	});
+
 </script>
 </body>
 </html>
