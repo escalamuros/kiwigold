@@ -77,7 +77,7 @@ $('.btn_el').bind('click',function(){
 			url:'recibeajax.php',
 			type:'POST',
 			data:{to_del:elim},
-			success:function(){alert ('Datos eliminados con exito')}
+			success:function(){alert ('Datos eliminados con exito');$('#form_edi_cuar').load('productora_esp.php');}
 
 		});
 	}
@@ -105,7 +105,12 @@ $('#btn_editar').bind('click',function(){
 		url:'recibeajax.php',
 		type:'POST',
 		data:{ed_id:sessionStorage['ed_id'],ed_año:$('#ed_año').val(),ed_tipo:$('#ed_tipo').val(),ed_cant:$('#ed_cant').val()},
-		success:function(){$('#editar_plantas').hide(); alert ('Datos editados con exito');location.reload();	}
+		success:function(){
+			$('#editar_plantas').hide(); 
+			alert ('Datos editados con exito');
+			$('#form_edi_cuar').load('productora_esp.php');
+
+		}
 
 	});
 

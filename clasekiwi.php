@@ -482,9 +482,9 @@ class basededatos
 			if($tipo==1){$hembras=$cantidad;}
 			$total=$total+$cantidad;
 		}
-		if ($total>0){$porc=(100-($hembras*100/$total));}else{$porc="No hay registros";}
+		if ($total>0){$porc=round((100-($hembras*100/$total))*100)/100;}else{$porc="No hay registros";}
 		
-		return round($porc*100)/100;
+		return $porc;
 	}
 }
 ?>
