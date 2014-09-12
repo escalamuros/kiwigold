@@ -16,7 +16,6 @@
 		$ar=$c->recuperar_cuartel($_POST['cuartel']);
 		$or=$c->lista_plantas($_POST['cuartel']);
 		$lu=$c->lista_tipo_plantas();
-		$conteo=$c->contar_machos($_POST['cuartel']);
 	}
 	$c->desconexion();
 	echo "Editar Cuartel:<br>";
@@ -34,7 +33,7 @@
 	echo "<tr><td>Geolocalización:</td><td>         <input type='text' id='egeo' value='".$ar[11]."'></td></tr>";
 	echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='edth' value='".$ar[12]."'></td></tr>";
 	echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='edeh' value='".$ar[13]."'></td></tr>";
-	echo "<tr><td>% Machos:</td><td>                <input type='text' id='epm' value='".$conteo."'></td></tr>";
+	echo "<tr><td>% Machos:</td><td>                <input type='text' id='epm' value='".$ar[14]."'></td></tr>";
 	echo "<tr><td>Observación:</td><td>             <input type='text' id='eo' value='".$ar[15]."'></td></tr>";
 	echo "<tr><td colspan='2'><div id='btn_guar_edi_cuar' class='btn_color'>Guardar Cambio</td></tr></div>";
 	echo "</table>";
@@ -66,10 +65,7 @@
 	echo "</div>";
 ?>
 <script>
-
-
 $('.btn_el').bind('click',function(){
-
 	var elim=this.id.substr(2);
 	conf_elim=confirm('Esta seguro de eliminar esta entrada?');
 	if(conf_elim){
@@ -77,15 +73,15 @@ $('.btn_el').bind('click',function(){
 			url:'recibeajax.php',
 			type:'POST',
 			data:{to_del:elim},
-			success:function(){alert ('Datos eliminados con exito');$('#form_edi_cuar').load('productora_esp.php');}
-
+			success:function(){alert ('Datos eliminados con exito');}
 		});
+		$('#form_edi_cuar').hide();
 	}
 });
 $('.btn_ed').bind('click',function(){
 	$('#editar_plantas').show();
 	var edi=this.id.substr(2);
-
+	sessionStorage['id_plan_edi']=edi;
 	$('#add_tira_planta').hide();
 	$.ajax({
 		url:'recibeajax.php',
@@ -93,7 +89,6 @@ $('.btn_ed').bind('click',function(){
 		dataType:'json',
 		data:{traer_datos:edi},
 		success:function(e){
-			sessionStorage['ed_id']=e['id'];
 			$('#ed_cant').val(e['cantidad']);
 			$('#ed_año').val(e['año']);
 		}
@@ -104,16 +99,10 @@ $('#btn_editar').bind('click',function(){
 	$.ajax({
 		url:'recibeajax.php',
 		type:'POST',
-		data:{ed_id:sessionStorage['ed_id'],ed_año:$('#ed_año').val(),ed_tipo:$('#ed_tipo').val(),ed_cant:$('#ed_cant').val()},
-		success:function(){
-			$('#editar_plantas').hide(); 
-			alert ('Datos editados con exito');
-			$('#form_edi_cuar').load('productora_esp.php');
-
-		}
-
+		data:{ed_id:sessionStorage['id_plan_edi'],ed_año:$('#ed_año').val(),ed_tipo:$('#ed_tipo').val(),ed_cant:$('#ed_cant').val()},
+		success:function(){ $('#editar_plantas').hide(); alert ('Datos editados con exito');	}
 	});
-
+	$('#form_edi_cuar').hide();
 });
 
 $('#btn_cancel').bind('click',function(){
@@ -128,8 +117,9 @@ $('#btn_add_planta').bind('click',function(){
 		url:'recibeajax.php',
 		type:'POST',
 		data:{agrega_plantas:1,cuartel:$('#ap_cuartel').val(),tipo:$('select#ap_tipo').val(),cantidad:$('#ap_cant').val(),año:$('#ap_año').val()},
-		success:function(){alert ('Datos guardados con exito');$('#add_plantas1').hide()}
+		success:function(){alert ('Datos guardados con exito\n');}
 	});
+	$('#form_edi_cuar').hide();
 });
 
 $('#btn_guar_edi_cuar').bind('click',function(){

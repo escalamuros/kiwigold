@@ -29,9 +29,57 @@
 		echo "</table>";
 		$c->desconexion();
 	}
+	//actualizar datos de un analisis existente
+	if(isset($_POST['peso'])){
+		$c->conexion();
+		$c->ingresolab($_POST['numm'],$_POST['peso'],$_POST['presion1'],$_POST['presion2'],$_POST['ss'],$_POST['color1'],$_POST['color2'],$_POST['pesoi'],$_POST['pesof'],$_POST['obs'],$_POST['ingbd']);
+		$c->desconexion();
+	}
+	//inserta un nuevo f_analisis y los 48 frutos en analisis
+	if((isset($_POST['um']))&&(isset($_POST['flab']))&&(isset($_POST['fmue']))){
+		$c->conexion();
+		$c->crearAnalisis($_POST['um'],$_POST['flab'],$_POST['fmue']);
+		$c->desconexion();
+	}
+	if((isset($_POST['actualizar_lab']))&&(isset($_POST['flab']))&&(isset($_POST['fmue']))){
+		$c->conexion();
+		$c->actualizaAnalisis($_POST['actualizar_lab'],$_POST['flab'],$_POST['fmue']);
+		$c->desconexion();
+	}
 ?>
 <script>
+function completarCampos(per)
+{
+	for(var de=0;de<=47;de++)
+	{
+		$('#l_peso'+(de+1)).val(per[de][1]);
+		$('#l_pre1'+(de+1)).val(per[de][2]);
+		$('#l_pre2'+(de+1)).val(per[de][3]);
+		$('#l_solu'+(de+1)).val(per[de][4]);
+		$('#l_col1'+(de+1)).val(per[de][5]);
+		$('#l_col2'+(de+1)).val(per[de][6]);
+		$('#l_pesi'+(de+1)).val(per[de][7]);
+		$('#l_pesf'+(de+1)).val(per[de][8]);
+		$('#l_obse'+(de+1)).val(per[de][9]);
+	}
+}
 $('.btn_edi_lab').bind('click',function(){
+	var oe=$(this).attr('id').substr(3);
+	$('#existe_lab').val(oe);
+	$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			data:{lab_seleccionado:oe},
+			dataType:"json",
+			success:function(te){ completarCampos(te); 	}
+	});
+	$.ajax({
+		url:'recibeajax.php',
+		type:'POST',
+		data:{f_lab_selec:oe},
+		dataType:"json",
+		success:function(tii){$('#fanalisis').val(tii[0]);$('#fmuestra').val(tii[1]);}
+	})
 	$('#add_data').show();
 });
 $('#n_anal').bind('click',function(){

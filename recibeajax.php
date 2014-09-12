@@ -32,22 +32,15 @@
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 	}
-		
-	if(isset($_POST['peso'])){
+	//llena de datos, un analisis seleeccionado para editar
+	if(isset($_POST['lab_seleccionado'])){
 		$c->conexion();
-		$c->ingresolab($_POST['numm'],$_POST['peso'],$_POST['presion1'],$_POST['presion2'],$_POST['ss'],$_POST['color1'],$_POST['color2'],$_POST['pesoi'],$_POST['pesof'],$_POST['obs'],$_POST['ingbd']);
-		$c->desconexion();
-	}
-	if(isset($_POST['lab'])){
-		$um=$_POST['lab'];
-		$fecha=$_POST['fecha'];
-		$c->conexion();
-		$c->crearAnalisis($um,$fecha);
+		$c->traerDatos($_POST['lab_seleccionado']);
 		$c->desconexion();
 		}
-	if(isset($_POST['ning'])){
+	if(isset($_POST['f_lab_selec'])){
 		$c->conexion();
-		$c->traerDatos($_POST['ning']);
+		$c->traerDatosf($_POST['f_lab_selec']);
 		$c->desconexion();
 		}
 	//genera una nueva fecha en f_analisis (laboratorio.php)

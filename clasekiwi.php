@@ -89,27 +89,41 @@ class basededatos
 		}
 		return $arreglo;
 	}
-	// hasta aqui revisado	
+	// actualiza los datos en analisis, por linea
 	function ingresolab($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
 		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
 		mysql_query($cons,$this->id_con);
 		if ($numm==48){ echo $numm; }
 	}
-	function crearAnalisis($lab,$fecha){
-		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fecha',0);";
+	// frea una nueva fecha de analisis, con sus muestras en cero
+	function crearAnalisis($lab,$fecha,$fmue){
+		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0);";
 		mysql_query($cons,$this->id_con);
 		$po=mysql_insert_id();
 		for($aa=1;$aa<=48;$aa++) {
-		$cons="insert into analisis values (NULL,$po,$aa,'','','','','','','','','');";
+		$cons="insert into analisis values (NULL,$po,$aa,'','','','','','','','','','1');";
 		mysql_query($cons,$this->id_con);
 		}
 		echo $po;
 	}
+	function actualizaAnalisis($lab,$f,$ff){
+		$cons="update f_analisis set fecha='$f',fecha_m='$ff' where id='$lab';";
+		mysql_query($cons,$this->id_con);
+	}
 	function traerDatos($re){
-		$cons="select * from analisis where f_analisis=$re order by numm";
+		$cons="select * from analisis where f_analisis=$re order by numm asc ;";
+		echo $cons;
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$arreglo[]=array($rs['numm'],$rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['obs']);
+			$arreglo[]=array($rs['numm'],$rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['obs'],$rs['estado']);
+		}
+		print_r(json_encode($arreglo));
+	}
+	function traerDatosf($re){
+		$cons="select fecha,fecha_m from f_analisis where id='$re' ; ";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$arreglo=array($rs['fecha'],$rs['fecha_m']);
 		}
 		print_r(json_encode($arreglo));
 	}
@@ -170,7 +184,7 @@ class basededatos
 		$cons="select * from cuarteles where id='$cuar';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmacho'],$rs['obs']);
+		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmachos'],$rs['obs']);
 		}
 		return $arr;
 	}
@@ -205,21 +219,57 @@ class basededatos
 		if(count($plantas) < 1){$plantas[]=array('0','No Hay Registro','-','-');}
 		return $plantas;
 	}
-	function add_plantas($cuar,$tipo,$cantidad,$año){
-		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$año');";
+	function add_plantas($cuar,$tipo,$cantidad,$ann){
+		$cons="insert into plantas values(NULL,'$cuar','$tipo','$cantidad','$ann');";
 		mysql_query($cons,$this->id_con);
-
+		$cons="select sum(cantidad) as cant from plantas where cuartel='$cuar';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$cant_t=$rs['cant']; }
+		$cons="select sum(cantidad) as cant from plantas where cuartel='$cuar' and tipo='1';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$canti_h=$rs['cant']; }
+		$p_m=(($cant_t-$canti_h)*100)/$cant_t;
+		$cons="update cuarteles set nplantas='$cant_t',pmachos='$p_m' where id='$cuar'; ";
+		mysql_query($cons,$this->id_con);
 	}
 	function elimina_plantas($elim){
-		$cons="delete from plantas where id='$elim'";
+		$cons="select cuartel from plantas where id='".$elim."';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $cuart=$rs['cuartel'];}
+		$cons="delete from plantas where id='$elim';";
+		mysql_query($cons,$this->id_con);
+		$cons="select sum(cantidad) as a from plantas where cuartel='$cuart';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$cant_t=$rs['a']; }
+		$cons="select sum(cantidad) as a from plantas where cuartel='$cuart' and tipo='1';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$canti_h=$rs['a']; }
+		$p_m=(($cant_t-$canti_h)*100)/$cant_t;
+		$cons="update cuarteles set nplantas='$cant_t',pmachos='$p_m' where id='$cuart'; ";
 		mysql_query($cons,$this->id_con);
 	}
+	function editar_plantas($id,$tipo,$ano,$cant){
+		$cons="update plantas set tipo='".$tipo."',año='".$ano."',cantidad='".$cant."' where id='".$id."';";
+		mysql_query($cons,$this->id_con);
+		$cons="select cuartel from plantas where id='".$id."';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $cuartel_contar=$rs['cuartel'];}
+		$cons="select sum(cantidad) as a from plantas where cuartel='$cuartel_contar';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$cant_t=$rs['a']; }
+		$cons="select sum(cantidad) as a from plantas where cuartel='$cuartel_contar' and tipo='1';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){$canti_h=$rs['a']; }
+		$p_m=(($cant_t-$canti_h)*100)/$cant_t;
+		$cons="update cuarteles set nplantas='$cant_t',pmachos='$p_m' where id='$cuartel_contar'; ";
+		mysql_query($cons,$this->id_con);
+	}
+
 	function traer_edi($ed){
 		$cons="select plantas.cantidad,plantas.año,tipo_plantas.nombre from plantas,tipo_plantas where plantas.id='$ed' and plantas.tipo=tipo_plantas.id";
 		$ejec=mysql_query($cons,$this->id_con);
 		if($rs=mysql_fetch_array($ejec,$this->id_bd)){
 			$ret=array('id'=>$ed,'tipo'=>$rs['nombre'],'cantidad'=>$rs['cantidad'],'año'=>$rs['año']);
-
 		}
 		echo json_encode($ret);
 	}
@@ -458,24 +508,6 @@ class basededatos
 			$cons="insert into datos_prod values ('$id','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
-	}
-	function editar_plantas($id,$tipo,$año,$cant){
-		$cons="update plantas set tipo='$tipo',año='$año',cantidad='$cant' where id='$id';";
-		mysql_query($cons,$this->id_con);
-
-	}
-	function contar_machos($fe){
-		$cons="select cantidad,tipo from plantas where cuartel='$fe';";
-		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->idb)){
-			$cantidad=$rs['cantidad'];
-			$tipo=$rs['tipo'];
-			if($tipo==1){$hembras=$cantidad;}
-			$total=$total+$cantidad;
-		}
-		if ($total>0){$porc=round((100-($hembras*100/$total))*100)/100;}else{$porc="No hay registros";}
-		
-		return $porc;
 	}
 }
 ?>
