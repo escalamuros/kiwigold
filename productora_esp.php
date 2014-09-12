@@ -1,6 +1,7 @@
 <?php
 	require('clasekiwi.php');
 	$c=new basededatos();
+	
 ?>
 <html>
 <head>
