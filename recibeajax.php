@@ -24,7 +24,6 @@
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 		}
-		//if(is_array($arreglo)){ foreach($arreglo as $arr){echo $arr;}}
 	//retorna id y nombre de cuarteles segun el productor seleccionado
 	if(isset($_POST['prod_elegido'])){
 		$c->conexion();
@@ -32,19 +31,13 @@
 		$arreglo=$c->lista_cuarteles_productor($_POST['prod_elegido']);
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
-	}	
+	}
+		
 	if(isset($_POST['peso'])){
 		$c->conexion();
 		$c->ingresolab($_POST['numm'],$_POST['peso'],$_POST['presion1'],$_POST['presion2'],$_POST['ss'],$_POST['color1'],$_POST['color2'],$_POST['pesoi'],$_POST['pesof'],$_POST['obs'],$_POST['ingbd']);
 		$c->desconexion();
-		}
-	if(isset($_POST['um'])){
-		$um=$_POST['um'];
-		$fecha=$_POST['fecha'];
-		$c->conexion();
-		$c->buscaAnalisis($um,$fecha);
-		$c->desconexion();
-		}
+	}
 	if(isset($_POST['lab'])){
 		$um=$_POST['lab'];
 		$fecha=$_POST['fecha'];
@@ -57,7 +50,7 @@
 		$c->traerDatos($_POST['ning']);
 		$c->desconexion();
 		}
-	//genera una nueva fecha en f_analisis
+	//genera una nueva fecha en f_analisis (laboratorio.php)
 	if(isset($_POST['nuevafecha'])){
 		$c->conexion();
 		$c->nuevafecha($_POST['nuevafecha'],$_POST['fin']);

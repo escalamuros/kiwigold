@@ -39,9 +39,14 @@ $(document).ready(function(){
 		$('#expo_um').show();
 	});
     
-	$('#flab').bind('change',function(e) {
-		$('#datos_2').show();
-		$('#add_data').show();	
+	$('#flab').bind('change',function() {
+		$.ajax({
+			url:'para_laboratorio.php',
+			type:'POST',
+			data:{lista_f_anal:$('select#flab').val()},
+			success:function(yy){$('#datos_2').html(yy);}
+		});
+		$('#datos_2').show();	
 	});
 	//al presionar una tecla, baja o sube en la linea de datos (laboratorio.php)
 	$('.cuadrito').keydown(function(e)
@@ -67,8 +72,12 @@ $(document).ready(function(){
 			}
 		}
 	});
+	//si el campo al que se entra,tiene 0.... lo vacia(laboratorio.php)
+	$('.cuadrito').focusin(function(e) {
+		if($('#'+this.id).val()==0) { $('#'+this.id).val(''); }
+	});
 		//al cambiar un cuadro, evalua rangos,calcula y muestra (laboratorio.php)
-	$('.cuadrito').change(function(e)
+/*	$('.cuadrito').change(function(e)
 	{	
 		var fo=this.id.substring(0,6);
 		var fu=this.id.substring(6);
@@ -234,23 +243,19 @@ $(document).ready(function(){
 		$('#depss').html(((promss*validosss-minss-maxss)/(validosss-2)).toFixed(1));
 		$('#depcol').html(((promcol*validoscol-mincol-maxcol)/(validoscol-2)).toFixed(1));
 		$('#depseca').html(((promseca*validosseca-minseca-maxseca)/(validosseca-2)).toFixed(1));
-	}
-	//si el campo al que se entra,tiene 0.... lo vacia(laboratorio.php)
-	$('.cuadrito').focusin(function(e)
-	{
-	if($('#'+this.id).val()==0) { $('#'+this.id).val(''); }
-	});
+	}*/
+	
 	//al cambiar la fecha de la analisis, genera nueva fecha, en f_analisis(laboratorio.php) 
-	$('#fmuestra').change(function(e)
+	/*$('#fmuestra').change(function(e)
 	{
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
 			data:{nuevafecha:$('#fmuestra').val(),fin:sessionStorage['ning']}
 		});
-	});
+	});*/
 	// sube los datos, con un session? (laboratorio.php)
-	$('#btn_subir').click(function(e)
+/*	$('#btn_subir').click(function(e)
 	{
 		$.ajax({
 			url:'recibeajax.php',
@@ -258,9 +263,9 @@ $(document).ready(function(){
 			data:{ subir_data:sessionStorage['ning']},
 			success:function(){alert ('Informacion subida con exito!')}
 		});
-	});
-	//al presionar agregar, inserta los datos en a travez de reciveajax (laboratorio.php)
-	$('.adder').click(function(e)
+	});*/
+	//al presionar agregar, inserta los datos en a travez de recibeajax (laboratorio.php)
+	$('#masdatos').click(function(e)
 	{
 		for(var aa=1;aa<=48;aa++)
 		{
@@ -283,7 +288,7 @@ $(document).ready(function(){
 			});		
 		}
 	});
-
+/*
 	$('#fanalisis').change(function(e)
 	{ // AQUI REVISA SI EXISTEN ANALISIS
 		$.ajax({
@@ -292,10 +297,11 @@ $(document).ready(function(){
 			data:{um:$('#flab').val(),fecha:$('#fanalisis').val()},
 			success:function(e){ if(e!=''){traerDatos(e);}else{crearDatos();} }
 		});
-		$('#add_data').show(200);
-		$('#resultados').show(250);
+		$('#add_data').show();
+		$('#resultados').show();
 	});
-	function traerDatos(e)
+*/	
+/*	function traerDatos(e)
 	{
 		sessionStorage['ning']=e;
 		$.ajax({
@@ -325,7 +331,7 @@ $(document).ready(function(){
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{lab:$('#flab').val(),fecha:$('#fanalisis').val()},
+			data:{lab:$('select#flab').val(),fecha:$('#fanalisis').val()},
 			success:function(e){ sessionStorage['ning']=e; }
 		});
 	}
@@ -345,7 +351,7 @@ $(document).ready(function(){
 			calcular(de);
 			desviaciones();
 		}	
-	}
+	}*/
 });
 </script>
 </head>
@@ -353,21 +359,21 @@ $(document).ready(function(){
 	<?php if(isset($_SESSION['id'])){ ?>
 	<div id="contenedor" style="color:#567;">
 		<div id="titulo_lab">Registro Análisis de Control de Madurez Jintao</div>
-		<div class="men_i">
+		<div class="men_i" style="height:160px">
 			<div id="expo_lab" class="expo"><div class="etex">Exportadora :</div>
 				<select name="opexpo" id="opex"><option>Seleccione</option>
 					<?php foreach($ar as $v) { echo "<option value='".$v[0]."'>".$v[1]."</option>";}	?>
 				</select>
 			</div>
 			<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo"id="fprod"></select></div>
-			<div id="expo_um" class="expo"><div class="etex">Unidad de Maduracion :</div> <select name="labexpo"id="flab"></select></div>
+			<div id="expo_um" class="expo"><div class="etex">Unidad de Maduración :</div> <select name="labexpo"id="flab"></select></div>
 		</div>
-		<div class="men_i" id="datos_2">		
-			<div id="expo_fecha" class="expo"><div class="etex">Fecha Analisis: </div><input type="date" id="fanalisis" /></div>
-			<div id="expo_num" class="expo"><div class="etex">Fecha Muestreo :</div> <input type="date" id="fmuestra" /></div>
-			<!--<div id="expo_semana" class="expo"><div class="etex">Semana :</div><input id="fsemana" type="week" class="week"  /></div>-->
+		<div class="men_i" id="datos_2" style="height:160px">		
 		</div>
 		<div id="add_data">
+			<input type="hidden" id="existe_lab" value="0">
+			Fecha Analisis: <input type="date" id="fanalisis" />
+			Fecha Muestreo : <input type="date" id="fmuestra" /><br>
 			<table>
 				<tr><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td><td >Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td><td>Promedio Color 1-2</td><td>Peso Neto inicial(g)</td><td>Peso Neto final(g)</td><td>Mat Seca</td><td>Observaciones</td></tr>
 				<?php

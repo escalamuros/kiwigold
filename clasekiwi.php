@@ -95,12 +95,6 @@ class basededatos
 		mysql_query($cons,$this->id_con);
 		if ($numm==48){ echo $numm; }
 	}
-
-	function buscaAnalisis($um,$fecha){
-		$cons="select id from f_analisis where um='$um' and fecha='$fecha';";
-		$ejec=mysql_query($cons,$this->id_con);
-		if($rs=mysql_fetch_array($ejec,$this->id_bd)){ echo $rs['id']; }
-	}
 	function crearAnalisis($lab,$fecha){
 		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fecha',0);";
 		mysql_query($cons,$this->id_con);
@@ -111,23 +105,11 @@ class basededatos
 		}
 		echo $po;
 	}
-			
 	function traerDatos($re){
-		$con=1;
 		$cons="select * from analisis where f_analisis=$re order by numm";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$arreglo[$con][]=$rs['numm'];
-			$arreglo[$con][]=$rs['peso'];
-			$arreglo[$con][]=$rs['presion1'];
-			$arreglo[$con][]=$rs['presion2'];
-			$arreglo[$con][]=$rs['ss'];
-			$arreglo[$con][]=$rs['color1'];
-			$arreglo[$con][]=$rs['color2'];
-			$arreglo[$con][]=$rs['pesoi'];
-			$arreglo[$con][]=$rs['pesof'];
-			$arreglo[$con][]=$rs['obs'];
-			$con++;
+			$arreglo[]=array($rs['numm'],$rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['obs']);
 		}
 		print_r(json_encode($arreglo));
 	}
@@ -141,11 +123,20 @@ class basededatos
 		$cons="update f_analisis set estado='1' where id='$cas';";
 		mysql_query($cons,$this->id_con);
 	}
-	
-	function findum($re){
-		$cons="select id,um,campo from um where um like '$re%';";
+	//para laboratorio, solo muestra los laboratorios, sin autorizar
+	function lista_lab_sin_autorizar($um){
+		$cons="select id,fecha,fecha_m from f_analisis where um='$um' and estado='0' ;";
 		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ echo "<div class='resul_ind'>".$rs['um']."</div>"; 	}
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['fecha'],$rs['fecha_m']); }
+		if(count($ec)<1){$ec[]=array('0','No hay Registro','');}
+		return $ec;	
+	}
+	
+	function lista_laboratorio($um){
+		$cons="select id,fecha,estado from f_analisis where um='$um';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
+		return $ec;
 	}
 	//nueva funciones para productor de un campo
 	function datos_legales_productor($prod)
