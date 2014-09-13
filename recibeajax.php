@@ -35,12 +35,12 @@
 	//llena de datos, un analisis seleeccionado para editar
 	if(isset($_POST['lab_seleccionado'])){
 		$c->conexion();
-		$c->traerDatos($_POST['lab_seleccionado']);
+		$c->recupera_datos_analisis($_POST['lab_seleccionado']);
 		$c->desconexion();
 		}
 	if(isset($_POST['f_lab_selec'])){
 		$c->conexion();
-		$c->traerDatosf($_POST['f_lab_selec']);
+		$c->recupera_f_f_analisis($_POST['f_lab_selec']);
 		$c->desconexion();
 		}
 	//genera una nueva fecha en f_analisis (laboratorio.php)

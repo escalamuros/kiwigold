@@ -89,37 +89,43 @@ class basededatos
 		}
 		return $arreglo;
 	}
-	// actualiza los datos en analisis, por linea
-	function ingresolab($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
-		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
-		mysql_query($cons,$this->id_con);
-		if ($numm==48){ echo $numm; }
-	}
-	// frea una nueva fecha de analisis, con sus muestras en cero
+	// crea una nueva f_analisis
 	function crearAnalisis($lab,$fecha,$fmue){
 		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0);";
 		mysql_query($cons,$this->id_con);
 		$po=mysql_insert_id();
-		for($aa=1;$aa<=48;$aa++) {
-		$cons="insert into analisis values (NULL,$po,$aa,'','','','','','','','','','1');";
-		mysql_query($cons,$this->id_con);
-		}
-		echo $po;
+		return $po;
 	}
-	function actualizaAnalisis($lab,$f,$ff){
+	// actualiza los datos en analisis, por linea
+	function actualiza_analisis($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
+		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
+		mysql_query($cons,$this->id_con);
+		if ($numm==48){ echo $numm; }
+	}
+	function llena_analisis($id_anal,$arr){
+		$ar=explode('/',$arr);
+		$cons="insert into analisis values (NULL,'$id_anal','".$ar[0]."','".$ar[1]."','".$ar[2]."','".$ar[3]."','".$ar[4]."','".$ar[5]."','".$ar[6]."','".$ar[7]."','".$ar[8]."','".$ar[9]."','1');";
+		mysql_query($cons,$this->id_con);
+	}
+	//cambia estado de f_analisis, segun es est que se envie
+	function cambia_estado_lab($lab,$est)
+	{
+		$cons="update f_analisis set estado='$est' where id='$lab';";
+		mysql_query($cons,$this->id_con);
+	}
+	function actualiza_fechas_f_analisis($lab,$f,$ff){
 		$cons="update f_analisis set fecha='$f',fecha_m='$ff' where id='$lab';";
 		mysql_query($cons,$this->id_con);
 	}
-	function traerDatos($re){
-		$cons="select * from analisis where f_analisis=$re order by numm asc ;";
-		echo $cons;
+	function recupera_datos_analisis($id_f_analisis){
+		$cons="select * from analisis where f_analisis='$id_f_analisis' order by numm asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 			$arreglo[]=array($rs['numm'],$rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['obs'],$rs['estado']);
 		}
 		print_r(json_encode($arreglo));
 	}
-	function traerDatosf($re){
+	function recupera_f_f_analisis($re){
 		$cons="select fecha,fecha_m from f_analisis where id='$re' ; ";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
@@ -146,8 +152,8 @@ class basededatos
 		return $ec;	
 	}
 	
-	function lista_laboratorio($um){
-		$cons="select id,fecha,estado from f_analisis where um='$um';";
+	function lista_todo_laboratorio(){
+		$cons="select id,fecha,estado from f_analisis where estado<'2';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
 		return $ec;

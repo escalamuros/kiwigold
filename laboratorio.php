@@ -78,41 +78,61 @@ $(document).ready(function(){
 	$('#masdatos').bind('click',function(){
 		var existe = $('#existe_lab').val();
 		if(existe==0){
+			var datos= new FormData();
+			datos.append('um',$('select#flab').val());
+			datos.append('flab',$('#fanalisis').val());
+			datos.append('fmue',$('#fmuestra').val());
+			for(var aa=1;aa<=48;aa++)
+			{
+				datos.append('num[]',$('#nummer'+aa).html()+'/'+$('#l_peso'+aa).val()+'/'+$('#l_pre1'+aa).val()+'/'+$('#l_pre2'+aa).val()+'/'+$('#l_solu'+aa).val()+'/'+$('#l_col1'+aa).val()+'/'+$('#l_col2'+aa).val()+'/'+$('#l_pesi'+aa).val()+'/'+$('#l_pesf'+aa).val()+'/'+$('#l_obse'+aa).val());
+			}
 			$.ajax({
 					url:'para_laboratorio.php',
 					type:'POST',
-					data:{um:$('select#flab').val(),flab:$('#fanalisis').val(),fmue:$('#fmuestra').val()},
+					data:datos,
 					success:function(qe){ $('#existe_lab').val(qe);alert ('Datos Ingresados con exito!'); }
 			});
 		}else{
-			$.ajax({
-					url:'para_laboratorio.php',
-					type:'POST',
-					data:{actualizar_lab:existe,flab:$('#fanalisis').val(),fmue:$('#fmuestra').val()},
-					succes:function(){}
-			});
+			var datos= new FormData();
+         datos.append('actualiza_lab',existe);
+         datos.append('flab',$('#fanalisis').val());
+         datos.append('fmue',$('#fmuestra').val());
 			for(var aa=1;aa<=48;aa++)
 			{
-				var numm=$('#nummer'+aa).html();
-				var peso=$('#l_peso'+aa).val();
-				var presion1=$('#l_pre1'+aa).val();
-				var presion2=$('#l_pre2'+aa).val();		
-				var ss=$('#l_solu'+aa).val();
-				var color1=$('#l_col1'+aa).val();
-				var color2=$('#l_col2'+aa).val();
-				var pesoi=$('#l_pesi'+aa).val();
-				var pesof=$('#l_pesf'+aa).val();
-				var obs=$('#l_obse'+aa).val();
-				$.ajax({
-					url:'para_laboratorio.php',
-					type:'POST',
-					data:{numm:numm,peso:peso,presion1:presion1,presion2:presion2,ss:ss,color1:color1,color2:color2,pesoi:pesoi,pesof:pesof,obs:obs,ingbd:existe},
-					success:function(e){ if(e==48){alert ('Datos Actualzados con exito!');}; }
-				});		
-			};
-
+				datos.append('num[]',$('#nummer'+aa).html()+'/'+$('#l_peso'+aa).val()+'/'+$('#l_pre1'+aa).val()+'/'+$('#l_pre2'+aa).val()+'/'+$('#l_solu'+aa).val()+'/'+$('#l_col1'+aa).val()+'/'+$('#l_col2'+aa).val()+'/'+$('#l_pesi'+aa).val()+'/'+$('#l_pesf'+aa).val()+'/'+$('#l_obse'+aa).val());
+			}
+			$.ajax({
+				url:'para_laboratorio.php',
+				type:'POST',
+				data:datos,
+				success:function(e){ if(e==48){alert ('Datos Actualizados con exito!');}; }
+			});		
+			
 		}		
 	});
+	
+	$('#cambia_estado_lab').bind('click',function(){
+		
+		var existe = $('#existe_lab').val();
+		
+		if(existe == 0) 
+		{
+			alert('No Hay datos Guardados para Enviar');
+		}
+		else
+		{
+			alert(existe);
+			/*
+			$.ajax({
+				url:'para_laboratorio.php',
+				type:'POST',
+				data:{lab_cam_est:existe,l_f_anal_nu:$('select#flab').val()},
+				success:function(hh){$('datos_2').haml(hh);};
+			});
+			$('#add_data').hide();*/
+		}
+	});	
+
 });
 </script>
 </head>
@@ -136,52 +156,34 @@ $(document).ready(function(){
 			Fecha Analisis: <input type="date" id="fanalisis" />
 			Fecha Muestreo : <input type="date" id="fmuestra" /><br>
 			<table>
-				<tr><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td><td >Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td><td>Promedio Color 1-2</td><td>Peso Neto inicial(g)</td><td>Peso Neto final(g)</td><td>Mat Seca</td><td>Observaciones</td></tr>
+				<tr><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td>
+				<!-- <td >Promedio Presion 1-2</td> -->
+				<td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td>
+				<!-- <td>Promedio Color 1-2</td> -->
+				<td>Peso Neto inicial(g)</td><td>Peso Neto final(g)</td>
+				<!-- <td>Mat Seca</td> -->
+				<td>Observaciones</td></tr>
 				<?php
 					for($a=1;$a<=48;$a++){
 					echo '<tr><td><div id="nummer'.$a.'">'.$a.'</div></td>';
 					echo '<td><input type="text" id="l_peso'.$a.'" size="3" class="cuadrito" /></td>';
 					echo '<td><input type="text" id="l_pre1'.$a.'" class="cuadrito" size="3"/></td>';
 					echo '<td><input type="text" id="l_pre2'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><div id="p_pres'.$a.'" class="es_1"></div></td>';
+					//echo '<td><div id="p_pres'.$a.'" class="es_1"></div></td>';
 					echo '<td><input type="text" id="l_solu'.$a.'" class="cuadrito" size="3"/></td>';
 					echo '<td><input type="text" id="l_col1'.$a.'" class="cuadrito" size="3"/></td>';
 					echo '<td><input type="text" id="l_col2'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><div id="p_colo'.$a.'" class="es_1"></div></td>';
+					//echo '<td><div id="p_colo'.$a.'" class="es_1"></div></td>';
 					echo '<td><input type="text" id="l_pesi'.$a.'" class="cuadrito" size="3"/></td>';
 					echo '<td><input type="text" id="l_pesf'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><div id="m_seca'.$a.'" class="es_1"></div></td>';
-					echo '<td><input type="text" id="l_obse'.$a.'" class="cuadrito" size="8"/></td></tr>';	
+					//echo '<td><div id="m_seca'.$a.'" class="es_1"></div></td>';
+					echo '<td><input type="text" id="l_obse'.$a.'" class="cuadrito" size="28"/></td></tr>';	
 					}	
 				?>
 			</table>
 			<div id="masdatos" class="adder">Guardar Datos</div>
-		</div>
-		<div id="resultados">
-			<table border="0">
-			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
-			<tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
-			<tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
-			<tr><td>Min</td><td><div id="resmin" class="resul"></div></td><td><div id="resminp" class="resul"></td><td><div id="resmins" class="resul"></td><td><div id="resminc" class="resul"></td><td><div id="resminm" class="resul"></td></tr>
-			<tr><td>Max</td><td><div id="resmax" class="resul"></div></td><td><div id="resmaxp" class="resul"></td><td><div id="resmaxs" class="resul"></td><td><div id="resmaxc" class="resul"></td><td><div id="resmaxm" class="resul"></td></tr>
-			<tr><td>Desv.Estandar</td><td><div id="resdesv" class="resul"></div></td><td><div id="resdesvp" class="resul"></td><td><div id="resdesvs" class="resul"></td><td><div id="resdesvc" class="resul"></td><td><div id="resdesvm" class="resul"></td></tr>
-			</table>  
-			<br />
-			<table border='0'>
-			<tr><td colspan="6" align="left">Rango de normalidad de la muestra</td></tr>
-			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
-			<tr><td>Min</td><td><div id="minpeso" class="resul"></div></td><td><div id="minpre" class="resul"></div></td><td><div id="minss" class="resul"></div></td><td><div id="mincol" class="resul"></div></td><td><div id="minseca" class="resul"></div></td></tr>
-			<tr><td>Max</td><td><div id="maxpeso" class="resul"></div></td><td><div id="maxpre" class="resul"></div></td><td><div id="maxss" class="resul"></div></td><td><div id="maxcol" class="resul"></div></td><td><div id="maxseca" class="resul"></div></td></tr>
-			<!--<tr><td>Datos anormales</td><td><div id="datopeso" class="resul"></div></td><td><div id="datopre" class="resul"></div></td><td><div id="datoss" class="resul"></div></td><td><div id="datocol" class="resul"></div></td><td><div id="datoseca" class="resul"></div></td></tr>-->
-			 </table> 
-			<br />
-			<table border='0'>
-			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
-			<tr><td>Promedio Depurado</td><td><div id="deppeso" class="resul"></div></td><td><div id="deppre" class="resul"></div></td><td><div id="depss" class="resul"></div></td><td><div id="depcol" class="resul"></div></td><td><div id="depseca" class="resul"></div></td></tr>
-			</table>         
-			<?php if($_SESSION['nivel']==3 or $_SESSION['nivel']==1){ ?>
-			<div class="addersd" id="btn_subir" style="float:left;width:550px;">Subir Información</div>
-			<?php  }; ?>      
+			<br>
+			<div id="cambia_estado_lab" class="adder">Entrega a Analisis de Datos</div>
 		</div>
 	</div>
 	<?php
