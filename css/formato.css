@@ -132,7 +132,7 @@ input{
 }
 table{
 	font-size:12px;
-	border:1px solid #eee;
+	border:1px solid #789;
 	padding-bottom:10px;
 	}
 td{
@@ -407,6 +407,33 @@ td{
 	position:relative;
 	top:-100px;
 }
+
+.box_cuartel{
+	width:160px;
+	display: inline-block;
+	//border:1px solid #789;
+	overflow: hidden;
+	margin-right: 6px;
+	margin-bottom: 6px;
+}
+.box_cuartel td:first-child{background: #abc;}
+.box_cuartel td{background: #bcd;}
 #mantenedor_cuarteles{
 	margin-left: 20px;
 }
+#lis_cuarteles{
+	margin-left: -20px;
+	min-width:800px;
+}
+.cuadro_informe{
+	min-width:800px;
+	background-color: #abc;
+	margin-left: -20px;
+}
+.cuadro_informe td{
+	background: #bcd;
+	width:200px;
+	margin-left: 10px;
+}
+
+

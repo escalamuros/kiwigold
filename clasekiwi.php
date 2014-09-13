@@ -188,6 +188,14 @@ class basededatos
 		}
 		return $arr;
 	}
+	function resumen_fito($cu){
+		$cons="select cuarteles.nombre,fitosanitarios.fecha,fitosanitarios.n_comercial,fitosanitarios.i_activo,fitosanitarios.cadencia,fitosanitarios.obs,est_fen.nombre as feno from cuarteles,fitosanitarios,est_fen where fitosanitarios.cuartel='$cu' and fitosanitarios.cuartel=cuarteles.id AND fitosanitarios.estado_f = est_fen.id;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$res=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
+		}
+		return $res;
+	}
 	function editar_cuartel($cuar,$nombre,$ano,$sup,$nplan,$zona,$d,$enc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
 	{
 		$cons="update cuarteles set nombre='$nombre',año='$ano',superficie='$sup',nplantas='$nplan',zona='$zona',direccion='$d',nenc='$enc',fenc='$fenc',eenc='$eenc',geo='$geo',dentreh='$dth',denh='$deh',pmachos='$pm',obs='$o' where id='$cuar' ; ";
