@@ -62,13 +62,18 @@
 		echo $id_f_anal.'<br>';
 		foreach($_POST['num'] as $a)
 		{
-			echo $a.'<br>';
+			$c->llena_analisis($id_f_anal,$a);
 		}
 		$c->desconexion();
 	}
-	if((isset($_POST['actualizar_lab']))&&(isset($_POST['flab']))&&(isset($_POST['fmue']))){
+	if((isset($_POST['actualiza_lab']))&&(isset($_POST['flab']))&&(isset($_POST['fmue']))){
 		$c->conexion();
 		$c->actualiza_fechas_f_analisis($_POST['actualizar_lab'],$_POST['flab'],$_POST['fmue']);
+		foreach($_POST['num'] as $a)
+		{
+			$dat=explode('/',$a);
+			$c->actualiza_analisis($dat[0],$dat[1],$dat[2],$dat[3],$dat[4],$dat[5],$dat[6],$dat[7],$dat[8],$dat[9],$_POST['actualiza_lab']);
+		}
 		$c->desconexion();
 	}
 ?>
@@ -104,12 +109,14 @@ $('.btn_edi_lab').bind('click',function(){
 		data:{f_lab_selec:oe},
 		dataType:"json",
 		success:function(tii){$('#fanalisis').val(tii[0]);$('#fmuestra').val(tii[1]);}
-	})
+	});
 	$('#add_data').show();
 });
 $('#n_anal').bind('click',function(){
 	$('#add_data').show();
 	$('#existe_lab').val('0');
+	$('#fanalisis').val('');
+	$('#fmuestra').val('');
 	for(var aa=1;aa<=48;aa++)
 	{
 		$('#l_peso'+aa).val('');
@@ -120,7 +127,7 @@ $('#n_anal').bind('click',function(){
 		$('#l_col2'+aa).val('');
 		$('#l_pesi'+aa).val('');
 		$('#l_pesf'+aa).val('');
-		$('#l_obse'+aa).val());
-	}
+		$('#l_obse'+aa).val('');
+	};
 });
 </script>

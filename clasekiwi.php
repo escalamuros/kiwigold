@@ -102,6 +102,7 @@ class basededatos
 		mysql_query($cons,$this->id_con);
 		if ($numm==48){ echo $numm; }
 	}
+	//inserta nuevos datos de un analisis, segun la f_analisis
 	function llena_analisis($id_anal,$arr){
 		$ar=explode('/',$arr);
 		$cons="insert into analisis values (NULL,'$id_anal','".$ar[0]."','".$ar[1]."','".$ar[2]."','".$ar[3]."','".$ar[4]."','".$ar[5]."','".$ar[6]."','".$ar[7]."','".$ar[8]."','".$ar[9]."','1');";
@@ -153,9 +154,9 @@ class basededatos
 	}
 	
 	function lista_todo_laboratorio(){
-		$cons="select id,fecha,estado from f_analisis where estado<'2';";
+		$cons="select id,um,fecha,fecha_m,estado from f_analisis where estado<'2';";
 		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['um'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
 		return $ec;
 	}
 	//nueva funciones para productor de un campo
