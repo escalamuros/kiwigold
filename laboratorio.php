@@ -122,15 +122,13 @@ $(document).ready(function(){
 		}
 		else
 		{
-			alert(existe);
-			/*
 			$.ajax({
 				url:'para_laboratorio.php',
 				type:'POST',
 				data:{lab_cam_est:existe,l_f_anal_nu:$('select#flab').val()},
-				success:function(hh){$('datos_2').haml(hh);};
+				success:function(hh){$('datos_2').html(hh);}
 			});
-			$('#add_data').hide();*/
+			$('#add_data').hide();
 		}
 	});	
 });
