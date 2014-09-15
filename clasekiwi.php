@@ -532,5 +532,13 @@ class basededatos
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 	}
+	function resumen_produccion($re){
+		$cons="select campos.empresa,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from campos,produccion where produccion.productor='$re' and produccion.productor=campos.id;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$resol[]=array($rs['empresa'],$rs['fecha'],$rs['comercializadora'],$rs['ton'],$rs['calibre']);
+		}
+		return $resol;
+	}
 }
 ?>

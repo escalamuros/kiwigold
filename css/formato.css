@@ -409,15 +409,15 @@ td{
 }
 
 .box_cuartel{
-	width:160px;
-	display: inline-block;
+	width:800px;
+	display: block;
 	//border:1px solid #789;
 	overflow: hidden;
 	margin-right: 6px;
 	margin-bottom: 6px;
 }
-.box_cuartel td:first-child{background: #abc;}
-.box_cuartel td{background: #bcd;}
+//.box_cuartel td:first-child{background: #abc;}
+.box_cuartel td{background: #abc;}
 #mantenedor_cuarteles{
 	margin-left: 20px;
 }

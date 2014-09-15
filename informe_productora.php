@@ -44,8 +44,8 @@ $(document).ready(function(){
 			echo "<table>";
 			echo "<tr><td colspan='2'>".$v[1]."</td></tr>";
 			$sup=$c->recuperar_cuartel($v[0]);
-			echo "<tr><td>Superficie</td><td>".$sup[4]."</td></tr><tr><td>Numero de Plantas</td><td>".$sup[5]."</td></tr><tr><td>Dist. entre Hileras</td><td>".$sup[12]."</td></tr>";
-			echo "<tr><td>Dist. en Hileras</td><td>".$sup[13]."</td></tr><tr><td>% Machos</td><td>".$sup[14]."</td></tr><tr><td>Mapa</td><td style='cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='40'></td></tr>";
+			echo "<tr><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
+			echo "<tr><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='40'></td></tr>";
 			echo "</table>";
 			echo "</div>";
 			
@@ -78,6 +78,23 @@ $(document).ready(function(){
 		}
 		echo "</table>";
 		echo "</div>";
+
+		echo "<br>Producción<br>";
+		echo "<div class='cuadro_informe' id='cuadro_produccion'>";
+		echo "<table>";
+		echo "<tr><td style='background:#abc;'>Productor</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercializadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
+		$inp=$c->resumen_produccion($_POST['elegido']);
+		foreach ($inp as $cu){
+			
+			if($cu[0]!=''){
+			echo "<tr><td>".$cu[0]."</td><td>".$cu[1]."</td><td>".$cu[2]."</td><td>".$cu[3]."</td><td>".$cu[4]."</td></tr>";
+			}
+		}
+		echo "</table>";
+		echo "</div>";
+
+
+
 		$c->desconexion();
 	}
 ?>
