@@ -1,4 +1,11 @@
-<?php session_start();?>
+<?php
+session_start();
+include_once "clasekiwi.php";
+$c=new basededatos();
+$c->conexion();
+$ar=$c->lista_todo_laboratorio();
+$c->desconexion();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -258,7 +265,17 @@ if(isset($_SESSION['id']))
 {
 	if(($_SESSION['nivel']=='1')||($_SESSION['nivel']=='2'))
 	{?>
-		
+		<div id='lista_t_lab'>
+			<table>
+			<tr><td>Revisar</td><td>UM</td><td>Fecha de Lab</td><td>Fecha Muestreo</td><td>Estado</td></tr>
+			<?php
+			foreach($ar as $i)
+			{
+				echo "<tr><td><div class='btn_color' id='".$i[0]."'>".$i[0]."</div></td><td>".$i[1]."</td><td>".$i[2]."</td><td>".$i[3]."</td><td>".$i[4]."</td></tr>";
+			}
+			?>
+			</table>
+		</div>
 		<div id="resultados">
 			<table border="0">
 			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
@@ -280,10 +297,7 @@ if(isset($_SESSION['id']))
 			<table border='0'>
 			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
 			<tr><td>Promedio Depurado</td><td><div id="deppeso" class="resul"></div></td><td><div id="deppre" class="resul"></div></td><td><div id="depss" class="resul"></div></td><td><div id="depcol" class="resul"></div></td><td><div id="depseca" class="resul"></div></td></tr>
-			</table>         
-			<?php if($_SESSION['nivel']==3 or $_SESSION['nivel']==1){ ?>
-			<div class="addersd" id="btn_subir" style="float:left;width:550px;">Subir Información</div>
-			<?php  }; ?>      
+			</table>     
 		</div>
 
 	<?php 

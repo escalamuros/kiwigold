@@ -78,19 +78,21 @@ $(document).ready(function(){
 	$('#masdatos').bind('click',function(){
 		var existe = $('#existe_lab').val();
 		if(existe==0){
-			var datos= new FormData();
-			datos.append('um',$('select#flab').val());
-			datos.append('flab',$('#fanalisis').val());
-			datos.append('fmue',$('#fmuestra').val());
+			var ndatos= new FormData();
+			ndatos.append('um',$('select#flab').val());
+			ndatos.append('flab',$('#fanalisis').val());
+			ndatos.append('fmue',$('#fmuestra').val());
 			for(var aa=1;aa<=48;aa++)
 			{
-				datos.append('num[]',$('#nummer'+aa).html()+'/'+$('#l_peso'+aa).val()+'/'+$('#l_pre1'+aa).val()+'/'+$('#l_pre2'+aa).val()+'/'+$('#l_solu'+aa).val()+'/'+$('#l_col1'+aa).val()+'/'+$('#l_col2'+aa).val()+'/'+$('#l_pesi'+aa).val()+'/'+$('#l_pesf'+aa).val()+'/'+$('#l_obse'+aa).val());
+				ndatos.append('num[]',$('#nummer'+aa).html()+'/'+$('#l_peso'+aa).val()+'/'+$('#l_pre1'+aa).val()+'/'+$('#l_pre2'+aa).val()+'/'+$('#l_solu'+aa).val()+'/'+$('#l_col1'+aa).val()+'/'+$('#l_col2'+aa).val()+'/'+$('#l_pesi'+aa).val()+'/'+$('#l_pesf'+aa).val()+'/'+$('#l_obse'+aa).val());
 			}
 			$.ajax({
-					url:'para_laboratorio.php',
-					type:'POST',
-					data:datos,
-					success:function(qe){ $('#existe_lab').val(qe);alert ('Datos Ingresados con exito!'); }
+				url:'para_laboratorio.php',
+				type:'POST',
+				data: ndatos,
+				processData: false,
+				contentType: false, 
+				success:function(qe){ $('#existe_lab').val(qe);alert ('Datos Ingresados con exito!'); }
 			});
 		}else{
 			var datos= new FormData();
@@ -104,17 +106,16 @@ $(document).ready(function(){
 			$.ajax({
 				url:'para_laboratorio.php',
 				type:'POST',
-				data:datos,
-				success:function(e){ if(e==48){alert ('Datos Actualizados con exito!');}; }
-			});		
-			
-		}		
+				data: datos ,
+				processData: false,
+				contentType: false, 
+				success:function(){ alert ('Datos Actualizados con exito!\n'); }
+			});
+		};		
 	});
 	
 	$('#cambia_estado_lab').bind('click',function(){
-		
 		var existe = $('#existe_lab').val();
-		
 		if(existe == 0) 
 		{
 			alert('No Hay datos Guardados para Enviar');
@@ -132,7 +133,6 @@ $(document).ready(function(){
 			$('#add_data').hide();*/
 		}
 	});	
-
 });
 </script>
 </head>
