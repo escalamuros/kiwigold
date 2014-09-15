@@ -59,7 +59,9 @@ $(document).ready(function(){
 		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Nombre Comercial</td><td style='background:#abc;'>Ingrediente Activo</td><td style='background:#abc;'>Cadencia</td><td style='background:#abc;'>Observaciones</td><td style='background:#abc;'>Estado Fenologico</td></tr>";
 		foreach ($lum as $cu){
 			$pfs=$c->resumen_fito($cu[0]);
+			if($pfs!=''){
 			echo "<tr><td>".$pfs[0]."</td><td>".$pfs[1]."</td><td>".$pfs[2]."</td><td>".$pfs[3]."</td><td>".$pfs[4]."</td><td>".$pfs[5]."</td><td>".$pfs[6]."</td></tr>";
+			}
 		}
 		echo "</table>";
 		echo "</div>";
@@ -67,10 +69,12 @@ $(document).ready(function(){
 		echo "<br>Labores No Químicas<br>";
 		echo "<div class='cuadro_informe' id='cuadro_labores'>";
 		echo "<table>";
-		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Nombre Comercial</td><td style='background:#abc;'>Ingrediente Activo</td><td style='background:#abc;'>Cadencia</td><td style='background:#abc;'>Observaciones</td><td style='background:#abc;'>Estado Fenologico</td></tr>";
+		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Programa</td><td style='background:#abc;'>Aplicación</td><td style='background:#abc;'>Estado Fenologico</td></tr>";
 		foreach ($lum as $cu){
-			$pfs=$c->resumen_fito($cu[0]);
-			echo "<tr><td>".$pfs[0]."</td><td>".$pfs[1]."</td><td>".$pfs[2]."</td><td>".$pfs[3]."</td><td>".$pfs[4]."</td><td>".$pfs[5]."</td><td>".$pfs[6]."</td></tr>";
+			$pfs=$c->resumen_labs($cu[0]);
+			if($pfs!=''){
+			echo "<tr><td>".$pfs[0]."</td><td>".$pfs[1]."</td><td>".$pfs[2]."</td><td>".$pfs[3]."</td><td>".$pfs[4]."</td></tr>";
+			}
 		}
 		echo "</table>";
 		echo "</div>";
