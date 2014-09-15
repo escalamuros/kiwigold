@@ -203,6 +203,14 @@ class basededatos
 		}
 		return $res;
 	}
+	function resumen_labs($cu){
+		$cons="select cuarteles.nombre,labores.fecha,labores.programa,labores.aplicacion,est_fen.nombre as feno from cuarteles,labores,est_fen where labores.cuartel='$cu' and labores.cuartel=cuarteles.id AND labores.estado_f = est_fen.id;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$res=array($rs['nombre'],$rs['fecha'],$rs['programa'],$rs['aplicacion'],$rs['feno']);
+		}
+		return $res;
+	}
 	function editar_cuartel($cuar,$nombre,$ano,$sup,$nplan,$zona,$d,$enc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
 	{
 		$cons="update cuarteles set nombre='$nombre',año='$ano',superficie='$sup',nplantas='$nplan',zona='$zona',direccion='$d',nenc='$enc',fenc='$fenc',eenc='$eenc',geo='$geo',dentreh='$dth',denh='$deh',pmachos='$pm',obs='$o' where id='$cuar' ; ";
