@@ -12,7 +12,6 @@ $c->desconexion();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script>
 $(document).ready(function(){
-	var minpeso=999999,maxpeso=0,minpres=999999,maxpres=0,mincol=999999,maxcol=0,minss=999999,maxss=0,minseca=999999,maxseca=0;
 	$('#man_datos').hide();
 	function completarCampos(per)
 	{
@@ -27,7 +26,7 @@ $(document).ready(function(){
 			$('#l_pesi'+(de+1)).val(per[de][7]);
 			$('#l_pesf'+(de+1)).val(per[de][8]);
 			$('#l_obse'+(de+1)).val(per[de][9]);
-			if(per[de][10]==1){$('#l_chke'+(de+1)).prop('checked', true);}
+			if(per[de][10]==1){$('#l_chke'+(de+1)).prop('checked', true);}else{$('#l_chke'+(de+1)).prop('checked', false);}
 		}
 	}
 	$('.labs').bind('click',function(){
@@ -47,9 +46,12 @@ $(document).ready(function(){
 	$('.contarlo').change(function(e)
 	{	
 		var num=$(this).attr('id').substring(6);
-		//if($(this).is(':checked')){}else{}
-		calcular(num);
-		desviaciones();
+		$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			data:{cam_est_dato:num,analisis:$('#existe_lab').val()},
+			success:function(){calcular(num);desviaciones();}
+		});
 	});
 	
 	function calcular(fu)
@@ -81,6 +83,7 @@ $(document).ready(function(){
 	}
 	function desviaciones()
 	{
+		var minpeso=999999,maxpeso=0,minpres=999999,maxpres=0,mincol=999999,maxcol=0,minss=999999,maxss=0,minseca=999999,maxseca=0;
 		var sumapeso=0,sumdifpeso,prompeso,difpeso=0;
 		var sumapres=0,sumdifpres,prompres,difpres=0;
 		var sumasss=0,sumdifss,promss,difss=0;
@@ -177,7 +180,9 @@ $(document).ready(function(){
 		$('#depcol').html(((promcol*tot_elem-mincol-maxcol)/(tot_elem-2)).toFixed(1));
 		$('#depseca').html(((promseca*tot_elem-minseca-maxseca)/(tot_elem-2)).toFixed(1));
 	}
-	
+	$('#Envio_Productor').bind('click',function(){
+		alert('aaaa');
+	});
 });
 </script>
 </head>
@@ -202,7 +207,8 @@ if(isset($_SESSION['id']))
 			</table>
 		</div>
 		<div id="man_datos">
-			<table>
+			<input type="hidden" id="existe_lab" value="0" >
+			<table style="margin: 0 auto 0 auto;">
 			<tr><td>Dato Valido</td><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td>
 				<td >Promedio Presion 1-2</td>
 				<td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td>
@@ -229,7 +235,8 @@ if(isset($_SESSION['id']))
 					}	
 				?>
 			</table>
-			<table>
+			<br>
+			<table style="margin: 0 auto 0 auto;">
 			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
 			<tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
 			<tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
@@ -238,7 +245,13 @@ if(isset($_SESSION['id']))
 			<tr><td>Desv.Estandar</td><td><div id="resdesv" class="resul"></div></td><td><div id="resdesvp" class="resul"></td><td><div id="resdesvs" class="resul"></td><td><div id="resdesvc" class="resul"></td><td><div id="resdesvm" class="resul"></td></tr>
 			</table>  
 			<br />
-			<table border='0'>
+			<div style="float:left;width:350px;height:200px;">
+			Observaciones:<br>
+			<textarea style="width:300px;height:110px" id="obs_gral" ></textarea><br><br>
+			<div class='btn_color' id='Envio_Productor' style=" width:290px;">Generación de Informe</div>
+
+			</div>
+			<table style="margin: 0 auto 0 auto;">
 			<tr><td colspan="6" align="left">Rango de normalidad de la muestra</td></tr>
 			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
 			<tr><td>Min</td><td><div id="minpeso" class="resul"></div></td><td><div id="minpre" class="resul"></div></td><td><div id="minss" class="resul"></div></td><td><div id="mincol" class="resul"></div></td><td><div id="minseca" class="resul"></div></td></tr>
@@ -246,7 +259,7 @@ if(isset($_SESSION['id']))
 			<!--<tr><td>Datos anormales</td><td><div id="datopeso" class="resul"></div></td><td><div id="datopre" class="resul"></div></td><td><div id="datoss" class="resul"></div></td><td><div id="datocol" class="resul"></div></td><td><div id="datoseca" class="resul"></div></td></tr>-->
 			 </table> 
 			<br />
-			<table border='0'>
+			<table style="margin: 0 auto 0 auto;">
 			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
 			<tr><td>Promedio Depurado</td><td><div id="deppeso" class="resul"></div></td><td><div id="deppre" class="resul"></div></td><td><div id="depss" class="resul"></div></td><td><div id="depcol" class="resul"></div></td><td><div id="depseca" class="resul"></div></td></tr>
 			</table>     

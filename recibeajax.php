@@ -32,7 +32,7 @@
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 	}
-	//llena de datos, un analisis seleeccionado para editar
+	//llena de datos, un analisis seleccionado para editar
 	if(isset($_POST['lab_seleccionado'])){
 		$c->conexion();
 		$c->recupera_datos_analisis($_POST['lab_seleccionado']);
@@ -123,6 +123,12 @@
 		$c->conexion();
 		$c->editar_plantas($_POST['ed_id'],$_POST['ed_tipo'],$_POST['ed_año'],$_POST['ed_cant']);
 		$c->desconexion();
-
+	}
+	//cambia el estado de un dato, de un analisis.. 
+	if(isset($_POST['cam_est_dato']))
+	{
+		$c->conexion();
+		$c->cambia_estado_dato_analisis($_POST['cam_est_dato'],$_POST['analisis']);
+		$c->desconexion();
 	}
 ?>

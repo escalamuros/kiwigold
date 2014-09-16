@@ -139,9 +139,14 @@ class basededatos
 		$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
 		mysql_query($cons,$this->id_con);
 	}
-	
-	function updata($cas){
-		$cons="update f_analisis set estado='1' where id='$cas';";
+	// cambia el estado de un dato, de un analisis... para sacarlo o contarlo en los datos estadisticos
+	function cambia_estado_dato_analisis($dato,$f_analisis){
+		$cons="select estado from analisis where numm='$dato' and f_analisis='$f_analisis';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $est=$rs['estado']; }
+		if($est==1){$est=0;}else{$est=1;}
+		$cons="update analisis set estado='$est' where numm='$dato' and f_analisis='$f_analisis';";
+		echo $cons;
 		mysql_query($cons,$this->id_con);
 	}
 	//para laboratorio, solo muestra los laboratorios, sin autorizar
@@ -152,7 +157,7 @@ class basededatos
 		if(count($ec)<1){$ec[]=array('0','No hay Registro','');}
 		return $ec;	
 	}
-	
+	//lista los laboratorios (f_analisis) y desde que cuartel y UM vienen
 	function lista_todo_laboratorio(){
 		$cons="select f_analisis.id,um.um,cuarteles.nombre as n_c,campos.empresa as n_prod,f_analisis.fecha,f_analisis.fecha_m,f_analisis.estado from f_analisis,um,cuarteles,campos where f_analisis.um=um.id and um.cuartel=cuarteles.id and um.campo=campos.id order by f_analisis.fecha asc ;";
 		$ejec=mysql_query($cons,$this->id_con);

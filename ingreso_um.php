@@ -16,12 +16,15 @@
 	}
 	$ar=$c->lista_todas_um_productor($_POST['prod']);
 	$c->desconexion();
-	echo "Lista de Unidades de Maduración:<br>";
-	foreach($ar as $v)
+	if(is_array($ar))
 	{
-		echo "<div class='bit_um btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1];
-		if($v[2]==1){echo "(Activa)";}else {echo "(Inactiva)";}
-		echo "</div>";
+		echo "Lista de Unidades de Maduración:<br>";
+		foreach($ar as $v)
+		{
+			echo "<div class='bit_um btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1];
+			if($v[2]==1){echo "(Activa)";}else {echo "(Inactiva)";}
+			echo "</div>";
+		}
 	}
 ?>
 <script>
