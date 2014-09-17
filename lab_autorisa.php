@@ -181,7 +181,7 @@ $(document).ready(function(){
 		$('#depseca').html(((promseca*tot_elem-minseca-maxseca)/(tot_elem-2)).toFixed(1));
 	}
 	$('#Envio_Productor').bind('click',function(){
-		alert('aaaa');
+		alert('Redirigir Datos, Almacenar comentario(f_analisis), Mostrara los correos, adjuntar documento');
 	});
 });
 </script>
