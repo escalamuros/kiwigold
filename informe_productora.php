@@ -14,11 +14,57 @@ $(document).ready(function(){
 	$('.bot_cuartel').bind('click',function(){
 		window.open('gmap.php?cuartel='+$(this).attr('id'),'_blank');
 	});
+	sessionStorage['anio']='2014';
+	sessionStorage['theone']=<?php echo $_POST['elegido'] ?>;
+	
+	
+	$('.box_cuartel').bind('click',function(){
+		sessionStorage['cuartel']=this.id.substr(4);
+		$('#resumen_resultados').show();
+		cargar_datos();
+	})
+
+	$('.flecha').bind('click',function(){
+		var anio=$('#s_temp').html();
+		if(this.id=='fmenos'){
+			anio=parseInt(anio)-1;
+			if(parseInt(anio)<2010){anio=2010;}
+		}else{anio=parseInt(anio)+1;if(parseInt(anio)>2017){anio=2017}}
+		$('#s_temp').html(anio);
+		sessionStorage['anio']=anio;
+		cargar_datos();
+	});
+
+	function cargar_datos(){
+		$('#cuadro_fen table').html("<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Nombre Comercial</td><td style='background:#abc;'>Ingrediente Activo</td><td style='background:#abc;'>Cadencia</td><td style='background:#abc;'>Observaciones</td><td style='background:#abc;'>Estado Fenologico</td></tr>");
+		$('#cuadro_labores table').html("<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Programa</td><td style='background:#abc;'>Aplicación</td><td style='background:#abc;'>Estado Fenologico</td></tr>");
+		$('#cuadro_produccion table').html("<tr><td style='background:#abc;'>Productor</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercializadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>");
+		$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			dataType:'JSON',
+			data:{tnd:1,theone:sessionStorage['theone'],tempo:sessionStorage['anio'],ccuartel:sessionStorage['cuartel']},
+			success:function(e){
+				for (var fut in e.fitos){
+					$('#cuadro_fen table').append('<tr><td>'+e.fitos[fut][0]+'</td><td>'+e.fitos[fut][1]+'</td><td>'+e.fitos[fut][2]+'</td><td>'+e.fitos[fut][3]+'</td><td>'+e.fitos[fut][4]+'</td><td>'+e.fitos[fut][5]+'</td><td>'+e.fitos[fut][6]+'</td></tr>');
+				
+				}
+				for (var fut in e.labs){
+					$('#cuadro_labores table').append('<tr><td>'+e.labs[fut][0]+'</td><td>'+e.labs[fut][1]+'</td><td>'+e.labs[fut][2]+'</td><td>'+e.labs[fut][3]+'</td><td>'+e.labs[fut][4]+'</td></tr>');
+				
+				}
+				for(var fut in e.produccion)
+					$('#cuadro_produccion table').append('<tr><td>'+e.produccion[fut][0]+'</td><td>'+e.produccion[fut][1]+'</td><td>'+e.produccion[fut][2]+'</td><td>'+e.produccion[fut][3]+'</td><td>'+e.produccion[fut][4]+'</td></tr>');
+				
+				}
+		})
+	} //cerrar cargar_datos
 });
 </script>
 </head>
 <body>
 <?php
+	
 	if(isset($_POST['elegido']))
 	{
 		$c->conexion();
@@ -40,7 +86,7 @@ $(document).ready(function(){
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
 		foreach($lum as $v)
 		{
-			echo "<div class='box_cuartel'>";
+			echo "<div class='box_cuartel' id='cuar".$v[0]."'>";
 			echo "<table>";
 			echo "<tr><td colspan='2'>".$v[1]."</td></tr>";
 			$sup=$c->recuperar_cuartel($v[0]);
@@ -51,49 +97,31 @@ $(document).ready(function(){
 			
 		}
 		echo "</div>";
+		echo "<div id='resumen_resultados'>";
+		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>2014</div><div class='flecha' id='fmas'>></div></div>";
 		
 		echo "<br>Programa Fitosanitario<br>";
-
+		
 		echo "<div class='cuadro_informe' id='cuadro_fen'>";
 		echo "<table>";
-		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Nombre Comercial</td><td style='background:#abc;'>Ingrediente Activo</td><td style='background:#abc;'>Cadencia</td><td style='background:#abc;'>Observaciones</td><td style='background:#abc;'>Estado Fenologico</td></tr>";
-		foreach ($lum as $cu){
-			$pfs=$c->resumen_fito($cu[0]);
-			if($pfs!=''){
-			echo "<tr><td>".$pfs[0]."</td><td>".$pfs[1]."</td><td>".$pfs[2]."</td><td>".$pfs[3]."</td><td>".$pfs[4]."</td><td>".$pfs[5]."</td><td>".$pfs[6]."</td></tr>";
-			}
-		}
+		
+		
 		echo "</table>";
 		echo "</div>";
 
 		echo "<br>Labores No Químicas<br>";
 		echo "<div class='cuadro_informe' id='cuadro_labores'>";
 		echo "<table>";
-		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Programa</td><td style='background:#abc;'>Aplicación</td><td style='background:#abc;'>Estado Fenologico</td></tr>";
-		foreach ($lum as $cu){
-			$pfs=$c->resumen_labs($cu[0]);
-			if($pfs!=''){
-			echo "<tr><td>".$pfs[0]."</td><td>".$pfs[1]."</td><td>".$pfs[2]."</td><td>".$pfs[3]."</td><td>".$pfs[4]."</td></tr>";
-			}
-		}
+		
+	
 		echo "</table>";
 		echo "</div>";
-
 		echo "<br>Producción<br>";
 		echo "<div class='cuadro_informe' id='cuadro_produccion'>";
 		echo "<table>";
-		echo "<tr><td style='background:#abc;'>Productor</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercializadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
-		$inp=$c->resumen_produccion($_POST['elegido']);
-		foreach ($inp as $cu){
-			
-			if($cu[0]!=''){
-			echo "<tr><td>".$cu[0]."</td><td>".$cu[1]."</td><td>".$cu[2]."</td><td>".$cu[3]."</td><td>".$cu[4]."</td></tr>";
-			}
-		}
 		echo "</table>";
 		echo "</div>";
-
-
+		
 
 		$c->desconexion();
 	}

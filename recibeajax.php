@@ -131,4 +131,9 @@
 		$c->cambia_estado_dato_analisis($_POST['cam_est_dato'],$_POST['analisis']);
 		$c->desconexion();
 	}
+	if(isset($_POST['tnd'])){
+		$c->conexion();
+		$c->resumen_produccion($_POST['theone'],$_POST['tempo'],$_POST['ccuartel']);
+		$c->desconexion();
+	}
 ?>
