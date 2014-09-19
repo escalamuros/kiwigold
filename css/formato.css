@@ -415,6 +415,7 @@ td{
 	overflow: hidden;
 	margin-right: 6px;
 	margin-bottom: 6px;
+	cursor:pointer;
 }
 //.box_cuartel td:first-child{background: #abc;}
 .box_cuartel td{background: #abc;}
@@ -435,5 +436,30 @@ td{
 	width:200px;
 	margin-left: 10px;
 }
+#sel_temporada{
+	background: #abc;
+	padding:5px 20px 5px 20px;
+	border:1px solid #789;
+	margin-left: -20px;
+	margin-top:20px;
+	height: 18px;
+}
+#s_temp{
+	width:60px	;
+	text-align: center;
+	background-color: #bcd;
+	float: left;
+}
+.flecha{
+	width:20px;
+	background-color: #bcd;
+	text-align: center;
+	float: left;
+	cursor: pointer;
 
+}
 
+#resumen_resultados{
+	display:none;
+	
+}
