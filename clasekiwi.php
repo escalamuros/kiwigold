@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		*/
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -91,7 +91,7 @@ class basededatos
 	}
 	// crea una nueva f_analisis
 	function crearAnalisis($lab,$fecha,$fmue){
-		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0);";
+		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0,'');";
 		mysql_query($cons,$this->id_con);
 		$po=mysql_insert_id();
 		return $po;
@@ -133,6 +133,12 @@ class basededatos
 			$arreglo=array($rs['fecha'],$rs['fecha_m']);
 		}
 		print_r(json_encode($arreglo));
+	}
+	//actualiza la observacion de f_analisis, segun lab
+	function actualiza_obs_f_a($obs,$lab)
+	{
+		$cons="update f_analisis set obs='$obs' where id='$lab' ; ";
+		mysql_query($cons,$this->id_con);
 	}
 	//genera nueva fecha en fechas de analisis			
 	function nuevafecha($pom,$pe){
