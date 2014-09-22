@@ -12,17 +12,17 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		*/
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -91,7 +91,7 @@ class basededatos
 	}
 	// crea una nueva f_analisis
 	function crearAnalisis($lab,$fecha,$fmue){
-		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0);";
+		$cons="insert into f_analisis values(NULL,'$lab','$fecha','$fmue',0,'');";
 		mysql_query($cons,$this->id_con);
 		$po=mysql_insert_id();
 		return $po;
@@ -134,6 +134,12 @@ class basededatos
 		}
 		print_r(json_encode($arreglo));
 	}
+	//actualiza la observacion de f_analisis, segun lab
+	function actualiza_obs_f_a($obs,$lab)
+	{
+		$cons="update f_analisis set obs='$obs' where id='$lab' ; ";
+		mysql_query($cons,$this->id_con);
+	}
 	//genera nueva fecha en fechas de analisis			
 	function nuevafecha($pom,$pe){
 		$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
@@ -164,13 +170,13 @@ class basededatos
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['um'],$rs['n_c'],$rs['n_prod'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
 		return $ec;
 	}
-	//nueva funciones para productor de un campo
+	//nueva funciones para productor de un campo (revisar donde se usa)
 	function datos_legales_productor($prod)
 	{
-		$cons="select * from datos_prod where campo=$prod;";
+		$cons="select * from datos_prod where campo='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['rs'],$rs['rut'],$rs['giro'],$rs['dir'],$rs['fono'],$rs['mail'],$rs['rl'],$rs['rutrl'],$rs['fonorl'],$rs['mailrl'],$rs['encargado'],$rs['rute'],$rs['fonoe'],$rs['maile']);
+		$arr=array($rs['rs'],$rs['rut'],$rs['giro'],$rs['dir'],$rs['fono'],$rs['mail'],$rs['rl'],$rs['rutrl'],$rs['fonorl'],$rs['mailrl'],$rs['agronomo'],$rs['amail']);
 		}
 		return $arr;
 	}
@@ -186,9 +192,9 @@ class basededatos
 		if(count($arreglo)==0){$arreglo=array(array('0','No hay Cuarteles'));}
 		return $arreglo;
 	}
-	function agregar_cuartel_productor($prod,$ano,$nom,$sup,$nplan,$z,$d,$nenc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
+	function agregar_cuartel_productor($prod,$ano,$nom,$sup,$nplan,$z,$d,$nenc,$fenc,$eenc,$geo,$dth,$deh,$pm,$t,$c,$o)
 	{
-		$cons="insert into cuarteles values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$o');";
+		$cons="insert into cuarteles values(NULL,'$prod','$ano','$nom','$sup','$nplan','$z','$d','$nenc','$fenc','$eenc','$geo','$dth','$deh','$pm','$t','$c','$o');";
 		mysql_query($cons,$this->id_con);
 	}
 	function recuperar_cuartel($cuar)
@@ -196,14 +202,14 @@ class basededatos
 		$cons="select * from cuarteles where id='$cuar';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmachos'],$rs['obs']);
+		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmachos'],$rs['tipo'],$rs['contrato'],$rs['obs']);
 		}
 		return $arr;
 	}
 	
-	function editar_cuartel($cuar,$nombre,$ano,$sup,$nplan,$zona,$d,$enc,$fenc,$eenc,$geo,$dth,$deh,$pm,$o)
+	function editar_cuartel($cuar,$nombre,$ano,$sup,$nplan,$zona,$d,$enc,$fenc,$eenc,$geo,$dth,$deh,$pm,$t,$c,$o)
 	{
-		$cons="update cuarteles set nombre='$nombre',año='$ano',superficie='$sup',nplantas='$nplan',zona='$zona',direccion='$d',nenc='$enc',fenc='$fenc',eenc='$eenc',geo='$geo',dentreh='$dth',denh='$deh',pmachos='$pm',obs='$o' where id='$cuar' ; ";
+		$cons="update cuarteles set nombre='$nombre',año='$ano',superficie='$sup',nplantas='$nplan',zona='$zona',direccion='$d',nenc='$enc',fenc='$fenc',eenc='$eenc',geo='$geo',dentreh='$dth',denh='$deh',pmachos='$pm',tipo='$t',contrato='$c',obs='$o' where id='$cuar' ; ";
 		mysql_query($cons,$this->id_con);
 	}
 	function eliminar_cuartel($cuar)
@@ -468,14 +474,14 @@ class basededatos
 		}
 		return $ar;
 	}
-	function registrar_productora($expo,$rs,$empresa,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl)
+	function registrar_productora($expo,$rs,$empresa,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl,$agronomo,$amail)
 	{
 		$cons="insert into campos values(NULL,'$expo','0','$empresa');";
 		$ejec=mysql_query($cons,$this->id_con);
 		if(mysql_errno($this->id_con)==0)
 		{
 			$p=mysql_insert_id($this->id_con);
-			$cons="insert into datos_prod values('$p','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
+			$cons="insert into datos_prod values('$p','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl','$agronomo','$amail');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 	}
@@ -501,11 +507,13 @@ class basededatos
 		$re[10]=$rs['rutrl'];
 		$re[11]=$rs['fonorl'];
 		$re[12]=$rs['mailrl'];
+		$re[13]=$rs['agronomo'];
+		$re[14]=$rs['amail'];
 		}
 		while(count($re) < 17){$re[]='';}
 		return $re;
 	}
-	function modif_productora($id,$empresa,$rs,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl)
+	function modif_productora($id,$empresa,$rs,$rut,$giro,$dir,$fono,$mail,$rl,$rutrl,$fonorl,$mailrl,$agronomo,$amail)
 	{
 		$cons="update campos set empresa='$empresa' where id='$id';";
 		$ejec=mysql_query($cons,$this->id_con);
@@ -513,12 +521,12 @@ class basededatos
 		$ejec=mysql_query($cons, $this->id_con);
 		if(mysql_num_rows($ejec)==1)
 		{
-			$cons="update datos_prod set rs='$rs',rut='$rut',giro='$giro',dir='$dir',fono='$fono',mail='$mail',rl='$rl',rutrl='$rutrl',fonorl='$fonorl',mailrl='$mailrl' where campo='$id';";
+			$cons="update datos_prod set rs='$rs',rut='$rut',giro='$giro',dir='$dir',fono='$fono',mail='$mail',rl='$rl',rutrl='$rutrl',fonorl='$fonorl',mailrl='$mailrl',agronomo='$agronomo',amail='$amail' where campo='$id';";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 		else
 		{
-			$cons="insert into datos_prod values ('$id','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl');";
+			$cons="insert into datos_prod values ('$id','$rs','$rut','$giro','$dir','$fono','$mail','$rl','$rutrl','$fonorl','$mailrl','$agronomo','$amail');";
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 	}

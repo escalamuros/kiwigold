@@ -31,7 +31,7 @@ $(document).ready(function(){
 			url:'modif_productora.php',
 			type:'POST',
 			async:false,
-			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val()},
+			data:{id:$('#ide').val(),nf:$('#nf').val(),rs:$('#rs').val(),rut:$('#rut').val(),giro:$('#giro').val(),dir:$('#dir').val(),fono:$('#fono').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
 			success:function(a){alert('Cambios Aceptados');}
 		});
 		$.ajax({
@@ -128,6 +128,8 @@ $(document).ready(function(){
 		echo "<tr><td>Rut Rep.</td><td>".$lis[10]."</td>         </tr>";
 		echo "<tr><td>Telefono Rep.</td><td>".$lis[11]."</td>     </tr>";
 		echo "<tr><td>EMail Rep.</td><td>".$lis[12]."</td>      </tr>";
+		echo "<tr><td>Nombre Agronomo</td><td>".$lis[13]."</td>     </tr>";
+		echo "<tr><td>EMail Agronomo</td><td>".$lis[14]."</td>      </tr>";
 		echo "</table>";
 		echo "<div class='btn_color' id='Editar' style='width:240px;'>Editar Productora</div><br>";
 		echo "<div class='btn_color' id='MostrarCuarteles' style='width:240px;'>Listar Cuarteles</div><br>";
@@ -135,17 +137,19 @@ $(document).ready(function(){
 		echo "</div>";
 		echo "<div class='mod' id='editar_prod' >";
 		echo "<table>";
-		echo "<tr><td>Nombre de Fantasia</td><td>           <input type='text' id='nf' value='".$lis[2]."'></td></tr>";
-		echo "<tr><td>Razón Social</td><td>                  <input type='text' id='rs' value='".$lis[3]."'></td></tr>";
-		echo "<tr><td>Rut</td><td>                          <input type='text' id='rut' value='".$lis[4]."'></td></tr>";
+		echo "<tr><td>Nombre de Fantasia</td><td>          <input type='text' id='nf' value='".$lis[2]."'></td></tr>";
+		echo "<tr><td>Razón Social</td><td>                <input type='text' id='rs' value='".$lis[3]."'></td></tr>";
+		echo "<tr><td>Rut</td><td>                         <input type='text' id='rut' value='".$lis[4]."'></td></tr>";
 		echo "<tr><td>Giro</td><td>                        <input type='text' id='giro' value='".$lis[5]."'></td></tr>";
-		echo "<tr><td>Dirección </td><td>                   <input type='text' id='dir' value='".$lis[6]."'></td></tr>";
+		echo "<tr><td>Dirección </td><td>                  <input type='text' id='dir' value='".$lis[6]."'></td></tr>";
 		echo "<tr><td>Fono</td><td>                        <input type='text' id='fono' value='".$lis[7]."'></td></tr>";
 		echo "<tr><td>Mail</td><td>                        <input type='text' id='mail' value='".$lis[8]."'></td></tr>";
-		echo "<tr><td>Representante Legal</td><td>           <input type='text' id='rl' value='".$lis[9]."'></td></tr>";
-		echo "<tr><td>Rut Representante Legal</td><td>    <input type='text' id='rutr' value='".$lis[10]."'></td></tr>";
-		echo "<tr><td>Fono Representante Legal</td><td>  <input type='text' id='fonor' value='".$lis[11]."'></td></tr>";
-		echo "<tr><td>EMail Representante Legal</td><td>  <input type='text' id='mailr' value='".$lis[12]."'></td></tr>";
+		echo "<tr><td>Representante Legal</td><td>         <input type='text' id='rl' value='".$lis[9]."'></td></tr>";
+		echo "<tr><td>Rut Representante Legal</td><td>     <input type='text' id='rutr' value='".$lis[10]."'></td></tr>";
+		echo "<tr><td>Fono Representante Legal</td><td>    <input type='text' id='fonor' value='".$lis[11]."'></td></tr>";
+		echo "<tr><td>EMail Representante Legal</td><td>   <input type='text' id='mailr' value='".$lis[12]."'></td></tr>";
+		echo "<tr><td>Nombre Agronomo</td><td>             <input type='text' id='agro' value='".$lis[13]."'></td></tr>";
+		echo "<tr><td>EMail Agronomo</td><td>              <input type='text' id='amail' value='".$lis[14]."'></td></tr>";
 		echo "</table>";
 		echo "<div class='btn_color' id='guar_datos' style='width:240px;'>Guardar</div>";
 		echo "</div>";

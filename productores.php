@@ -20,7 +20,7 @@ $(document).ready(function(){
 		$.ajax({
 			url:'ingreso_productora.php',
 			type:'POST',
-			data: {expo:$('select#opex').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val()},
+			data: {expo:$('select#opex').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
 			success:function(a){$('#list_prod').html(a);}
 		});
 	});
@@ -71,11 +71,13 @@ if(isset($_SESSION['id']))
 		<tr><td>Giro</td><td><input type="text" id="giro"></td></tr>
 		<tr><td>Dirección </td><td><input type="text" id="dir"></td></tr>
 		<tr><td>Fono</td><td> <input type="text" id="fono"></td></tr>
-		<tr><td>Mail</td><td> <input type="text" id="mail"></td></tr>
+		<tr><td>EMail</td><td> <input type="text" id="mail"></td></tr>
 		<tr><td>Representante Legal</td><td> <input type="text" id="rl"></td></tr>
 		<tr><td>Rut Representante Legal</td><td> <input type="text" id="rutr"></td></tr>
 		<tr><td>Fono Representante Legal</td><td> <input type="text" id="fonor"></td></tr>
-		<tr><td>Mail Representante Legal</td><td> <input type="text" id="mailr"></td></tr>
+		<tr><td>EMail Representante Legal</td><td> <input type="text" id="mailr"></td></tr>
+		<tr><td>Nombre Agronomo</td><td> <input type="text" id="agro"></td></tr>
+		<tr><td>EMail Agronomo</td><td> <input type="text" id="amail"></td></tr>
 		</table>
 		<div id="btn_guar">Guardar</div>
 		
