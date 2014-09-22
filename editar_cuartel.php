@@ -34,7 +34,9 @@
 	echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='edth' value='".$ar[12]."'></td></tr>";
 	echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='edeh' value='".$ar[13]."'></td></tr>";
 	echo "<tr><td>% Machos:</td><td>                <input type='text' id='epm' value='".$ar[14]."'></td></tr>";
-	echo "<tr><td>Observación:</td><td>             <input type='text' id='eo' value='".$ar[15]."'></td></tr>";
+	echo "<tr><td>Tipo Plantación:</td><td>         <input type='text' id='et' value='".$ar[15]."'></td></tr>";
+	echo "<tr><td>N Contrato:</td><td>              <input type='text' id='ec' value='".$ar[16]."'></td></tr>";
+	echo "<tr><td>Observación:</td><td>             <input type='text' id='eo' value='".$ar[17]."'></td></tr>";
 	echo "<tr><td colspan='2'><div id='btn_guar_edi_cuar' class='btn_color'>Guardar Cambio</td></tr></div>";
 	echo "</table>";
 	
@@ -126,7 +128,7 @@ $('#btn_guar_edi_cuar').bind('click',function(){
 	$.ajax({
 		url:'recibeajax.php',
 		type:'POST',
-		data:{editar_cuar:$('#ppp').val(),nombre:$('#enom').val(),ano:$('#eano').val(),sup:$('#esup').val(),nplan:$('#enplan').val(),zona:$('#ez').val(),d:$('#ed').val(),enc:$('#enenc').val(),fenc:$('#efenc').val(),eenc:$('#eeenc').val(),geo:$('#egeo').val(),dth:$('#edth').val(),deh:$('#edeh').val(),pm:$('#epm').val(),o:$('#eo').val()},
+		data:{editar_cuar:$('#ppp').val(),nombre:$('#enom').val(),ano:$('#eano').val(),sup:$('#esup').val(),nplan:$('#enplan').val(),zona:$('#ez').val(),d:$('#ed').val(),enc:$('#enenc').val(),fenc:$('#efenc').val(),eenc:$('#eeenc').val(),geo:$('#egeo').val(),dth:$('#edth').val(),deh:$('#edeh').val(),pm:$('#epm').val(),t:$('#et').val(),c:$('#ec').val(),o:$('#eo').val()},
 		success:function(){alert('Datos Aceptados y Actualizados');}
 	});
 	$('#form_edi_cuar').hide();

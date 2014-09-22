@@ -82,7 +82,7 @@
 	//actualiza los datos de un cuartel
 	if(isset($_POST['editar_cuar'])){
 		$c->conexion();
-		$c->editar_cuartel($_POST['editar_cuar'],$_POST['nombre'],$_POST['ano'],$_POST['sup'],$_POST['nplan'],$_POST['zona'],$_POST['d'],$_POST['enc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
+		$c->editar_cuartel($_POST['editar_cuar'],$_POST['nombre'],$_POST['ano'],$_POST['sup'],$_POST['nplan'],$_POST['zona'],$_POST['d'],$_POST['enc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['t'],$_POST['c'],$_POST['o']);
 		$c->desconexion();
 	}
 	//eliminar los datos de un cuartel
