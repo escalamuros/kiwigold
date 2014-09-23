@@ -463,3 +463,9 @@ td{
 	display:none;
 	
 }
+#exp_excel{
+	float:left;
+	margin-top:-5px;
+	margin-left: 100px;
+	cursor: pointer;
+}

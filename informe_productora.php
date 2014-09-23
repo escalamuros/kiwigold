@@ -1,6 +1,14 @@
 <?php
 	require('clasekiwi.php');
 	$c=new basededatos();
+
+	if(isset($_POST['datos_a_enviar'])){
+		header("Content-type: application/vnd.ms-excel; name='excel'");
+		header("Content-Disposition: filename=DatosExportadoras.xls");
+		header("Pragma: no-cache");	
+		header("Expires: 0");
+		echo $_POST['datos_a_enviar'];
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,6 +41,12 @@ $(document).ready(function(){
 		$('#s_temp').html(anio);
 		sessionStorage['anio']=anio;
 		cargar_datos();
+	});
+
+	//manda datos para excel
+	$("#exp_excel").click(function() {
+		$("#datos_a_enviar").val( $("<div>").append( $("#cont_centro").eq(0).clone()).html());
+		$("#FormularioExportacion").submit();
 	});
 
 	function cargar_datos(){
@@ -91,14 +105,16 @@ $(document).ready(function(){
 			echo "<tr><td colspan='2'>".$v[1]."</td></tr>";
 			$sup=$c->recuperar_cuartel($v[0]);
 			echo "<tr><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
-			echo "<tr><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='40'></td></tr>";
+			echo "<tr><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='30'></td></tr>";
 			echo "</table>";
 			echo "</div>";
 			
 		}
 		echo "</div>";
+
 		echo "<div id='resumen_resultados'>";
-		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>2014</div><div class='flecha' id='fmas'>></div></div>";
+		echo "";
+		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>2014</div><div class='flecha' id='fmas'>></div><div id='exp_excel'><img src='img/excel_logo.png' width='28' alt='Exportar Datos a Excel'></div></div>";
 		
 		echo "<br>Programa Fitosanitario<br>";
 		
@@ -124,6 +140,13 @@ $(document).ready(function(){
 		
 
 		$c->desconexion();
+
+
+		//pruebas de exportar a excel
+
+		echo '<form action="informe_productora.php" method="post" target="_blank" id="FormularioExportacion">';
+		echo '<input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />';
+		echo '</form>';
 	}
 ?>
 </body></html>
