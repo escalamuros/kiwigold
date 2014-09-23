@@ -26,7 +26,8 @@ class basededatos
 		$this->servidor="localhost";
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
-		$this->base="kiwigold_uno";*/
+		$this->base="kiwigold_uno";
+		*/
 	}
 	function conexion()
 	{
@@ -77,12 +78,13 @@ class basededatos
 		}
 		return $arreglo;
 	}
-	
+	//almacena en la bd un archivo, segun el productor
 	function guardar_archivo($prod,$archivo)
 	{
 		$cons="insert into archivos values (NULL,'$archivo','$prod');";
 		mysql_query($cons,$this->id_con);
 	}
+	//lista los archivos de un productor
 	function lista_archivos($prod)
 	{
 		$cons="select id,archivo from archivos where productor='$prod';";
@@ -92,6 +94,23 @@ class basededatos
 			$arreglo[]=array($rs['id'],$rs['archivo']);
 		}
 		return $arreglo;
+	}
+	//recupera los datos del archivo
+	function recupera_datos_archivo($id)
+	{
+		$cons="select * from archivos where id='$id';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{
+			$arreglo=array($rs['id'],$rs['archivo'],$rs['productor']);
+		}
+		return $arreglo;
+	}
+	//elimina un archivo por su id
+	function elimina_archivo($id)
+	{
+		$cons="delete from archivos where id='$id';";
+		mysql_query($cons,$this->id_con);
 	}
 	// crea una nueva f_analisis
 	function crearAnalisis($lab,$fecha,$fmue){

@@ -70,13 +70,15 @@ $(document).ready(function(){
 		}
 	});
 	$('#agregar_cuartel').bind('click',function(){
+		$('#form_edi_cuar').hide();
 		$('#form_nu_cuar').show();
+		
 	});
 	$('#btn_guar_nu_cuar').bind('click',function(){
 		$.ajax({
 			url:'ingreso_cuartel.php',
 			type:'POST',
-			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),o:$('#o').val()},
+			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),t:$('#t').val(),c:$('#c').val(),o:$('#o').val()},
 			success:function(a){$('#lis_cuarteles').html(a);$('#form_edi_cuar').hide();$('#form_nu_cuar').hide();}
 		});
 	});
@@ -99,7 +101,15 @@ $(document).ready(function(){
 			url:'lista_archivos.php',
 			type:'POST',
 			data:{elegido:$('#prod_id').val()},
-			success:function(oi){$('#m_arch').html(oi);},
+			success:function(oi){$('#m_arch').html(oi);}
+		});
+	});
+	$('.elim_arch').bind('click',function(){
+		$.ajax({
+			url:'lista_archivos.php',
+			type:'POST',
+			data:{elim_arch:$(this).attr('id').substring(1)},
+			success:function(oi){$('#m_arch').html(oi);}
 		});
 	});
 });
@@ -158,13 +168,16 @@ $(document).ready(function(){
 		echo "Lista de Cuarteles asociado a la productora:<br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
 		echo "<table>";
-		foreach($lum as $v)
+		if(is_array($lum))
 		{
-			echo "<tr><td>";
-			echo "<div class='bit_cuartel btn_color' style='width:230px;' id='".$v[0]."'>".$v[1]."</div>";
-			echo "</td><td>";
-			echo "<div style='width:20px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
-			echo "</td></tr>";
+			foreach($lum as $v)
+			{
+				echo "<tr><td>";
+				echo "<div class='bit_cuartel btn_color' style='width:230px;' id='".$v[0]."'>".$v[1]."</div>";
+				echo "</td><td>";
+				echo "<div style='width:20px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
+				echo "</td></tr>";
+			}
 		}
 		echo "</table>";
 		echo "</div>";
@@ -181,11 +194,13 @@ $(document).ready(function(){
 		echo "<tr><td>Dirección:</td><td>               <input type='text' id='d'></td></tr>";
 		echo "<tr><td>Nombre Encargado:</td><td>        <input type='text' id='nenc'></td></tr>";
 		echo "<tr><td>Fono Encargado:</td><td>          <input type='text' id='fenc'></td></tr>";
-		echo "<tr><td>EMail Encargado:</td><td>        <input type='text' id='eenc'></td></tr>";
+		echo "<tr><td>EMail Encargado:</td><td>         <input type='text' id='eenc'></td></tr>";
 		echo "<tr><td>Geolocalización:</td><td>         <input type='text' id='geo'></td></tr>";
 		echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='dth'></td></tr>";
 		echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='deh'></td></tr>";
 		echo "<tr><td>% Machos:</td><td>                <input type='text' id='pm'></td></tr>";
+		echo "<tr><td>Tipo Plantación:</td><td>         <input type='text' id='t'></td></tr>";
+		echo "<tr><td>N Contrato:</td><td>              <input type='text' id='c'></td></tr>";
 		echo "<tr><td>Observación:</td><td>             <input type='text' id='o'></td></tr>";
 		echo "<tr><td colspan='2'><div class='btn_color' id='btn_guar_nu_cuar'>Guardar</div></td></tr>";
 		echo "</table>";
@@ -195,13 +210,15 @@ $(document).ready(function(){
 		echo "<div class='mod' id='mantenedor_arch' >";
 		echo "Lista de Archivos Adjuntos Productora:<br>";
 		echo "<div id='m_arch'>";
-		$lum=$c->lista_archivos($_POST['elegido']);
-		echo "<table>";
-		foreach($lum as $v)	{
-			echo "<tr><td><a href='bajar.php?arch=".$v[1],"' >". basename($v[1])."</a></td>";
-			echo "<td>X</td></tr>";
+		$lim = $c->lista_archivos($_POST['elegido']);
+		if( is_array($lim) ) 
+		{
+			foreach($lim as $v)
+			{
+				echo "<div style='margin-top:2px;width:310px;'><a href='bajar.php?arch=".$v[1],"' >". basename($v[1])."</a>";
+				echo "<div style='border-radius:5px;cursor:pointer;float:right;margin-left:5px;padding-left:10px;color:red;background-color:#345;width:23px;' class='elim_arch' id='x".$v[0]."'>x</div></div>";
+			}
 		}
-		echo "<table>";
 		echo "</div>";		
 		echo "<br>";
 		echo "Agregar nuevo Archivo:<br>";

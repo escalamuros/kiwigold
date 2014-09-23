@@ -196,12 +196,15 @@ if(isset($_SESSION['id']))
 			<table>
 			<tr><td>Lab Numero</td><td>UM</td><td>Campo</td><td>Productor</td><td>Fecha de Lab</td><td>Fecha Muestreo</td><td>Estado</td></tr>
 			<?php
+			if(is_array($ar))
+			{
 			foreach($ar as $i)
 			{
 				echo "<tr><td><div class='btn_color labs' id='".$i[0]."'>".$i[0]."</div></td><td>".$i[1]."</td><td>".$i[2]."</td><td>".$i[3]."</td><td>".$i[4]."</td><td>".$i[5]."</td><td>";
 				switch($i[6])
 				{case 0: echo "Datos Incompletos";break;case 1: echo "Datos Completos";break;case 2: echo "Informe Enviado";break;}
 				echo "</td></tr>";
+			}
 			}
 			?>
 			</table>

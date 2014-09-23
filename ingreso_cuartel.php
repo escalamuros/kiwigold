@@ -12,7 +12,7 @@
 <?php 
 	if((isset($_POST['prod']))&&(isset($_POST['ano'])))
 	{
-		$c->agregar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['o']);
+		$c->agregar_cuartel_productor($_POST['prod'],$_POST['ano'],$_POST['nom'],$_POST['sup'],$_POST['nplan'],$_POST['z'],$_POST['d'],$_POST['nenc'],$_POST['fenc'],$_POST['eenc'],$_POST['geo'],$_POST['dth'],$_POST['deh'],$_POST['pm'],$_POST['t'],$_POST['c'],$_POST['o']);
 	}
 	$ar=$c->lista_cuarteles_productor($_POST['prod']);
 	$c->desconexion();
