@@ -12,38 +12,52 @@
 $(document).ready(function(){
 	$('#prod_prod').hide();
 	$('#hist_prod').hide();
+	$('#expo_prod').hide();
+	$('#expo_cuar').hide();
 	$('#opex').bind('change',function(e) {	
-		sessionStorage['exportadora']=this.value;
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:this.value},
+			data:{findprod:$('select#opex').val()},
 			success:function(re){		
 				$('#fprod').html(re);
 				$('#prod_prod').hide();
 				$('#hist_prod').hide();
+				$('#expo_cuar').hide();
 				}
 			});
 		$('#expo_prod').show();
     });
     $('#fprod').bind('change',function(e) {
-		sessionStorage['productor']=this.value;
+		$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			data:{findcuar:$('select#fprod').val()},
+			success:function(dev){
+				$('#fcuar').html(dev);
+				$('#expo_cuar').show();
+				$('#prod_prod').hide();
+				$('#hist_prod').hide();	
+			}
+		});
+    });
+    $('#fcuar').bind('change',function(e) {
 		$.ajax({
 			url:'ingreso_produccion.php',
 			type:'POST',
-			data:{prod:$('select#fprod').val()},
-			success:function(dev){
-				$('#hist_prod').html(dev);
+			data:{cuar:$('select#fcuar').val()},
+			success:function(re){
+				$('#hist_prod').html(re);
 				$('#prod_prod').show();
 				$('#hist_prod').show();
-			}
-		});
+				}
+			});
     });
     $('#guar_prod').bind('click',function(){
     	$.ajax({
     		url:'ingreso_produccion.php',
     		type:'POST',
-    		data:{prod:$('select#fprod').val(),fech:$('#f_p_p').val(),com:$('#com_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
+    		data:{cuar:$('select#fcuar').val(),fech:$('#f_p_p').val(),com:$('#com_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
     		success:function(wa){$('#hist_prod').html(wa);},
     	});
     	$('#f_p_p').val('');
@@ -75,7 +89,8 @@ $(document).ready(function(){
 					?>
 				</select>
 			</div>
-        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
+        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="fprod"></select></div>
+        	<div id="expo_cuar" class="expo"><div class="etex">Cuartel :</div> <select id="fcuar"></select></div>
 		</div>
 		<div id='hist_prod' style="float:left;width:370px;height:220px;overflow:auto;"></div>
 		<div id="prod_prod" style="clear:both;">

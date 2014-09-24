@@ -12,22 +12,22 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 		$this->servidor="localhost";
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
 		$this->base="kiwigold_uno";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -416,7 +416,7 @@ class basededatos
 	}
 	function lista_ultimos10_prod($prod)
 	{
-		$cons="select id,fecha,ton,calibre from produccion where productor='$prod' order by fecha desc limit 10;";
+		$cons="select id,fecha,ton,calibre from produccion where cuartel='$prod' order by fecha desc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
 		{$arr[]=array($rs['id'],$rs['fecha'],$rs['ton'],$rs['calibre']);}
@@ -555,45 +555,23 @@ class basededatos
 	}
 	function resumen_produccion($re,$anio,$cuartel){
 		$aniomas=intval($anio)+1;
-		$cons="select campos.empresa,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from campos,produccion where produccion.productor='$re' and produccion.productor=campos.id and produccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by produccion.fecha  ;";
+		$cons="select cuarteles.nombre,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from cuarteles,produccion where produccion.cuartel='$re' and produccion.cuartel=cuarteles.id and produccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by produccion.fecha  ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$resol[]=array($rs['empresa'],$rs['fecha'],$rs['comercializadora'],$rs['ton'],$rs['calibre']);
+			$resol[]=array($rs['nombre'],$rs['fecha'],$rs['comercializadora'],$rs['ton'],$rs['calibre']);
 		}
-		
 		$cons="select cuarteles.nombre,labores.fecha,labores.programa,labores.aplicacion,est_fen.nombre as feno from cuarteles,labores,est_fen where labores.cuartel='$cuartel' and labores.cuartel=cuarteles.id AND labores.estado_f = est_fen.id and labores.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by labores.fecha;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 			$res[]=array($rs['nombre'],$rs['fecha'],$rs['programa'],$rs['aplicacion'],$rs['feno']);
 		}
-		
-
 		$cons="select cuarteles.nombre,fitosanitarios.fecha,fitosanitarios.n_comercial,fitosanitarios.i_activo,fitosanitarios.cadencia,fitosanitarios.obs,est_fen.nombre as feno from cuarteles,fitosanitarios,est_fen where fitosanitarios.cuartel='$cuartel' and fitosanitarios.cuartel=cuarteles.id AND fitosanitarios.estado_f = est_fen.id and fitosanitarios.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by fitosanitarios.fecha;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 			$resf[]=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
 		}
-
-		
 		$respon=array('produccion'=>$resol,'labs'=>$res,'fitos'=>$resf);
 		echo json_encode($respon);
 	}
-	/*function resumen_fito($cu){
-		$cons="select cuarteles.nombre,fitosanitarios.fecha,fitosanitarios.n_comercial,fitosanitarios.i_activo,fitosanitarios.cadencia,fitosanitarios.obs,est_fen.nombre as feno from cuarteles,fitosanitarios,est_fen where fitosanitarios.cuartel='$cu' and fitosanitarios.cuartel=cuarteles.id AND fitosanitarios.estado_f = est_fen.id;";
-		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$res=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
-		}
-		return $res;
-	}
-	function resumen_labs($anio,$cu){
-		$aniomas=intval($anio)+1;
-		$cons="select cuarteles.nombre,labores.fecha,labores.programa,labores.aplicacion,est_fen.nombre as feno from cuarteles,labores,est_fen where labores.cuartel='$cu' and labores.cuartel=cuarteles.id AND labores.estado_f = est_fen.id and labores.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by labores.fecha;";
-		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$res=array($rs['nombre'],$rs['fecha'],$rs['programa'],$rs['aplicacion'],$rs['feno']);
-		}
-		echo json_encode($res);
-	}*/
 }
 ?>

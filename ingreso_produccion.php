@@ -10,11 +10,11 @@
 </head>
 <body>
 <?php 
-	if((isset($_POST['prod']))&&(isset($_POST['fech'])))
+	if((isset($_POST['cuar']))&&(isset($_POST['fech'])))
 	{
-		$c->ingresa_produccion($_POST['prod'],$_POST['fech'],$_POST['com'],$_POST['ton'],$_POST['cal']);
+		$c->ingresa_produccion($_POST['cuar'],$_POST['fech'],$_POST['com'],$_POST['ton'],$_POST['cal']);
 	}
-	$ar=$c->lista_ultimos10_prod($_POST['prod']);
+	$ar=$c->lista_ultimos10_prod($_POST['cuar']);
 	$c->desconexion();
 	echo "Últimas Producciones Registradas";
 	echo "<table>";

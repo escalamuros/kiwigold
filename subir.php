@@ -3,7 +3,7 @@ require('clasekiwi.php');
 $nombre_archivo =basename($_FILES['archivo']['name']) ;
 $tmp_archivo = $_FILES['archivo']['tmp_name'];
 $ruta='./documentos/'.$_POST['prod'].'/';
-if( mkdir($ruta ,0777)){chmod($ruta,0777);}
+if( @mkdir($ruta ,0777)){chmod($ruta,0777);}
 $i=1;
 do{
 	$temp=$ruta.$i."_".$nombre_archivo;

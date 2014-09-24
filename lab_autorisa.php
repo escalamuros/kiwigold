@@ -198,16 +198,18 @@ if(isset($_SESSION['id']))
 			<?php
 			if(is_array($ar))
 			{
-			foreach($ar as $i)
-			{
-				echo "<tr><td><div class='btn_color labs' id='".$i[0]."'>".$i[0]."</div></td><td>".$i[1]."</td><td>".$i[2]."</td><td>".$i[3]."</td><td>".$i[4]."</td><td>".$i[5]."</td><td>";
-				switch($i[6])
-				{case 0: echo "Datos Incompletos";break;case 1: echo "Datos Completos";break;case 2: echo "Informe Enviado";break;}
-				echo "</td></tr>";
-			}
+				foreach($ar as $i)
+				{
+					echo "<tr><td><div class='btn_color labs' id='".$i[0]."'>".$i[0]."</div></td><td>".$i[1]."</td><td>".$i[2]."</td><td>".$i[3]."</td><td>".$i[4]."</td><td>".$i[5]."</td><td>";
+					switch($i[6])
+					{case 0: echo "Datos Incompletos";break;case 1: echo "Datos Completos";break;case 2: echo "Informe Enviado";break;}
+					echo "</td></tr>";
+				}
 			}
 			?>
 			</table>
+			<br>
+			<a class="btn_color" href="histo_lab.php">Historico Laboratorios</a>
 		</div>
 		<div id="man_datos">
 			<input type="hidden" id="existe_lab" value="0" >
@@ -240,7 +242,7 @@ if(isset($_SESSION['id']))
 			</table>
 			<br>
 			<table style="margin: 0 auto 0 auto;">
-			<tr><td></td><td>Peso(g)</td><td>Promedio Presion 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
+			<tr><td></td><td>Peso(g)</td><td>Promedio Presión 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
 			<tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
 			<tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
 			<tr><td>Min</td><td><div id="resmin" class="resul"></div></td><td><div id="resminp" class="resul"></td><td><div id="resmins" class="resul"></td><td><div id="resminc" class="resul"></td><td><div id="resminm" class="resul"></td></tr>
