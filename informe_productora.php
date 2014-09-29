@@ -98,18 +98,18 @@ $(document).ready(function(){
 		echo "<div id='lis_cuarteles'>";
 		echo "<br>Lista de Cuarteles <br>";
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
+		echo "<table>";
+		echo "<tr><td>Cuartel</td><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. sobre Hileras</td><td>% Machos</td><td>Tipo de plantación</td><td>Mapa</td></tr>";
 		foreach($lum as $v)
 		{
-			echo "<div class='box_cuartel' id='cuar".$v[0]."'>";
-			echo "<table>";
-			echo "<tr><td colspan='2'>".$v[1]."</td></tr>";
 			$sup=$c->recuperar_cuartel($v[0]);
-			echo "<tr><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
-			echo "<tr><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='30'></td></tr>";
-			echo "</table>";
-			echo "</div>";
-			
+			echo "<tr><td class='box_cuartel' id='cuar".$v[0]."'>".$v[1]."</td><td style='background:#bcd;'>".$sup[4]."</td>";
+			echo "<td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td>";
+			echo "<td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td>";
+			echo "<td style='background:#bcd;'>".$sup[15]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'>";
+			echo "<img src='img/tierra.png' width='30'></td></tr>";
 		}
+		echo "</table>";
 		echo "</div>";
 
 		echo "<div id='resumen_resultados'>";

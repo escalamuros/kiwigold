@@ -2,7 +2,7 @@
 	session_start();
 	require('clasekiwi.php');
 	$c=new basededatos();
-	if(!isset($_SESSION['id'])){ header('location:index.php?op=2'); }
+	if(!isset($_SESSION['id'])){ header('location:login.php?op=2'); }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

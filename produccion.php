@@ -77,7 +77,7 @@ $(document).ready(function(){
 		<div id="titulo_lab">Registro de Producciones Por Productor</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
-				<div class="etex">Exportadora :</div>
+				<div class="etex">Consecionaria :</div>
 				<select name="opexpo" id="opex">
 					<option>Seleccione</option>
 					<?php

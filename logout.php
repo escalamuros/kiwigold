@@ -1,3 +1,3 @@
 <?php
-header('location:index.php?op=3');exit();
+header('location:login.php?op=3');exit();
 ?>

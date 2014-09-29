@@ -139,7 +139,7 @@ $(document).ready(function(){
 	<div id="contenedor" style="color:#567;">
 		<div id="titulo_lab">Registro Análisis de Control de Madurez Jintao</div>
 		<div class="men_i" style="height:160px">
-			<div id="expo_lab" class="expo"><div class="etex">Exportadora :</div>
+			<div id="expo_lab" class="expo"><div class="etex">Consecionaria :</div>
 				<select name="opexpo" id="opex"><option>Seleccione</option>
 					<?php foreach($ar as $v) { echo "<option value='".$v[0]."'>".$v[1]."</option>";}	?>
 				</select>

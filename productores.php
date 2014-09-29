@@ -49,7 +49,7 @@ if(isset($_SESSION['id']))
 		$a='0';
 		foreach($lis as $p)
 		{
-			if($p[0]!=$a){$a=$p[0];echo "<div class='tit_expo'>Exportadora ".$p[0]."</div>";}
+			if($p[0]!=$a){$a=$p[0];echo "<div class='tit_expo'>Concesionaria ".$p[0]."</div>";}
 			echo "<div class='prod' id='".$p[1]."'>".$p[2]."</div>";
 		}
 		?>
