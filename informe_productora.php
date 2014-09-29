@@ -26,7 +26,7 @@ $(document).ready(function(){
 	sessionStorage['theone']=<?php echo $_POST['elegido'] ?>;
 	
 	
-	$('.box_cuartel').bind('click',function(){
+	$('.selec_cuartel').bind('click',function(){
 		sessionStorage['cuartel']=this.id.substr(4);
 		$('#resumen_resultados').show();
 		cargar_datos();
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
 	//manda datos para excel
 	$("#exp_excel").click(function() {
-		$("#datos_a_enviar").val( $("<div>").append( $("#cont_centro").eq(0).clone()).html());
+		$("#datos_a_enviar").val( $("<div>").append( $("#resumen_resultados").eq(0).clone()).html());
 		$("#FormularioExportacion").submit();
 	});
 
@@ -97,19 +97,23 @@ $(document).ready(function(){
 		echo "<div class='mod' id='mantenedor_cuarteles' >";
 		echo "<div id='lis_cuarteles'>";
 		echo "<br>Lista de Cuarteles <br>";
+		echo "<table>";
+		echo "<tr><td>Cuartel</td><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
+			
 		$lum=$c->lista_cuarteles_productor($_POST['elegido']);
 		foreach($lum as $v)
 		{
-			echo "<div class='box_cuartel' id='cuar".$v[0]."'>";
-			echo "<table>";
-			echo "<tr><td colspan='2'>".$v[1]."</td></tr>";
+			//echo "<div class='box_cuartel' id='cuar".$v[0]."'>";
+			//echo "<table>";
+			
 			$sup=$c->recuperar_cuartel($v[0]);
-			echo "<tr><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
-			echo "<tr><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='30'></td></tr>";
-			echo "</table>";
-			echo "</div>";
+			//echo "<tr><td>Cuartel</td><td>Superficie</td><td>Numero de Plantas</td><td>Dist. entre Hileras</td><td>Dist. en Hileras</td><td>% Machos</td><td>Mapa</td></tr>";
+			echo "<tr class='selec_cuartel' id='cuar".$v[0]."'><td>".$v[1]."</td><td style='background:#bcd;'>".$sup[4]."</td><td style='background:#bcd;'>".$sup[5]."</td><td style='background:#bcd;'>".$sup[12]."</td><td style='background:#bcd;'>".$sup[13]."</td><td style='background:#bcd;'>".$sup[14]."</td><td style='background:#bcd;cursor:pointer;' class='bot_cuartel' id='".$v[0]."'><img src='img/tierra.png' width='30'></td></tr>";
+			
+			//echo "</div>";
 			
 		}
+		echo "</table>";
 		echo "</div>";
 
 		echo "<div id='resumen_resultados'>";

@@ -417,8 +417,11 @@ td{
 	margin-bottom: 6px;
 	cursor:pointer;
 }
+.selec_cuartel{
+	cursor: pointer;
+}
 //.box_cuartel td:first-child{background: #abc;}
-.box_cuartel td{background: #abc;}
+.selec_cuartel td{background: #abc;}
 #mantenedor_cuarteles{
 	margin-left: 20px;
 }
