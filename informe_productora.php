@@ -45,7 +45,7 @@ $(document).ready(function(){
 
 	//manda datos para excel
 	$("#exp_excel").click(function() {
-		$("#datos_a_enviar").val( $("<div>").append( $("#cont_centro").eq(0).clone()).html());
+		$("#datos_a_enviar").val( $("<div>").append( $("#resumen_resultados").eq(0).clone()).html());
 		$("#FormularioExportacion").submit();
 	});
 

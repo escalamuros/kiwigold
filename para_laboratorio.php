@@ -68,7 +68,7 @@
 	}
 	if((isset($_POST['actualiza_lab']))&&(isset($_POST['flab']))&&(isset($_POST['fmue']))){
 		$c->conexion();
-		$c->actualiza_fechas_f_analisis($_POST['actualizar_lab'],$_POST['flab'],$_POST['fmue']);
+		$c->actualiza_fechas_f_analisis($_POST['actualiza_lab'],$_POST['flab'],$_POST['fmue']);
 		foreach($_POST['num'] as $a)
 		{
 			$dat=explode('/',$a);

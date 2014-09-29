@@ -83,10 +83,10 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:300px;height:230px;overflow:auto;'>
+      <div id="h_fito" style='float:left;width:300px;height:140px;overflow:auto;'>
       </div>
    	<div style="clear:both;"></div>
-   	<div id="n_fito" style="width:950px;height:150px;overflow:auto;">
+   	<div id="n_fito" style="width:950px;height:290px;overflow:auto;">
    	Registrar nueva Labor No Quimica<br>
    	<table>
    	<tr><td>Fecha</td><td><input type="date" id="fechaf" style="width:700px;"></td></tr>

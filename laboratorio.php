@@ -77,6 +77,7 @@ $(document).ready(function(){
 	//al presionar agregar, inserta los datos o actualiza 
 	$('#masdatos').bind('click',function(){
 		var existe = $('#existe_lab').val();
+
 		if(existe==0){
 			var ndatos= new FormData();
 			ndatos.append('um',$('select#flab').val());

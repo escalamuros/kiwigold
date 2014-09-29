@@ -123,7 +123,6 @@ class basededatos
 	function actualiza_analisis($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
 		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
 		mysql_query($cons,$this->id_con);
-		if ($numm==48){ echo $numm; }
 	}
 	//inserta nuevos datos de un analisis, segun la f_analisis
 	function llena_analisis($id_anal,$arr){

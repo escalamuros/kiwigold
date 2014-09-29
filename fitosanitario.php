@@ -84,14 +84,14 @@ $(document).ready(function(){
         	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
         	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select name="labexpo" id="flab"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:300px;height:220px;overflow:auto;'>
+      <div id="h_fito" style='float:left;width:300px;height:140px;overflow:auto;'>
       </div>
    	<div style="clear:both;"></div>
-   	<div id="n_fito" style="width:950px;height:150px;overflow:auto;">
+   	<div id="n_fito" style="width:950px;height:290px;overflow:auto;">
    	Registrar nuevo evento Fitosanitario<br>
    	<table>
-   	<tr><td>Fecha</td><td><input type="date" id="fecha" style="width:700px;"></td></tr>
-   	<tr><td>Estado Fenologico</td><td>
+   	<tr><td>Fecha</td><td><input type="date" id="fecha" style="width:100px;"></td>
+   	<td>Estado Fenologico</td><td>
    	<select id="fen">
    	<option value='0'>Seleccione</option>
    	<?php
@@ -103,11 +103,11 @@ $(document).ready(function(){
 		?>
    	</select>
    	<img id='foto_fen' src='img/if0.png' width="50px"></td></tr>
-		<tr><td>Nombre Comercial</td><td><input type="text" id="ncom" style="width:700px;"></td></tr>
-		<tr><td>Ingrediente Activo</td><td><input type="text" id="iac" style="width:700px;"></td></tr>
-		<tr><td>Carencia</td><td><input type="text" id="cad" style="width:700px;"></td></tr>
-		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="obs" style="width:700px;height:55px"></textarea></td></tr>
-		<tr><td></td><td><div id="btn_guardar">Guardar evento Fitosanitario</div></td></tr>	
+		<tr><td>Nombre Comercial</td><td colspan="3"><input type="text" id="ncom" style="width:700px;"></td></tr>
+		<tr><td>Ingrediente Activo</td><td colspan="3"><input type="text" id="iac" style="width:700px;"></td></tr>
+		<tr><td>Carencia</td><td colspan="3"><input type="text" id="cad" style="width:700px;"></td></tr>
+		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td colspan="3"><textarea id="obs" style="width:700px;height:55px"></textarea></td></tr>
+		<tr><td></td><td colspan="3"><div id="btn_guardar">Guardar evento Fitosanitario</div></td></tr>	
 		</table>
 		</div>
 	<?php
