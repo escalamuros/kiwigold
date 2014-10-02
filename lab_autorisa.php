@@ -13,6 +13,20 @@ $c->desconexion();
 <script>
 $(document).ready(function(){
 	$('#man_datos').hide();
+	$('#historico').bind('click',function(){
+		$.ajax({
+			url:'lab_historico.php',
+			type:'POST',
+			success:function(e){$('#cont_centro').html(e);}
+		});
+	});
+	$('#Envio_Productor').bind('click',function(){
+		$.ajax({
+			url:'recibeajax.php',
+			type:'POST',
+			data:{lab_aut:$('#existe_lab').val(),obs_datos:$('#obs_gral').val()},
+			success:function(){alert('revisar laboratorios historicos'); }});
+	});
 	function completarCampos(per)
 	{
 		for(var de=0;de<=47;de++)
@@ -180,9 +194,6 @@ $(document).ready(function(){
 		$('#depcol').html(((promcol*tot_elem-mincol-maxcol)/(tot_elem-2)).toFixed(1));
 		$('#depseca').html(((promseca*tot_elem-minseca-maxseca)/(tot_elem-2)).toFixed(1));
 	}
-	$('#Envio_Productor').bind('click',function(){
-		alert('Redirigir Datos, Almacenar comentario(f_analisis), Mostrara los correos, adjuntar documento');
-	});
 });
 </script>
 </head>
@@ -193,6 +204,7 @@ if(isset($_SESSION['id']))
 	if(($_SESSION['nivel']=='1')||($_SESSION['nivel']=='2'))
 	{?>
 		<div id='lista_t_lab'>
+			Lista de Laboratorios en proceso de aprovación.
 			<table>
 			<tr><td>Lab Numero</td><td>UM</td><td>Campo</td><td>Productor</td><td>Fecha de Lab</td><td>Fecha Muestreo</td><td>Estado</td></tr>
 			<?php
@@ -209,7 +221,7 @@ if(isset($_SESSION['id']))
 			?>
 			</table>
 			<br>
-			<a class="btn_color" href="histo_lab.php">Historico Laboratorios</a>
+			<div class="btn_color" id="historico" style="width:200px;">Historico Laboratorios</div>
 		</div>
 		<div id="man_datos">
 			<input type="hidden" id="existe_lab" value="0" >
@@ -273,7 +285,7 @@ if(isset($_SESSION['id']))
 	<?php 
 	}
 }
-else{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
+else{echo "<a href='login.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>

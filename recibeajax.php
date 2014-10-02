@@ -32,6 +32,13 @@
 		foreach($arreglo as $a){echo "<option value='".$a[0]."'>".$a[1]."</option>";}
 		$c->desconexion();
 	}
+	//cambia estado de laboratorio y guarda la observacion.
+	if( (isset($_POST['lab_aut']))&&(isset($_POST['obs_datos']))){
+		$c->conexion();
+		$c->actualiza_obs_f_a($_POST['obs_datos'],$_POST['lab_aut']);
+		$c->cambia_estado_lab($_POST['lab_aut'],2);
+		$c->desconexion();
+	}
 	//llena de datos, un analisis seleccionado para editar
 	if(isset($_POST['lab_seleccionado'])){
 		$c->conexion();
@@ -129,11 +136,6 @@
 	{
 		$c->conexion();
 		$c->cambia_estado_dato_analisis($_POST['cam_est_dato'],$_POST['analisis']);
-		$c->desconexion();
-	}
-	if(isset($_POST['tnd'])){
-		$c->conexion();
-		$c->resumen_produccion($_POST['theone'],$_POST['tempo'],$_POST['ccuartel']);
 		$c->desconexion();
 	}
 ?>

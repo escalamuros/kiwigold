@@ -140,6 +140,93 @@ class basededatos
 		$cons="update f_analisis set fecha='$f',fecha_m='$ff' where id='$lab';";
 		mysql_query($cons,$this->id_con);
 	}
+	function recupera_f_analisis($id)
+	{
+		$cons="select * from f_analisis where id='$id';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$resp=array($rs['id'],$rs['um'],$rs['fecha'],$rs['fecha_m'],$rs['estado'],$rs['obs']);
+		}
+		return $resp;
+	}
+	function analisis_datos_fanalisis($a)
+	{
+		$cons="select * from analisis where f_analisis='$a' and estado='1' order by numm asc ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$arreglo[]=array($rs['peso'],($rs['presion1']+$rs['presion2'])/2,$rs['ss'],($rs['color1']+$rs['color2'])/2,($rs['pesof']/$rs['pesoi'])*100);
+		}
+		$pesoM=0;$pesom=99999;$presionM=0;$presionm=99999;$ssM=0;$ssm=99999;$colorM=0;$colorm=99999;$secaM=0;$secam=99999;
+		$c=0;$sumap=0;$sumapre=0;$sumass=0;$sumacolor=0;$sumaseca=0;
+		foreach($arreglo as $a)
+		{
+			if($pesoM<=$a[0]){$pesoM=$a[0];}
+			if($pesom>=$a[0]){$pesom=$a[0];}
+			$sumap+=$a[0];
+			if($presionM<=$a[1]){$presionM=$a[1];}
+			if($presionm>=$a[1]){$presionm=$a[1];}
+			$sumapre+=$a[1];
+			if($ssM<=$a[2]){$ssM=$a[2];}
+			if($ssm>=$a[2]){$ssm=$a[2];}
+			$sumass+=$a[2];
+			if($colorM<=$a[3]){$colorM=$a[3];}
+			if($colorm>=$a[3]){$colorm=$a[3];}
+			$sumacolor+=$a[3];
+			if($secaM<=$a[4]){$secaM=$a[4];}
+			if($secam>=$a[4]){$secam=$a[4];}
+			$sumaseca+=$a[4];
+			$c++;
+		}
+		$difpeso=0;$difpresion=0;$difss=0;$difcolor=0;$difseca=0;
+		if($c>0)
+		{
+			$promp=$sumap/$c;
+			$prompre=$sumapre/$c;
+			$promss=$sumass/$c;
+			$promcolor=$sumacolor/$c;
+			$promseca=$sumaseca/$c;
+			foreach($arreglo as $b)
+			{
+				$difpeso+=pow(($b[0]-$promp),2);
+				$difpresion+=pow(($b[1]-$prompre),2);
+				$difss+=pow(($b[2]-$promss),2);
+				$difcolor+=pow(($b[3]-$promcolor),2);
+				$difseca+=pow(($b[4]-$promseca),2);
+			}
+			$desvp=sqrt($difpeso/$c);
+			$desvpre=sqrt($difpresion/$c);
+			$desvss=sqrt($difss/$c);
+			$desvcolor=sqrt($difcolor/$c);
+			$desvseca=sqrt($difseca/$c);
+		}
+		$lis[0]=$c;
+		$lis[1]=$pesom;
+		$lis[2]=$pesoM;
+		$lis[3]=$presionm;
+		$lis[4]=$presionM;
+		$lis[5]=$ssm;
+		$lis[6]=$ssM;
+		$lis[7]=$colorm;
+		$lis[8]=$colorM;
+		$lis[9]=number_format($secam,1);
+		$lis[10]=number_format($secaM,1);
+		$lis[11]=number_format($promp,1);
+		$lis[12]=number_format($prompre,1);
+		$lis[13]=number_format($promss,1);
+		$lis[14]=number_format($promcolor,1);
+		$lis[15]=number_format($promseca,1);
+		$lis[16]=number_format($promp-(3.35*$desvp),1);
+		$lis[17]=number_format($promp+(3.35*$desvp),1);
+		$lis[18]=number_format($prompre-(3.35*$desvpre),1);
+		$lis[19]=number_format($prompre+(3.35*$desvpre),1);
+		$lis[20]=number_format($promss-(3.35*$desvss),1);
+		$lis[21]=number_format($promss+(3.35*$desvss),1);
+		$lis[22]=number_format($promcolor-(3.35*$desvcolor),1);
+		$lis[23]=number_format($promcolor+(3.35*$desvcolor),1);
+		$lis[24]=number_format($promseca-(3.35*$desvseca),1);
+		$lis[25]=number_format($promseca+(3.35*$desvseca),1);
+		return $lis;
+	}
 	function recupera_datos_analisis($id_f_analisis){
 		$cons="select * from analisis where f_analisis='$id_f_analisis' order by numm asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
@@ -147,6 +234,26 @@ class basededatos
 			$arreglo[]=array($rs['numm'],$rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['obs'],$rs['estado']);
 		}
 		print_r(json_encode($arreglo));
+	}
+	function recupera_datos_analisis2($id_f_analisis){
+		$cons="select * from analisis where f_analisis='$id_f_analisis' order by numm asc ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$arreglo[]=array($rs['peso'],$rs['presion1'],$rs['presion2'],$rs['ss'],$rs['color1'],$rs['color2'],$rs['pesoi'],$rs['pesof'],$rs['estado']);
+		}
+		return $arreglo;
+	}
+	//recupera datos del productor, para generacion de informe en base a "um" hacia cuartel y productora
+	function recupera_dt_para_inf($um)
+	{
+		$cons="select datos_prod.rs,datos_prod.mail,datos_prod.rl,datos_prod.mailrl,datos_prod.agronomo,datos_prod.amail,cuarteles.nombre,cuarteles.direccion,cuarteles.nenc,cuarteles.eenc from um,datos_prod,cuarteles where um.id='$um' and um.cuartel=cuarteles.id and um.campo=datos_prod.campo";
+		$ejec=mysql_query($cons,$this->id_con);
+		$arreglo="";
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$arreglo=array($rs['rs'],$rs['mail'],$rs['rl'],$rs['mailrl'],$rs['agronomo'],$rs['amail'],$rs['nombre'],$rs['direccion'],$rs['nenc'],$rs['eenc']);
+		}
+		while(count($arreglo) < 10){$arreglo[]='';}
+		return $arreglo;
 	}
 	function recupera_f_f_analisis($re){
 		$cons="select fecha,fecha_m from f_analisis where id='$re' ; ";
@@ -162,7 +269,7 @@ class basededatos
 		$cons="update f_analisis set obs='$obs' where id='$lab' ; ";
 		mysql_query($cons,$this->id_con);
 	}
-	//genera nueva fecha en fechas de analisis			
+	//genera nueva fecha en fechas de analisis, creo que ya no se usa... revisar			
 	function nuevafecha($pom,$pe){
 		$cons="update f_analisis set fecha_m='$pom' where id='$pe';";
 		mysql_query($cons,$this->id_con);
@@ -187,7 +294,14 @@ class basededatos
 	}
 	//lista los laboratorios (f_analisis) y desde que cuartel y UM vienen
 	function lista_todo_laboratorio(){
-		$cons="select f_analisis.id,um.um,cuarteles.nombre as n_c,campos.empresa as n_prod,f_analisis.fecha,f_analisis.fecha_m,f_analisis.estado from f_analisis,um,cuarteles,campos where f_analisis.um=um.id and um.cuartel=cuarteles.id and um.campo=campos.id order by f_analisis.fecha asc ;";
+		$cons="select f_analisis.id,um.um,cuarteles.nombre as n_c,campos.empresa as n_prod,f_analisis.fecha,f_analisis.fecha_m,f_analisis.estado from f_analisis,um,cuarteles,campos where f_analisis.estado<2 and f_analisis.um=um.id and um.cuartel=cuarteles.id and um.campo=campos.id order by f_analisis.fecha asc limit 20 ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['um'],$rs['n_c'],$rs['n_prod'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
+		return $ec;
+	}
+	//lista los laboratorios ya analisados
+	function lista_laboratorios_f(){
+		$cons="select f_analisis.id,um.um,cuarteles.nombre as n_c,campos.empresa as n_prod,f_analisis.fecha,f_analisis.fecha_m,f_analisis.estado from f_analisis,um,cuarteles,campos where f_analisis.estado=2 and f_analisis.um=um.id and um.cuartel=cuarteles.id and um.campo=campos.id order by f_analisis.fecha asc limit 30;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['um'],$rs['n_c'],$rs['n_prod'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
 		return $ec;
@@ -552,25 +666,25 @@ class basededatos
 			$ejec=mysql_query($cons,$this->id_con);
 		}
 	}
-	function resumen_produccion($re,$anio,$cuartel){
-		$aniomas=intval($anio)+1;
-		$cons="select cuarteles.nombre,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from cuarteles,produccion where produccion.cuartel='$re' and produccion.cuartel=cuarteles.id and produccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by produccion.fecha  ;";
+	function resumen_registro_cuartel($anio,$cuartel){
+		$aniomas=intval($anio)+1;$res_prod=array();$res_lab=array();$res_f=array();
+		$cons="select cuarteles.nombre,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from cuarteles,produccion where produccion.cuartel='$cuartel' and produccion.cuartel=cuarteles.id and produccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by produccion.fecha  ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$resol[]=array($rs['nombre'],$rs['fecha'],$rs['comercializadora'],$rs['ton'],$rs['calibre']);
+			$res_prod[]=array($rs['nombre'],$rs['fecha'],$rs['comercializadora'],$rs['ton'],$rs['calibre']);
 		}
 		$cons="select cuarteles.nombre,labores.fecha,labores.programa,labores.aplicacion,est_fen.nombre as feno from cuarteles,labores,est_fen where labores.cuartel='$cuartel' and labores.cuartel=cuarteles.id AND labores.estado_f = est_fen.id and labores.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by labores.fecha;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$res[]=array($rs['nombre'],$rs['fecha'],$rs['programa'],$rs['aplicacion'],$rs['feno']);
+			$res_lab[]=array($rs['nombre'],$rs['fecha'],$rs['programa'],$rs['aplicacion'],$rs['feno']);
 		}
 		$cons="select cuarteles.nombre,fitosanitarios.fecha,fitosanitarios.n_comercial,fitosanitarios.i_activo,fitosanitarios.cadencia,fitosanitarios.obs,est_fen.nombre as feno from cuarteles,fitosanitarios,est_fen where fitosanitarios.cuartel='$cuartel' and fitosanitarios.cuartel=cuarteles.id AND fitosanitarios.estado_f = est_fen.id and fitosanitarios.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by fitosanitarios.fecha;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$resf[]=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
+			$res_f[]=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
 		}
-		$respon=array('produccion'=>$resol,'labs'=>$res,'fitos'=>$resf);
-		echo json_encode($respon);
+		$respon = array($res_f,$res_lab,$res_prod);
+		return $respon;
 	}
 }
 ?>
