@@ -15,17 +15,24 @@
 <meta charset="utf-8">
 <script>
 $(document).ready(function(){
+	$('#resumen_resultados').hide();
+	$('#sel_temporada').hide();
 	//abre otra pestaña con el mapa
 	$('.bot_mapa_cuartel').bind('click',function(){
 		window.open('gmap.php?cuartel='+$(this).attr('id'),'_blank');
 	});
-	$('#resumen_resultados').hide();$('#sel_temporada').hide();
+	//al pinchar el icono, se exporta a exel
+	$('#exp_excel').bind('click',function(){
+		alert('exportar');
+	});
+	//al seleccionar un cuartel
 	$('.box_cuartel').bind('click',function(){
 		$('#cuartel_sel').val(this.id.substr(4));
 		$('#resumen_resultados').show();
 		$('#sel_temporada').show();
 		cargar_datos();
 	})
+	//al cambiar el año
 	$('.flecha').bind('click',function(){
 		var anio=$('#s_temp').html();
 		if(this.id=='fmenos'){
@@ -35,19 +42,16 @@ $(document).ready(function(){
 		$('#s_temp').html(anio);
 		cargar_datos();
 	});
-	//manda datos para excel
-	$("#exp_excel").click(function() {
-		$("#datos_a_enviar").val( $("<div>").append( $("#resumen_resultados").eq(0).clone()).html());
-		$("#FormularioExportacion").submit();
-	});
-	function cargar_datos(){
+	//recarga los datos correctos segun el año y el cuartel
+	function cargar_datos()
+	{
 		$.ajax({
 			url:'recarga_informe.php',
 			type:'POST',
 			data:{tempo:$('#s_temp').html(),ccuartel:$('#cuartel_sel').val()},
 			success:function(e){ $('#resumen_resultados').html(e);}	
 		});
-	} //cerrar cargar_datos
+	}
 });
 </script>
 </head>
@@ -87,15 +91,11 @@ $(document).ready(function(){
 		}
 		echo "</table>";
 		echo "</div>";
-		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>".date('Y')."</div><div class='flecha' id='fmas'>></div><div id='exp_excel'><img src='img/excel_logo.png' width='28' alt='Exportar Datos a Excel'></div></div>";
+		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>".date('Y')."</div><div class='flecha' id='fmas'>></div><img src='img/excel_logo.png' width='28' alt='Exportar Datos a Excel' id='exp_excel'></div>";
 		echo "<div id='resumen_resultados'>";
 
 		echo "</div>";
 		$c->desconexion();
-		//pruebas de exportar a excel
-		echo '<form action="informe_productora.php" method="post" target="_blank" id="FormularioExportacion">';
-		echo '<input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />';
-		echo '</form>';
 	}
 ?>
 </body></html>
