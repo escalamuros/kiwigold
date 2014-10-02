@@ -1,13 +1,6 @@
 <?php
 	require('clasekiwi.php');
 	$c=new basededatos();
-	if(isset($_POST['datos_a_enviar'])){
-		header("Content-type: application/vnd.ms-excel; name='excel'");
-		header("Content-Disposition: filename=DatosExportadoras.xls");
-		header("Pragma: no-cache");	
-		header("Expires: 0");
-		echo $_POST['datos_a_enviar'];
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,13 +10,19 @@
 $(document).ready(function(){
 	$('#resumen_resultados').hide();
 	$('#sel_temporada').hide();
+	$('#enlace_dinamico').hide();
 	//abre otra pestaña con el mapa
 	$('.bot_mapa_cuartel').bind('click',function(){
 		window.open('gmap.php?cuartel='+$(this).attr('id'),'_blank');
 	});
 	//al pinchar el icono, se exporta a exel
 	$('#exp_excel').bind('click',function(){
-		alert('exportar');
+		$.ajax({
+			url:'informe_exp_excel.php',
+			type:'POST',
+			data:{temporada:$('#s_temp').html(),cuartel:$('#cuartel_sel').val()},
+			success:function(){ }	
+		});
 	});
 	//al seleccionar un cuartel
 	$('.box_cuartel').bind('click',function(){
@@ -49,7 +48,11 @@ $(document).ready(function(){
 			url:'recarga_informe.php',
 			type:'POST',
 			data:{tempo:$('#s_temp').html(),ccuartel:$('#cuartel_sel').val()},
-			success:function(e){ $('#resumen_resultados').html(e);}	
+			success:function(e){
+				$('#resumen_resultados').html(e);
+				$('#enlace_dinamico').show();
+				$('#enlace_dinamico').attr('href','informe_exp_excel.php?cuartel='+$('#cuartel_sel').val()+'&temporada='+$('#s_temp').html());
+				}	
 		});
 	}
 });
@@ -91,9 +94,8 @@ $(document).ready(function(){
 		}
 		echo "</table>";
 		echo "</div>";
-		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>".date('Y')."</div><div class='flecha' id='fmas'>></div><img src='img/excel_logo.png' width='28' alt='Exportar Datos a Excel' id='exp_excel'></div>";
+		echo "<div id='sel_temporada'><span style='float:left;margin-right:50px;'>Temporada: </span><div class='flecha' id='fmenos'><</div><div id='s_temp'>".date('Y')."</div><div class='flecha' id='fmas'>></div><a id='enlace_dinamico' ><img src='img/excel_logo.png' width='28' alt='Exportar Datos a Excel' id='exp_excel'></a></div>";
 		echo "<div id='resumen_resultados'>";
-
 		echo "</div>";
 		$c->desconexion();
 	}

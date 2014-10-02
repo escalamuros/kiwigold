@@ -336,6 +336,7 @@ class basededatos
 	function recuperar_cuartel($cuar)
 	{
 		$cons="select * from cuarteles where id='$cuar';";
+		$arr=array();
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arr=array($rs['id'],$rs['campo'],$rs['año'],$rs['nombre'],$rs['superficie'],$rs['nplantas'],$rs['zona'],$rs['direccion'],$rs['nenc'],$rs['fenc'],$rs['eenc'],$rs['geo'],$rs['dentreh'],$rs['denh'],$rs['pmachos'],$rs['tipo'],$rs['contrato'],$rs['obs']);
@@ -357,7 +358,7 @@ class basededatos
 	{
 		$cons="select id,nombre from tipo_plantas order by id asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
-		while($rs=mysql_fetch_array($ejec,$this->idb))
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$l_p[]=array($rs['id'],$rs['nombre']);
 		}
@@ -367,6 +368,7 @@ class basededatos
 	function lista_plantas($cuar){
 		$cons="select tipo_plantas.nombre,plantas.cantidad,plantas.año,plantas.id from plantas,tipo_plantas where tipo_plantas.id=plantas.tipo and plantas.cuartel='$cuar';";
 		$ejec=mysql_query($cons,$this->id_con);
+		$planta=array();
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$plantas[]=array($rs['nombre'],$rs['cantidad'],$rs['año'],$rs['id']);
@@ -531,6 +533,7 @@ class basededatos
 	{
 		$cons="select id,fecha,ton,calibre from produccion where cuartel='$prod' order by fecha desc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
+		$arr=array();
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
 		{$arr[]=array($rs['id'],$rs['fecha'],$rs['ton'],$rs['calibre']);}
 		if(count($arr)==0){$arr[]=array('0','','No Hay registro','');}

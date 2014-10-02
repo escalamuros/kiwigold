@@ -197,7 +197,7 @@ $(document).ready(function(){
 		echo "<tr><td>EMail Encargado:</td><td>         <input type='text' id='eenc'></td></tr>";
 		echo "<tr><td>Geolocalización:</td><td>         <input type='text' id='geo'></td></tr>";
 		echo "<tr><td>Distancia entre hileras:</td><td> <input type='text' id='dth'></td></tr>";
-		echo "<tr><td>Distancia en hileras:</td><td>    <input type='text' id='deh'></td></tr>";
+		echo "<tr><td>Distancia sobre hilera:</td><td>  <input type='text' id='deh'></td></tr>";
 		echo "<tr><td>% Machos:</td><td>                <input type='text' id='pm'></td></tr>";
 		echo "<tr><td>Tipo Plantación:</td><td>         <input type='text' id='t'></td></tr>";
 		echo "<tr><td>N Contrato:</td><td>              <input type='text' id='c'></td></tr>";
