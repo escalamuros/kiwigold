@@ -7,13 +7,13 @@
 #tb_datos_leg {float:left; width: 300px;color:#456;colapse:colapse;}
 #arch_prod{float:left;width: 300px;color:#456;}
 #datos_um{float:left;width: 300px;color:#456;}
-.bit_um{background-color: #456;color:white;padding: 4px;text-align: center; margin-top:4px; border-radius:5px;}
+.bit_um{width:230px;background-color: #456;color:white;padding: 4px;text-align: center; margin-top:4px; border-radius:5px;}
 </style>
 <script>
 $(document).ready(function(){
 	$('.bit_um').bind('click',function(){
 		var opcion=$(this).attr('id');
-		$.ajax({url:'bitacora_um.php',type:'post',data:{um:opcion},success:function(e){$('#cont_centro').html(e);}});	
+		$.ajax({url:'bitacora_cuartel.php',type:'post',data:{um:opcion},success:function(e){$('#cont_centro').html(e);}});	
 	});
 });
 </script>
@@ -45,14 +45,22 @@ if(isset($_SESSION['id']))
 			echo "<tr><td>Rut</td>                <td>".$resp[7]."</td></tr>";
 			echo "<tr><td>Fono</td>               <td>".$resp[8]."</td></tr>";
 			echo "<tr><td>Mail</td>               <td>".$resp[9]."</td></tr>";
+			echo "<tr><td>Agrónomo</td>           <td>".$resp[10]."</td></tr>";
+			echo "<tr><td>Mail</td>               <td>".$resp[11]."</td></tr>";
 			echo "</table>";
-			foreach($l_cuar as $v)
-			{echo "<div class='bit_um' id='".$v[0]."'>".$v[1]."</div>";}
+			echo "<div style='float:left;margin-left:8px;'>";
+			echo "Cuarteles<br>";
+			if(is_array($l_cuar))
+			{
+				foreach($l_cuar as $v)
+				{echo "<div class='bit_um' id='".$v[0]."'>".$v[1]."</div>";}
+			}
+			echo "</div>";
 		}
 	}
 }
 else
-{echo "<a href='index.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
+{echo "<a href='login.php' style='color:black'>Sesión cerrada, Reingrese</a>";}
 ?>
 </body>
 </html>
