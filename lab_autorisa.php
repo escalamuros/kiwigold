@@ -204,7 +204,7 @@ if(isset($_SESSION['id']))
 	if(($_SESSION['nivel']=='1')||($_SESSION['nivel']=='2'))
 	{?>
 		<div id='lista_t_lab'>
-			Lista de Laboratorios en proceso de aprovación.
+			Lista de Laboratorios en proceso de aprobación.
 			<table>
 			<tr><td>Lab Numero</td><td>UM</td><td>Campo</td><td>Productor</td><td>Fecha de Lab</td><td>Fecha Muestreo</td><td>Estado</td></tr>
 			<?php
