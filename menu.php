@@ -50,7 +50,7 @@
       		break;
       		case 4:
       			echo "<div id='nivel'>Productor</div>";
-      			echo "<div class='barra' id='bitacora'><img class='imgmenu' src='img/bitacora.png' />Bitácora</div>";
+      			echo "<div class='barra' id='bitacora'><img class='imgmenu' src='img/etiqueta_n.png' />Bitácora</div>";
       			echo "<div class='barra' id='olabs'><img class='imgmenu' src='img/etiqueta_b.png' />Laboratorio</div>";
       			break;
       		default:break;
