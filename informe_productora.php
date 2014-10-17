@@ -72,7 +72,7 @@ $(document).ready(function(){
 		echo "<tr><td>Nombre</td><td>".$lis[2]."</td>            </tr>";
 		echo "<tr><td>Razón Social</td><td>".$lis[3]."</td>      </tr>";
 		echo "<tr><td>Rut</td><td>".$lis[4]."</td>                </tr>";
-		echo "<tr><td>Giro</td><td>".$lis[5]."</td>               </tr>";
+		//echo "<tr><td>Giro</td><td>".$lis[5]."</td>               </tr>";
 		echo "<tr><td>Dirección</td><td>".$lis[6]."</td>          </tr>";
 		echo "</table>";
 		echo "</div>";

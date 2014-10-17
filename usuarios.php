@@ -81,6 +81,7 @@ if(isset($_SESSION['id']))
 			<option value="2">Supervisor</option>
 			<option value="3">Digitador</option>
 			<option value="4">Observador</option>
+			<option value="5">Directorio</option>
 			</select></td></tr>
 			</table>
 			<input type="hidden" id="emp" value="0">

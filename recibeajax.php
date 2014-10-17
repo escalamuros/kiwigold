@@ -71,7 +71,7 @@
 	// cambiar el password de un usuario
 	if(isset($_POST['cam_pass_usu'])){
 		$c->conexion();
-		$c->editar_usuario($_POST['cam_est_usu'],'pass',$_POST['estado']);echo $_POST['estado'];
+		$c->editar_usuario($_POST['cam_pass_usu'],'pass',$_POST['estado']);echo $_POST['estado'];
 		$c->desconexion();
 	}
 	// cambiar el nombre de un usuario 
@@ -83,7 +83,7 @@
 	// cambiar el usuario de un usuario
 	if(isset($_POST['cam_usr_usu'])){
 		$c->conexion();
-		$c->editar_usuario($_POST['cam_usr_usu'],'usuario',$_POST['estado']);echo $_POST['estado'];
+		$c->editar_usuario($_POST['cam_usr_usu'],'user',$_POST['estado']);echo $_POST['estado'];
 		$c->desconexion();
 	}
 	//actualiza los datos de un cuartel

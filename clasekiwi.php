@@ -12,22 +12,22 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 		$this->servidor="localhost";
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
 		$this->base="kiwigold_uno";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -580,6 +580,11 @@ class basededatos
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 		$arr[]=array($rs['id'],$rs['nombre'],$rs['nivel'],$rs['empresa'],$rs['estado']);
 		};
+		$cons="select usuarios.id,usuarios.nombre,nivel.nivel,usuarios.empresa,usuarios.estado from usuarios,nivel where usuarios.nivel='5' and nivel.id=usuarios.nivel order by usuarios.nivel asc ;";		
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+		$arr[]=array($rs['id'],$rs['nombre'],$rs['nivel'],$rs['empresa'],$rs['estado']);
+		};
 		return $arr;
 	}
 	function recuperar_usuario($id)
@@ -593,7 +598,7 @@ class basededatos
 	}
 	function editar_usuario($id,$campo,$valor)
 	{
-		$cons="update usuarios set $campo='$valor' where id='$id' ;";
+		$cons="update usuarios set ".$campo."='$valor' where id='$id' ;";
 		$ejec=mysql_query($cons,$this->id_con);
 	}
 	function rec_empresa($emp)

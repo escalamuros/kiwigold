@@ -30,11 +30,11 @@ $('.c_usu').bind('click',function()
 		foreach($ar as $p)
 		{
 			if($p[3]=='0'){
-				if($a!=$p[2]){echo "<div style='background:blue;color:white;'>".$p[2]."</div>";$a=$p[2];}
+				if($a!=$p[2]){echo "<div class='btn_color' >".$p[2]."</div>";$a=$p[2];}
 				echo "<div class='c_usu' id='".$p[0]."'>".$p[1]."</div>";}
 			else
 			{
-				if($a!=$p[3]){$a=$p[3];echo "<div style='background:blue;color:white;'>Observador ".$a."</div>";}
+				if($a!=$p[3]){$a=$p[3];echo "<div class='btn_color' >Observador ".$a."</div>";}
 				echo "<div class='c_usu' id='".$p[0]."'>".$p[1]."</div>";
 			}
 		}

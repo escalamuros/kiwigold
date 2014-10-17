@@ -26,7 +26,7 @@ $(document).ready(function(){
 <?php
 if(isset($_SESSION['id']))
 {
-	if($_SESSION['nivel']=='1')
+	if(($_SESSION['nivel']=='1')||($_SESSION['nivel']=='5'))
 	{
 		?>
 		<div id="cont_productores">

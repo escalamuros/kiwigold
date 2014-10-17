@@ -36,7 +36,7 @@
       			echo "<div class='barra' id='produccion'><img class='imgmenu' src='img/registro.png' />Producción</div>";
       			echo "<div class='barra' id='usuarios'><img class='imgmenu' src='img/usuarios.png' />Usuarios</div>";
       			echo "<div class='barra' id='productores'><img class='imgmenu' src='img/campos.png' />Productores</div>";
-      			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes</div>";
+      			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes Productores</div>";
       		break;
       		case 2:
       			echo "<div class='nivel'>Supervisor Lab</div>";
@@ -52,6 +52,10 @@
       			echo "<div id='nivel'>Productor</div>";
       			echo "<div class='barra' id='bitacora'><img class='imgmenu' src='img/etiqueta_n.png' />Bitácora</div>";
       			echo "<div class='barra' id='olabs'><img class='imgmenu' src='img/etiqueta_b.png' />Laboratorio</div>";
+      			break;
+      		case 5:
+      			echo "<div id='nivel'>Directorio</div>";
+      			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes Productores</div>";
       			break;
       		default:break;
       	}
