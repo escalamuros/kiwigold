@@ -12,22 +12,22 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		/*
+		
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		
+		/*
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		*/
+		
 		$this->servidor="localhost";
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
 		$this->base="kiwigold_uno";
-		
+		*/
 	}
 	function conexion()
 	{
@@ -560,6 +560,43 @@ class basededatos
 	function editar_prod($id,$fech,$ton,$com,$cal)
 	{
 		$cons="update produccion set fecha='$fech',ton='$ton',comercializadora='$com',calibre='$cal' where id='$id';";
+		mysql_query($cons,$this->id_con);
+	}
+	function elim_prod($id)
+	{
+		$cons="delete from produccion where id='$id';";
+		mysql_query($cons,$this->id_con);
+	}
+	//funciones para proyecciones
+	function ingresa_proyeccion($prod,$fecha,$ton,$cal){
+		$cons="insert into proyeccion values (NULL,'$prod','$fecha','$ton','$cal');";
+		mysql_query($cons,$this->id_con);
+	}
+	function lista_ultimos10_proy($cuar)
+	{
+		$cons="select id,fecha,ton,calibre from proyeccion where cuartel='$cuar' order by fecha desc limit 10;";
+		$ejec=mysql_query($cons,$this->id_con);
+		$arr=array();
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
+		{$arr[]=array($rs['id'],$rs['fecha'],$rs['ton'],$rs['calibre']);}
+		if(count($arr)==0){$arr[]=array('0','','No Hay registro','');}
+		return $arr;
+	}
+	function rescatar_proyeccion($esa)
+	{
+		$cons="select * from proyeccion where id='$esa';";
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)) 
+		{$arr[]=array($rs['id'],$rs['productor'],$rs['fecha'],$rs['ton'],$rs['comercializadora'],$rs['calibre']);}
+		return $arr;
+	}
+	function editar_proy($id,$fech,$ton,$com,$cal)
+	{
+		$cons="update proyeccion set fecha='$fech',ton='$ton',calibre='$cal' where id='$id';";
+		mysql_query($cons,$this->id_con);
+	}
+	function elim_proy($id)
+	{
+		$cons="delete from proyeccion where id='$id';";
 		mysql_query($cons,$this->id_con);
 	}
 	//funciones para usuarios, generar y editar, cambiar estado etc...
