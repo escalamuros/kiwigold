@@ -35,7 +35,7 @@
       			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes Productores</div>";
       			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/etiqueta_b.png' />Control de UM</div>";
       			echo "<div class='barra' id='laboratorio'><img class='imgmenu' src='img/laboratorio.png' />Laboratorio</div>";
-      			echo "<div class='barra' id='proyeccion'><img class='imgmenu' src='img/registro.png' />Proyección</div>";
+      			echo "<div class='barra' id='proyeccion'><img class='imgmenu' src='img/esta.png' />Proyección</div>";
       			echo "<div class='barra' id='lab_autorisa'><img class='imgmenu' src='img/autorisa.png' />Analisis y Liberación</div>";
       			echo "<div class='barra' id='usuarios'><img class='imgmenu' src='img/usuarios.png' />Usuarios</div>";
       			
@@ -46,7 +46,7 @@
       			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Químicas</div>";
       			echo "<div class='barra' id='lab_autorisa'><img class='imgmenu' src='img/autorisa.png' />Analisis y Liberación</div>";
       			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/registro.png' />Control de UM</div>";
-      			echo "<div class='barra' id='proyeccion'><img class='imgmenu' src='img/registro.png' />Proyección</div>";
+      			echo "<div class='barra' id='proyeccion'><img class='imgmenu' src='img/esta.png' />Proyección</div>";
       		break;
       		case 3: 
       			echo "<div class='nivel'>Digitador</div>";
