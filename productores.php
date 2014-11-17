@@ -29,6 +29,7 @@ $(document).ready(function(){
 				},
 				success:function(a){
 					$('#ventana').hide();
+					$('#nue_prod').hide();
 					$('#list_prod').html(a);
 					$('#rs').val('');
 					$('#ne').val('');

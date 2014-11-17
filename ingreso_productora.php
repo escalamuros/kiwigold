@@ -26,7 +26,6 @@ $('.prod').bind('click',function()
 		$lis=$c->lista_prod_y_exp();
 		$c->desconexion();
 		$a='0';
-		echo $_POST['expo']."<br>";
 		foreach($lis as $p)
 		{
 			if($p[0]!=$a){$a=$p[0];echo "<div class='tit_expo'>Exportadora ".$p[0]."</div>";}
