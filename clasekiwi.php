@@ -12,22 +12,22 @@ class basededatos
 	//declarar constructor
 	function basededatos()
 	{	
-		
+		/*
 		$this->servidor="localhost";
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
-		/*
+		
 		$this->servidor="kiwibd.db.11164618.hostedresource.com";
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
-		
+		*/
 		$this->servidor="localhost";
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
 		$this->base="kiwigold_uno";
-		*/
+		
 	}
 	function conexion()
 	{
@@ -330,6 +330,7 @@ class basededatos
 	//listado, ingreso y recuperacion de cuarteles
 	function lista_cuarteles_productor($prod)
 	{
+		$arreglo = array();
 		$cons="select id,nombre from cuarteles where campo='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
@@ -379,7 +380,7 @@ class basededatos
 	function lista_plantas($cuar){
 		$cons="select tipo_plantas.nombre,plantas.cantidad,plantas.año,plantas.id from plantas,tipo_plantas where tipo_plantas.id=plantas.tipo and plantas.cuartel='$cuar';";
 		$ejec=mysql_query($cons,$this->id_con);
-		$planta=array();
+		$plantas=array();
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
 		{
 			$plantas[]=array($rs['nombre'],$rs['cantidad'],$rs['año'],$rs['id']);
@@ -506,7 +507,7 @@ class basededatos
 	}
 	function lista_ultimos10_labores($cuar)
 	{
-		//modificar para nueva bd
+		$arr=array();
 		$cons="select labores.fecha,labores.programa,est_fen.nombre from labores,est_fen where labores.estado_f=est_fen.id and labores.cuartel='$cuar' order by labores.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
@@ -519,12 +520,12 @@ class basededatos
 	}
 	function registrar_fitosanitario($cuar,$fecha,$ncom,$iac,$cad,$obs,$feno)
 	{
-		//modificar para nueva bd
 		$cons="insert into fitosanitarios values ('$cuar','$fecha','$ncom','$iac','$cad','$obs','$feno');";
 		mysql_query($cons,$this->id_con);
 	}
 	function lista_ultimos10_fito($cuar)
 	{
+		$arr=array();
 		$cons="select fitosanitarios.fecha,fitosanitarios.n_comercial,est_fen.nombre from fitosanitarios,est_fen where fitosanitarios.estado_f=est_fen.id and fitosanitarios.cuartel='$cuar' order by fitosanitarios.fecha asc limit 10;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
@@ -723,7 +724,12 @@ class basededatos
 		}
 	}
 	function resumen_registro_cuartel($anio,$cuartel){
-		$aniomas=intval($anio)+1;$res_prod=array();$res_lab=array();$res_f=array();
+		$aniomas=intval($anio)+1;$res_prod=array();$res_proy=array();$res_lab=array();$res_f=array();
+		$cons="select cuarteles.nombre,proyeccion.fecha,proyeccion.ton,proyeccion.calibre from cuarteles,proyeccion where proyeccion.cuartel='$cuartel' and proyeccion.cuartel=cuarteles.id and proyeccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by proyeccion.fecha  ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$res_proy[]=array($rs['nombre'],$rs['fecha'],$rs['ton'],$rs['calibre']);
+		}
 		$cons="select cuarteles.nombre,produccion.fecha,produccion.comercializadora,produccion.ton,produccion.calibre from cuarteles,produccion where produccion.cuartel='$cuartel' and produccion.cuartel=cuarteles.id and produccion.fecha BETWEEN '$anio-05-01' AND '$aniomas-05-01' order by produccion.fecha  ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
@@ -739,7 +745,7 @@ class basededatos
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
 			$res_f[]=array($rs['nombre'],$rs['fecha'],$rs['n_comercial'],$rs['i_activo'],$rs['cadencia'],$rs['obs'],$rs['feno']);
 		}
-		$respon = array($res_f,$res_lab,$res_prod);
+		$respon = array($res_f,$res_lab,$res_proy,$res_prod);
 		return $respon;
 	}
 }

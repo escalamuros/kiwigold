@@ -10,17 +10,23 @@
 <!-- <script src="js/jquery.js"></script> -->
 <script>
 $(document).ready(function(){
+	$('#ventana').hide();
 	$('#prod_prod').hide();
 	$('#hist_prod').hide();
 	$('#expo_prod').hide();
 	$('#expo_cuar').hide();
-	$('#opex').bind('change',function(e) {	
+	$('#op_exportadora').bind('change',function(e) {	
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:$('select#opex').val()},
-			success:function(re){		
-				$('#fprod').html(re);
+			data:{findprod:$('select#op_exportadora').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+				},
+			success:function(re){
+				$('#ventana').hide();		
+				$('#op_productor').html(re);
 				$('#prod_prod').hide();
 				$('#hist_prod').hide();
 				$('#expo_cuar').hide();
@@ -28,25 +34,35 @@ $(document).ready(function(){
 			});
 		$('#expo_prod').show();
     });
-    $('#fprod').bind('change',function(e) {
+    $('#op_productor').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findcuar:$('select#fprod').val()},
+			data:{findcuar:$('select#op_productor').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+				},
 			success:function(dev){
-				$('#fcuar').html(dev);
+				$('#ventana').hide();
+				$('#op_cuartel').html(dev);
 				$('#expo_cuar').show();
 				$('#prod_prod').hide();
 				$('#hist_prod').hide();	
 			}
 		});
     });
-    $('#fcuar').bind('change',function(e) {
+    $('#op_cuartel').bind('change',function(e) {
 		$.ajax({
 			url:'ingreso_produccion.php',
 			type:'POST',
-			data:{cuar:$('select#fcuar').val()},
+			data:{cuar:$('select#op_cuartel').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+				},
 			success:function(re){
+				$('#ventana').hide();
 				$('#hist_prod').html(re);
 				$('#prod_prod').show();
 				$('#hist_prod').show();
@@ -54,21 +70,33 @@ $(document).ready(function(){
 			});
     });
     $('#guar_prod').bind('click',function(){
-    	$.ajax({
-    		url:'ingreso_produccion.php',
-    		type:'POST',
-    		data:{cuar:$('select#fcuar').val(),fech:$('#f_p_p').val(),com:$('#com_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
-    		success:function(wa){$('#hist_prod').html(wa);},
-    	});
-    	$('#f_p_p').val('');
-    	$('#com_p_p').val('');
-    	$('#t_p_p').val('');
-    	$('#c_p_p').val('');
+    	if(($('#f_p_p').val()!='')&&($('#com_p_p').val()!='')&&($('#t_p_p').val()!='')&&($('#c_p_p').val()!=''))
+    	{
+	    	$.ajax({
+	    		url:'ingreso_produccion.php',
+	    		type:'POST',
+	    		data:{cuar:$('select#op_cuartel').val(),fech:$('#f_p_p').val(),com:$('#com_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
+	    		beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+					},
+	    		success:function(wa){
+	    			$('#ventana').hide();
+	    			$('#hist_prod').html(wa);
+	    			$('#f_p_p').val('');
+	    			$('#com_p_p').val('');
+	    			$('#t_p_p').val('');
+	    			$('#c_p_p').val('');
+	    		}
+	    	});
+    	}
+    	else{alert('Faltan Datos, Llene todo los campos');}
     });
 });   
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php if(isset($_SESSION['id']))
 {
 ?>
@@ -78,7 +106,7 @@ $(document).ready(function(){
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>
-				<select name="opexpo" id="opex">
+				<select id="op_exportadora">
 					<option>Seleccione</option>
 					<?php
 						$d->conexion();
@@ -89,8 +117,8 @@ $(document).ready(function(){
 					?>
 				</select>
 			</div>
-        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="fprod"></select></div>
-        	<div id="expo_cuar" class="expo"><div class="etex">Cuartel :</div> <select id="fcuar"></select></div>
+        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="op_productor"></select></div>
+        	<div id="expo_cuar" class="expo"><div class="etex">Cuartel :</div> <select id="op_cuartel"></select></div>
 		</div>
 		<div id='hist_prod' style="float:left;width:370px;height:220px;overflow:auto;"></div>
 		<div id="prod_prod" style="clear:both;">

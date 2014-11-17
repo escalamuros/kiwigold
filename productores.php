@@ -12,17 +12,34 @@ $d->desconexion();
 <link href="css/formato.css" rel="stylesheet" type="text/css" />
 <script>
 $(document).ready(function(){
+	$('#ventana').hide();
 	$('#btn_add').bind('click',function(){
 		$('#nue_prod').css('display','block');
 
 	});
 	$('#btn_guar').bind('click',function(){
-		$.ajax({
-			url:'ingreso_productora.php',
-			type:'POST',
-			data: {expo:$('select#opex').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
-			success:function(a){$('#list_prod').html(a);}
-		});
+		if (($('#rs').val()!='')&&($('#ne').val()!='')&&($('select#op_exportadora').val()!='0')) {
+			$.ajax({
+				url:'ingreso_productora.php',
+				type:'POST',
+				data: {expo:$('select#op_exportadora').val(),rs:$('#rs').val(),$nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
+				beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+				},
+				success:function(a){
+					$('#ventana').hide();
+					$('#list_prod').html(a);
+					$('#rs').val('');
+					$('#ne').val('');
+					$('select#op_exportadora').val('0');
+				}
+			});
+		}
+		else{
+			alert('Debe ingresar Razón Social y Nombre de Fantasía, ademas de la Concesionaria, para crear un nuevo productor');
+		}
+		
 	});
 	$('.prod').bind('click',function(){
 		$('#btn_add').css('display','none');
@@ -36,6 +53,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php
 if(isset($_SESSION['id']))
 {
@@ -56,9 +74,9 @@ if(isset($_SESSION['id']))
 		</div>
 		<div id="nue_prod">
 		<table>
-		<tr><td>Exportadora</td><td>
-		<select name="opexpo" id="opex">
-		<option>Seleccione</option>
+		<tr><td>Concesionaria</td><td>
+		<select id="op_exportadora">
+		<option value='0'>Seleccione</option>
 		<?php
 			foreach($ar as $v)
 			{echo "<option value='".$v[0]."'>".$v[1]."</option>";}

@@ -73,11 +73,20 @@ if(isset($_SESSION['id']))
 				echo "<tr><td>".$b[0]."</td><td>".$b[1]."</td><td>".$b[2]."</td><td>".$b[3]."</td><td>".$b[4]."</td></tr>";
 			}
 		}
-		echo "<tr><td>Producción</td></tr>";
-		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercialisadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
+		echo "<tr><td>Proyección</td></tr>";
+		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
 		if(is_array($lo[2]))
 		{
 			foreach($lo[2] as $c)
+			{
+				echo "<tr><td>".$c[0]."</td><td>".$c[1]."</td><td>".$c[2]."</td><td>".$c[3]."</td></tr>";
+			}
+		}
+		echo "<tr><td>Producción</td></tr>";
+		echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercialisadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
+		if(is_array($lo[3]))
+		{
+			foreach($lo[3] as $c)
 			{
 				echo "<tr><td>".$c[0]."</td><td>".$c[1]."</td><td>".$c[2]."</td><td>".$c[3]."</td><td>".$c[4]."</td></tr>";
 			}

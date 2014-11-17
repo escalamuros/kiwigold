@@ -7,6 +7,7 @@
 <head>
 <script>
 $(document).ready(function(){
+	$('#ventana').hide();
 	$('.mod').hide();
 	$('#form_nu_cuar').hide();
 	$('#form_edi_cuar').hide();
@@ -75,12 +76,30 @@ $(document).ready(function(){
 		
 	});
 	$('#btn_guar_nu_cuar').bind('click',function(){
-		$.ajax({
-			url:'ingreso_cuartel.php',
-			type:'POST',
-			data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),t:$('#t').val(),c:$('#c').val(),o:$('#o').val()},
-			success:function(a){$('#lis_cuarteles').html(a);$('#form_edi_cuar').hide();$('#form_nu_cuar').hide();}
-		});
+		if($('#nom').val()!='')
+		{
+			$.ajax({
+				url:'ingreso_cuartel.php',
+				type:'POST',
+				data:{prod:$('#p').val(),ano:$('#ano').val(),nom:$('#nom').val(),sup:$('#sup').val(),nplan:$('#nplan').val(),z:$('#z').val(),d:$('#d').val(),nenc:$('#nenc').val(),fenc:$('#fenc').val(),eenc:$('#eenc').val(),geo:$('#geo').val(),dth:$('#dth').val(),deh:$('#deh').val(),pm:$('#pm').val(),t:$('#t').val(),c:$('#c').val(),o:$('#o').val()},
+				beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+				},
+				success:function(a){
+					$('#ventana').hide();
+					$('#nom').val('');
+					$('#lis_cuarteles').html(a);
+					$('#form_edi_cuar').hide();
+					$('#form_nu_cuar').hide();
+				}
+			});
+		}
+		else
+		{
+			alert('Debe Ingresar un Nombre al Cuartel, para generar un Cuartel Nuevo');
+		}
+		
 	});
 	$('#btn_guar_nu_arch').bind('click',function(){
 		var inputFile = document.getElementById('archivo');
@@ -116,6 +135,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php
 	if(isset($_POST['elegido']))
 	{

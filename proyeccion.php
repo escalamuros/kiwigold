@@ -10,64 +10,92 @@
 <!-- <script src="js/jquery.js"></script> -->
 <script>
 $(document).ready(function(){
-	$('#prod_prod').hide();
-	$('#hist_prod').hide();
-	$('#expo_prod').hide();
+	$('#ventana').hide();
+	$('#prod_proy').hide();
+	$('#hist_proy').hide();
+	$('#expo_proy').hide();
 	$('#expo_cuar').hide();
-	$('#opex').bind('change',function(e) {	
+	$('#op_exportadora').bind('change',function(e) {	
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:$('select#opex').val()},
-			success:function(re){		
-				$('#fprod').html(re);
-				$('#prod_prod').hide();
-				$('#hist_prod').hide();
+			data:{findprod:$('select#op_exportadora').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+			},
+			success:function(re){	
+				$('#ventana').hide();	
+				$('#op_productora').html(re);
+				$('#prod_proy').hide();
+				$('#hist_proy').hide();
 				$('#expo_cuar').hide();
 				}
 			});
-		$('#expo_prod').show();
+		$('#expo_proy').show();
     });
-    $('#fprod').bind('change',function(e) {
+    $('#op_productora').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findcuar:$('select#fprod').val()},
+			data:{findcuar:$('select#op_productora').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+			},
 			success:function(dev){
-				$('#fcuar').html(dev);
+				$('#ventana').hide();
+				$('#op_cuartel').html(dev);
 				$('#expo_cuar').show();
 				$('#prod_prod').hide();
-				$('#hist_prod').hide();	
+				$('#hist_proy').hide();	
 			}
 		});
     });
-    $('#fcuar').bind('change',function(e) {
+    $('#op_cuartel').bind('change',function(e) {
 		$.ajax({
 			url:'ingreso_proyeccion.php',
 			type:'POST',
-			data:{cuar:$('select#fcuar').val()},
+			data:{cuar:$('select#op_cuartel').val()},
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Enviando consulta al Servidor');
+			},
 			success:function(re){
-				$('#hist_prod').html(re);
-				$('#prod_prod').show();
-				$('#hist_prod').show();
+				$('#ventana').hide();
+				$('#hist_proy').html(re);
+				$('#prod_proy').show();
+				$('#hist_proy').show();
 				}
 			});
     });
-    $('#guar_prod').bind('click',function(){
-    	$.ajax({
-    		url:'ingreso_proyeccion.php',
-    		type:'POST',
-    		data:{cuar:$('select#fcuar').val(),fech:$('#f_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
-    		success:function(wa){$('#hist_prod').html(wa);},
-    	});
-    	$('#f_p_p').val('');
-    	$('#t_p_p').val('');
-    	$('#c_p_p').val('');
+    $('#guar_proy').bind('click',function(){
+    	if(($('#f_p_p').val()!='')&&($('#t_p_p').val()!='')&&($('#c_p_p').val()!=''))
+    	{
+	    	$.ajax({
+	    		url:'ingreso_proyeccion.php',
+	    		type:'POST',
+	    		data:{cuar:$('select#op_cuartel').val(),fech:$('#f_p_p').val(),ton:$('#t_p_p').val(),cal:$('#c_p_p').val()},
+	    		beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+				},
+	    		success:function(wa){
+	    			$('#ventana').hide();
+	    			$('#hist_proy').html(wa);
+	    			$('#f_p_p').val('');
+	    			$('#t_p_p').val('');
+	    			$('#c_p_p').val('');
+	    		}
+	    	});
+    	}
+    	else {alert('Faltan Datos, Llene todo los campos');}
     });
 });   
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php if(isset($_SESSION['id']))
 {
 ?>
@@ -77,7 +105,7 @@ $(document).ready(function(){
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>
-				<select name="opexpo" id="opex">
+				<select id="op_exportadora">
 					<option>Seleccione</option>
 					<?php
 						$d->conexion();
@@ -88,17 +116,17 @@ $(document).ready(function(){
 					?>
 				</select>
 			</div>
-        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="fprod"></select></div>
-        	<div id="expo_cuar" class="expo"><div class="etex">Cuartel :</div> <select id="fcuar"></select></div>
+        	<div id="expo_proy" class="expo"><div class="etex">Productor :</div> <select id="op_productora"></select></div>
+        	<div id="expo_cuar" class="expo"><div class="etex">Cuartel :</div> <select id="op_cuartel"></select></div>
 		</div>
-		<div id='hist_prod' style="float:left;width:370px;height:220px;overflow:auto;"></div>
-		<div id="prod_prod" style="clear:both;">
+		<div id='hist_proy' style="float:left;width:370px;height:220px;overflow:auto;"></div>
+		<div id="prod_proy" style="clear:both;">
 			<table>
 			<tr><td colspan="2">Proyección del Productor</td></tr>
 			<tr><td>Fecha:</td>            <td><input type="date" id="f_p_p"></td></tr>
 			<tr><td>Toneladas:</td>        <td><input type="text" id="t_p_p"></td></tr>
 			<tr><td>Calibre:</td>          <td><input type="text" id="c_p_p"></td></tr>
-			<tr><td colspan="2"><div class="btn_color" id='guar_prod'>Guardar</div></td></tr>
+			<tr><td colspan="2"><div class="btn_color" id='guar_proy'>Guardar</div></td></tr>
 			</table>
 		</div>
    </div>

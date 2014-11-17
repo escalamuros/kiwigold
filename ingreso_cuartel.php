@@ -17,23 +17,31 @@
 	$ar=$c->lista_cuarteles_productor($_POST['prod']);
 	$c->desconexion();
 	echo "Lista de Cuarteles asociado a la productora:<br>";
-	foreach($ar as $v)
-	{
-		echo "<div class='bit_cuartel btn_color' style='width:220px;margin-top:3px;' id='".$v[0]."'>".$v[1]."</div>";
-		echo "<div style='width:20px;margin-top:3px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
-	}
+	echo "<table>";
+		if(is_array($ar))
+		{
+			foreach($ar as $v)
+			{
+				echo "<tr><td>";
+				echo "<div class='bit_cuartel btn_color' style='width:230px;' id='".$v[0]."'>".$v[1]."</div>";
+				echo "</td><td>";
+				echo "<div style='width:20px;' class='elim_cuar btn_color' id='e".$v[0]."'>X</div>";
+				echo "</td></tr>";
+			}
+		}
+		echo "</table>";
 ?>
 <script>
 $('.bit_cuartel').bind('click',function(){
-	$.ajax({
-		url:'recuperar_cuartel.php',
-		type:'POST',
-		data:{cuartel:$(this).attr('id')},
-		success:function(asd){$('#form_edi_cuar').html(asd);}
+		$.ajax({
+			url:'editar_cuartel.php',
+			type:'POST',
+			data:{cuartel:$(this).attr('id')},
+			success:function(asd){$('#form_edi_cuar').html(asd);}
+		});
+		$('#form_edi_cuar').show();
+		$('#form_nu_cuar').hide();
 	});
-	$('#form_edi_cuar').show();
-	$('#form_nu_cuar').hide();
-});
 $('.elim_cuar').bind('click',function(){
 	var e_c=$(this).attr('id').substring(1);
 	if(confirm('Eliminar Cuartel, conlleva a eliminación de Unidades de Maduración Asociados, ademas de Labores, Fitosanitario y Laboratorio.\nEsta seguro?'))

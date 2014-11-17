@@ -32,17 +32,31 @@ if(isset($_POST['tempo']))
 	}
 	echo "</table>";
 	echo "</div>";
+	echo "<br>Proyección<br>";
+	echo "<div class='cuadro_informe' id='cuadro_produccion'>";
+	echo "<table>";
+	echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
+	if(is_array($lo[2]))
+	{
+		foreach($lo[2] as $c)
+		{
+			echo "<tr><td>".$c[0]."</td><td>".$c[1]."</td><td>".$c[2]."</td><td>".$c[3]."</td></tr>";
+		}
+	}
+	echo "</table>";
+	echo "</div>";
 	echo "<br>Producción<br>";
 	echo "<div class='cuadro_informe' id='cuadro_produccion'>";
 	echo "<table>";
 	echo "<tr><td style='background:#abc;'>Cuartel</td><td style='background:#abc;'>Fecha</td><td style='background:#abc;'>Comercializadora</td><td style='background:#abc;'>Tonelada</td><td style='background:#abc;'>Calibre</td></tr>";
-	if(is_array($lo[2]))
+	if(is_array($lo[3]))
 	{
-		foreach($lo[2] as $c)
+		foreach($lo[3] as $c)
 		{
 			echo "<tr><td>".$c[0]."</td><td>".$c[1]."</td><td>".$c[2]."</td><td>".$c[3]."</td><td>".$c[4]."</td></tr>";
 		}
 	}
 	echo "</table>";
+	echo "</div>";
 }
 ?>

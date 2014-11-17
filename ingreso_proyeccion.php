@@ -38,7 +38,13 @@ $('.elim').bind('click',function(){
 			url:'ingreso_proyeccion.php',
 			type:'POST',
 			data:{elim_proy:id,cuar:cuart},
-			success:function(wa){$('#hist_prod').html(wa);}
+			beforeSend:function(){
+				$('#ventana').show();
+				$('#ventana').html('Elimiando datos del Servidor');
+				},
+			success:function(wa){
+				$('#ventana').hide();
+				$('#hist_prod').html(wa);}
 		});
 });
 </script>

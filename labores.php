@@ -9,48 +9,68 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script>
 $(document).ready(function(){
-	$('#h_fito').hide();
-	$('#n_fito').hide();
-	$('#opex').bind('change',function(e) {
+	$('#ventana').hide();
+	$('#h_labores').hide();
+	$('#n_labores').hide();
+	$('#expo_cuart').hide();
+	$('#op_exportadora').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:$('select#opex').val()},
-			success:function(re){ $('#fprod').html(re);$('#h_fito').hide();	$('#n_fito').hide();	}
+			data:{findprod:$('select#op_exportadora').val()},
+			success:function(re){ $('#op_prod').html(re);$('#h_labores').hide();	$('#n_labores').hide();	}
 		});
-		$('#expo_prod').show(100);
+		$('#expo_prod').show();
     });
-    $('#fprod').bind('change',function(e) {
-		$('#flab').html('');
+    $('#op_prod').bind('change',function(e) {
+		$('#op_cuar').html('');
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findcuar:$('select#fprod').val()},
+			data:{findcuar:$('select#op_prod').val()},
 			success:function(re){
-				$('#flab').html(re);
-				$('#h_fito').hide();
-				$('#n_fito').hide();
+				$('#op_cuar').html(re);
+				$('#h_labores').hide();
+				$('#n_labores').hide();
 				}
 			});
-		$('#expo_um').show(100);
+		$('#expo_cuart').show();
     });
-    $('#flab').bind('change',function(e) {
+    $('#op_cuar').bind('change',function(e) {
 		$.ajax({
 			url:'ingreso_labores.php',
 			type:'POST',
-			data:{cuar:$('select#flab').val()},
-			success:function(op){$('#h_fito').html(op);}
+			data:{cuar:$('select#op_cuar').val()},
+			success:function(op){$('#h_labores').html(op);}
 		});
-		$('#h_fito').show(100);
-		$('#n_fito').show(100);	
+		$('#h_labores').show();
+		$('#n_labores').show();	
     });
     $('#btn_guardar').bind('click',function(){
-    	$.ajax({
-    		url:'ingreso_labores.php',
-    		type:'post',
-    		data:{cuar:$('select#flab').val(),fecha:$('#fechaf').val(),prog:$('#progf').val(),metodo:$('#metodof').val(),ef:$('select#fen').val()},
-    		success:function(a){$('#h_fito').html(a);$('#fechaf').val('');$('#progf').val('');$('#metodof').val('');}
-    	});
+    	if(($('#fechal').val()!='')&&($('select#fen').val()!='0'))
+    	{
+	    	$.ajax({
+	    		url:'ingreso_labores.php',
+	    		type:'post',
+	    		data:{cuar:$('select#op_cuar').val(),fecha:$('#fechal').val(),prog:$('#progl').val(),metodo:$('#metodol').val(),ef:$('select#fen').val()},
+	    		beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+				},
+	    		success:function(a){
+	    			$('#ventana').hide();
+	    			$('#h_labores').html(a);
+	    			$('#fechal').val('');
+	    			$('#progl').val('');
+	    			$('#metodol').val('');
+	    			$('#fen').val('0');
+	    		}
+	    	});
+	   }
+	   else
+	   {
+	   	alert('Debe Ingresar Fecha y Estado Fenológico, para generar nueva Labor no quimica');
+	   }
     });
     $('#fen').bind('change',function(){
     	var a=$('select#fen').val();
@@ -60,6 +80,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php if(isset($_SESSION['id']))
 {
 ?>
@@ -69,7 +90,7 @@ $(document).ready(function(){
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>
-				<select name="opexpo" id="opex">
+				<select id="op_exportadora">
 					<option>Seleccione</option>
 					<?php
 						$d->conexion();
@@ -80,17 +101,17 @@ $(document).ready(function(){
 					?>
 				</select>
 			</div>
-        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
-        	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select name="labexpo" id="flab"></select></div>
+        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="op_prod"></select></div>
+        	<div id="expo_cuart" class="expo"><div class="etex">Cuartel :</div> <select id="op_cuar"></select></div>
 		</div>
-      <div id="h_fito" style='float:left;width:300px;height:140px;overflow:auto;'>
+      <div id="h_labores" style='float:left;width:300px;height:140px;overflow:auto;'>
       </div>
    	<div style="clear:both;"></div>
-   	<div id="n_fito" style="width:950px;height:290px;overflow:auto;">
+   	<div id="n_labores" style="width:950px;height:290px;overflow:auto;">
    	Registrar nueva Labor No Quimica<br>
    	<table>
-   	<tr><td>Fecha</td><td><input type="date" id="fechaf" style="width:700px;"></td></tr>
-   	<tr><td>Estado Fenologico</td><td>
+   	<tr><td>Fecha</td><td><input type="date" id="fechal" style="width:700px;"></td></tr>
+   	<tr><td>Estado Fenológico</td><td>
    	<select id="fen">
    	<option value='0'>Seleccione</option>
    	<?php
@@ -102,8 +123,8 @@ $(document).ready(function(){
 		?>
    	</select>
    	<img id='foto_fen' src='img/if0.png' width="50px"></td></tr>
-		<tr><td>Programa</td><td><input type="text" id="progf" style="width:700px;"></td></tr>
-		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="metodof" style="width:700px;height:55px"></textarea></td></tr>
+		<tr><td>Programa</td><td><input type="text" id="progl" style="width:700px;"></td></tr>
+		<tr><td>Metodo de Aplicación<br>y Obervaciones</td><td><textarea id="metodol" style="width:700px;height:55px"></textarea></td></tr>
 		<tr><td></td><td><div id="btn_guardar">Guardar Labor No Quimica</div></td></tr>	
 		</table>
 		</div>
