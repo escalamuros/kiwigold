@@ -9,49 +9,69 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script>
 $(document).ready(function(){
+	$('#ventana').hide();
 	$('#h_fito').hide();
 	$('#n_fito').hide();
-	$('#opex').bind('change',function(e) {	
+	$('#op_exportadora').bind('change',function(e) {	
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findprod:$('select#opex').val()},
-			success:function(re){ $('#fprod').html(re);$('#h_fito').hide();	$('#n_fito').hide();	}
+			data:{findprod:$('select#op_exportadora').val()},
+			success:function(re){ $('#op_prod').html(re);$('#h_fito').hide();	$('#n_fito').hide();	}
 		});
-		$('#expo_prod').show(100);
+		$('#expo_prod').show();
     });
-    $('#fprod').bind('change',function(e) {
-		$('#flab').html('');
+    $('#op_prod').bind('change',function(e) {
+		$('#op_cuar').html('');
 		$.ajax({
 			url:'recibeajax.php',
 			type:'POST',
-			data:{findcuar:$('select#fprod').val()},
+			data:{findcuar:$('select#op_prod').val()},
 			success:function(re){
-				$('#flab').html(re);
+				$('#op_cuar').html(re);
 				$('#h_fito').hide();
 				$('#n_fito').hide();
 				}
 			});
-		$('#expo_um').show(100);
+		$('#expo_um').show();
     });
-    $('#flab').bind('change',function(e) {
+    $('#op_cuar').bind('change',function(e) {
 		sessionStorage['um']=this.value;
 		$.ajax({
 			url:'ingreso_fitosanitario.php',
 			type:'POST',
-			data:{cuar:$('select#flab').val()},
+			data:{cuar:$('select#op_cuar').val()},
 			success:function(op){$('#h_fito').html(op);}
 		});
-		$('#h_fito').show(100);
-		$('#n_fito').show(100);	
+		$('#h_fito').show();
+		$('#n_fito').show();	
     });
     $('#btn_guardar').bind('click',function(){
-    	$.ajax({
-    		url:'ingreso_fitosanitario.php',
-    		type:'post',
-    		data:{cuar:$('select#flab').val(),fecha:$('#fecha').val(),ncom:$('#ncom').val(),iac:$('#iac').val(),cad:$('#cad').val(),obs:$('#obs').val(),est_f:$('#fen').val()},
-    		success:function(a){$('#h_fito').html(a);}
-    	});
+    	if(($('#fecha').val()!='')&&($('select#fen').val()!=0))
+    	{
+    		$.ajax({
+	    		url:'ingreso_fitosanitario.php',
+	    		type:'post',
+	    		data:{cuar:$('select#op_cuar').val(),fecha:$('#fecha').val(),ncom:$('#ncom').val(),iac:$('#iac').val(),cad:$('#cad').val(),obs:$('#obs').val(),est_f:$('select#fen').val()},
+	    		beforeSend:function(){
+					$('#ventana').show();
+					$('#ventana').html('Enviando datos al Servidor');
+				},
+	    		success:function(a){
+	    			$('#ventana').hide();
+	    			$('#h_fito').html(a);
+	    			$('#fecha').val('');
+	    			$('#ncom').val('');
+	    			$('#iac').val('');
+	    			$('#cad').val('');
+	    			$('#obs').val('');
+	    			$('#fen').val('0');
+	    		}
+	    	});
+    	}
+    	else
+    	{alert('Debe Ingresar Fecha y Estado Fenológico, para generar un evento Fitosanitario');}
+	    	
     });
     $('#fen').bind('change',function(){
     	var a=$('select#fen').val();
@@ -61,6 +81,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="ventana" style="position:absolute;z-index:100;margin 0 auto 0 auto;background-color:white;"></div>
 <?php if(isset($_SESSION['id']))
 {
 ?>
@@ -70,7 +91,7 @@ $(document).ready(function(){
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>
-				<select name="opexpo" id="opex">
+				<select id="op_exportadora">
 					<option>Seleccione</option>
 					<?php
 						$d->conexion();
@@ -81,8 +102,8 @@ $(document).ready(function(){
 					?>
 				</select>
 			</div>
-        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select name="prodexpo" id="fprod"></select></div>
-        	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select name="labexpo" id="flab"></select></div>
+        	<div id="expo_prod" class="expo"><div class="etex">Productor :</div> <select id="op_prod"></select></div>
+        	<div id="expo_um" class="expo"><div class="etex">Cuartel :</div> <select id="op_cuar"></select></div>
 		</div>
       <div id="h_fito" style='float:left;width:300px;height:140px;overflow:auto;'>
       </div>
@@ -91,7 +112,7 @@ $(document).ready(function(){
    	Registrar nuevo evento Fitosanitario<br>
    	<table>
    	<tr><td>Fecha</td><td><input type="date" id="fecha" style="width:100px;"></td>
-   	<td>Estado Fenologico</td><td>
+   	<td>Estado Fenológico</td><td>
    	<select id="fen">
    	<option value='0'>Seleccione</option>
    	<?php
