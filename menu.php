@@ -20,14 +20,14 @@
 		<div id="header">
 			<div id="logo"><img src="img/kiwi_logo.png" height="120" /></div>
          <div id="welcome">Bienvenido(a) <?php echo $_SESSION['nombre']; ?></div><br />
-         <div id="finsession">Cerrar Sesion</div>
+         <div id="finsession">Cerrar Sesión</div>
       </div>
       <div id="separador"><img src="img/separador.png" width="100%" height="15" /></div>
       <div id="menu_iz">
       	<?php switch($_SESSION['nivel'])
       	{
       		case 1:
-      			echo "<div class='nivel'>Superusuario</div>";
+      			echo "<div class='nivel'>Administrador</div>";
       			echo "<div class='barra' id='productores'><img class='imgmenu' src='img/campos.png' />Productores</div>";
       			echo "<div class='barra' id='fitosanitario'><img class='imgmenu' src='img/fenologico.png' />Fitosanitarios</div>";
       			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Químicas</div>";
@@ -41,7 +41,7 @@
       			
       		break;
       		case 2:
-      			echo "<div class='nivel'>Supervisor Lab</div>";
+      			echo "<div class='nivel'>Supervisor</div>";
       			echo "<div class='barra' id='fitosanitario'><img class='imgmenu' src='img/fenologico.png' />Fitosanitarios</div>";
       			echo "<div class='barra' id='labores'><img class='imgmenu' src='img/fitosanitario.png' />Labores No Químicas</div>";
       			echo "<div class='barra' id='proyeccion'><img class='imgmenu' src='img/esta.png' />Proyección</div>";
@@ -54,12 +54,12 @@
       			echo "<div class='barra' id='controlum'><img class='imgmenu' src='img/registro.png' />Control de UM</div>";
       		break;
       		case 4:
-      			echo "<div id='nivel'>Productor</div>";
+      			echo "<div class='nivel'>Productor</div>";
       			echo "<div class='barra' id='bitacora'><img class='imgmenu' src='img/etiqueta_n.png' />Bitácora</div>";
       			echo "<div class='barra' id='olabs'><img class='imgmenu' src='img/etiqueta_b.png' />Laboratorio</div>";
       			break;
       		case 5:
-      			echo "<div id='nivel'>Directorio</div>";
+      			echo "<div class='nivel'>Directorio</div>";
       			echo "<div class='barra' id='informes'><img class='imgmenu' src='img/recargar.png' />Informes Productores</div>";
       			break;
       		default:break;

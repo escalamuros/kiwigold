@@ -87,6 +87,7 @@ class basededatos
 	//lista los archivos de un productor
 	function lista_archivos($prod)
 	{
+		$arreglo= array();
 		$cons="select id,archivo from archivos where productor='$prod';";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd))
@@ -94,6 +95,21 @@ class basededatos
 			$arreglo[]=array($rs['id'],$rs['archivo']);
 		}
 		return $arreglo;
+	}
+	function guardar_arch_gpx($cuar,$arch)
+	{
+		$cons="insert into archiv_gpx values (NULL,'$cuar','$arch');";
+		mysql_query($cons,$this->id_con);
+	}
+	function lista_arch_gpx($cuar)
+	{
+		$cons="select archivo_gpx from archivos where cuartel='$cuar';";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd))
+		{
+			$arch=$rs['archivo'];
+		}
+		return $arch;
 	}
 	//recupera los datos del archivo
 	function recupera_datos_archivo($id)
@@ -165,7 +181,10 @@ class basededatos
 		$cons="select * from analisis where f_analisis='$a' and estado='1' order by numm asc ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
-			$arreglo[]=array($rs['peso'],($rs['presion1']+$rs['presion2'])/2,$rs['ss'],($rs['color1']+$rs['color2'])/2,($rs['pesof']/$rs['pesoi'])*100);
+			if(($rs['presion1'])&&($rs['presion2'])){$presion_p=($rs['presion1']+$rs['presion2'])/2;}else{$presion_p=0;}
+			if(($rs['color1'])&&($rs['color2'])){$color_p=($rs['color1']+$rs['color2'])/2;}else{$color_p=0;}
+			if(($rs['pesof'])&&($rs['pesoi'])){$pesp_p=($rs['pesof']/$rs['pesoi'])*100;}else{$pesp_p=0;}
+			$arreglo[]=array($rs['peso'],$presion_p,$rs['ss'],$color_p,$pesp_p);
 		}
 		$pesoM=0;$pesom=99999;$presionM=0;$presionm=99999;$ssM=0;$ssm=99999;$colorM=0;$colorm=99999;$secaM=0;$secam=99999;
 		$c=0;$sumap=0;$sumapre=0;$sumass=0;$sumacolor=0;$sumaseca=0;
@@ -297,6 +316,7 @@ class basededatos
 	}
 	//para laboratorio, solo muestra los laboratorios, sin autorizar
 	function lista_lab_sin_autorizar($um){
+		$ec=array();
 		$cons="select id,fecha,fecha_m from f_analisis where um='$um' and estado='0' ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['fecha'],$rs['fecha_m']); }

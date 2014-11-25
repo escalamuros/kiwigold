@@ -24,7 +24,7 @@
 			if($ar[3]==$cu[0]){echo "<option value='".$cu[0]."' selected='selected'>".$cu[1]."</option>";}
 			else{echo "<option value='".$cu[0]."' >".$cu[1]."</option>";}
 		}
-		echo "</select>".$ar[3]."</td></tr>";
+		echo "</select></td></tr>";
 		echo "<tr><td>Superficie</td><td><input type='text' id='sup_um' value='".$ar[4]."'></td></tr>";
 		echo "<tr><td>Año</td><td><input type='text' id='ano_um' value='".$ar[5]."'></td></tr>";
 		echo "<tr><td>Geolocalización</td><td><input type='text' id='geo_um' value='".$ar[6]."'></td></tr>";

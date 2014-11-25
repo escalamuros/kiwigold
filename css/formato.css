@@ -11,14 +11,14 @@ input{
 #contenedor{
 	width:100%;   
     height: 100%;
-	}
+}
 #header{
 	width:100%;
 	min-height:120px;
 	height:auto;
 	background:#fff;
 	font-size: 16px;
-	}
+}
 #footer{}
 #login{
 	width:350px;
@@ -31,18 +31,15 @@ input{
 	margin-left:-166px;
 	margin-top:-175px;
 	overflow:hidden;
-	}
-.linea{
-	
-	
-	}
+}
+.linea{}
 .ibox{
 	width:90%;
 	height:20px;
 	border:1px solid #aaa;
 	margin:30px auto 0px auto;
 	padding-left:5px;
-	}
+}
 .btnstdr{
 	width:30%;
 	border:1px solid #aaa;
@@ -52,7 +49,7 @@ input{
 	padding:4px 15px;
 	margin:30px auto 0 auto;
 	cursor:pointer;
-	}
+}
 #logo{
 	margin-left:20px;
 	float:left;
@@ -61,16 +58,15 @@ input{
 	float:right;
 	
 	margin:30px 60px;
-	font-size:16spx;
+	font-size: 16px;
 	font-family:Arial, Helvetica, sans-serif;
-	}
+}
 #menu_iz{
 	float:left;
 	width:17%;
 	min-height:450px;
 	height:auto;
-	border-right:solid 2px #ddd;
-	
+	border-right:solid 2px #ddd;	
 }
 .imgmenu{
 	width:43px;
@@ -100,29 +96,29 @@ input{
 }
 #expo_prod{
 	display:none;
-	}
+}
 #expo_um{
 	display:none;
-	}
+}
 #texto_wel{
 	color:#678;
 	font-size:18px;
 	float:left;
 	text-align:center;
-	}
+}
 #foto_wel{
 	float:left;
 	width:80%;
 	margin:20px 20% 0 20%;
-	}
+}
 .men_i{
 	width:50%;
 	float:left;
 	margin:10px auto 20px auto;
-	}
+}
 .expo{
 	padding:5px;
-	}
+}
 .week{
 	border:1px solid #777;
 	border-radius:5px;
@@ -134,12 +130,12 @@ table{
 	font-size:12px;
 	border:1px solid #789;
 	padding-bottom:10px;
-	}
+}
 td{
-	padding:3px;
+	padding: 3px;
 	text-align:center;
-	color #345;
-	}
+	color: #345;
+}
 	
 .btn_color{ 
 	padding-left:15px;
@@ -150,17 +146,22 @@ td{
 	border-radius:8px;
 	cursor: pointer;
 }
-.btn_color2{ padding:5px 3px 0 3px;background-color:#345;color:whitesmoke;border-radius:6px 0 6px 0;}
-.mod{ width:500px;float:left;}
-
+.btn_color2{
+	padding:5px 3px 0 3px;
+	background-color: #345;
+	color:whitesmoke;
+	border-radius:6px 0 6px 0;
+}
+.mod{
+	width:500px;
+	float:left;
+}
 #add_data{
 	display:none;
-	/*este siempre en none, ahora en block por pruebas*/
-	}
+}
 #datos_2{
 	display:none;
 }
-
 .es_1{
 	border:1px solid #bbb;
 	width:50px;
@@ -179,15 +180,15 @@ td{
 	font-size:12px;
 	display:none;
 	text-align:left;
-	}
+}
 .resul_ind{
 	width:100%;
 	float:left;
-	}
+}
 .resul_ind:hover{
 	background:#2be;
 	cursor:pointer;
-	}
+}
 .adder{
 	color:#fff;
 	background:#09c;
@@ -200,7 +201,6 @@ td{
 	width:85%;
 	text-align:center;
 	border-radius:15px;
-	
 }
 .addersd{
 	color:#fff;
@@ -214,14 +214,12 @@ td{
 	width:85%;
 	text-align:center;
 	border-radius:15px;
-	
 }
 .barra_res{
 	border:1px solid #eee;
 	width:100%;
 	height:40px;
-	}
-
+}
 .espa{
 	float:left;
 	width:30px;
@@ -234,50 +232,53 @@ td{
 .etex{
 	width:130px;
 	float:left;
-	}
+}
 #resultados{
 	width:100%;
 	float:left;
 	display:none;
 	margin-top:20px;
-	}
+}
 .resul{
 	width:auto;
 	height:14px;
 	padding:3px 8px 3px 8px;
 	background:#eee;
-	}
+}
 #add_data td{
 	width:60px;		
-	}
+}
 #add_data td:first-child{
 	width:30px;		
-	}
+}
 #resultados td:first-child{
 	width:110px;
 }
 #resultados td{
 	width:80px;
-	}
+}
 #edo_fen{
-	display:none;  //lo mismo del otro..siempre none
+	display:none;  
 	width:100%;
 	float:left;
 	min-height:300px;
 	height:auto;
-	}
+}
 .boxfen{
-		width:140px;
-		height:auto;
-		background:#39C;
-		display:inline-block;
-		margin:5px 20px 10px 5px;
-		overflow:hidden;
-		font-size:12px;
-		color:white;
-		text-align:center;
-	}
-.img_f{ width:140px; height:100px;}
+	width:140px;
+	height:auto;
+	background:#39C;
+	display:inline-block;
+	margin:5px 20px 10px 5px;
+	overflow:hidden;
+	font-size:12px;
+	color:white;
+	text-align:center;
+}
+.img_f{
+	width:140px;
+	height:100px;
+}
 .tfe{
 	margin:3px auto 3px auto;
 	}
@@ -287,38 +288,37 @@ td{
 	float:left;
 	background:#ffe;
 	display:block;
-	}
+}
 #finsession{
 	float:right;
 	cursor:pointer;
 	margin:35px -159px;
 	font-size:14px;
 	font-family:Arial, Helvetica, sans-serif;
-	}
+}
 .nivel{
 	text-align:right;
 	margin:5px 5px 20px auto;
 	font-size:12px;
-	}
+}
 .estado{
 	color:#eee;
 	margin-top:35px;
 	font-size:12px;
-	}
+}
 .lista_usu{
 	color:#666;
 	font-size:18px;
-	}
+}
 .c_usu{
 	padding-top:3px;
 	padding-bottom:3px;
 	text-align:center;
-	}
+}
 .nusuario{
 	width:80px;
 	float:left;
-	}
-
+}
 #nue_prod{
 	display: none;
 	float:left;
@@ -328,9 +328,18 @@ td{
 	color:#345;
 	overflow: auto;
 }
-#list_prod{float:left;width:450px;scroll:auto;height:470px;overflow: auto;}
-
-#btn_guar{color:white;background:#345;padding:5px;border-radius:5px;}
+#list_prod{
+	float:left;
+	width:450px;
+	height:470px;
+	overflow: auto;
+}
+#btn_guar{
+	color:white;
+	background:#345;
+	padding:5px;
+	border-radius:5px;
+}
 .tit_expo{
 	background-color:#345;
 	color:white;
@@ -339,7 +348,6 @@ td{
 	text-align: center;
 	padding-top:3px;
 	padding-bottom: 3px;
-
 }
 .prod{ 
 	cursor:pointer;
@@ -407,12 +415,10 @@ td{
 	position:relative;
 	top:-100px;
 }
-
 .box_cuartel{
 	cursor:pointer;
 	background:#bae;
 }
-
 #mantenedor_cuarteles{
 	margin-left: 20px;
 }
@@ -450,9 +456,7 @@ td{
 	text-align: center;
 	float: left;
 	cursor: pointer;
-
 }
-
 #exp_excel{
 	float:left;
 	margin-top:-5px;

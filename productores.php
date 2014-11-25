@@ -22,7 +22,7 @@ $(document).ready(function(){
 			$.ajax({
 				url:'ingreso_productora.php',
 				type:'POST',
-				data: {expo:$('select#op_exportadora').val(),rs:$('#rs').val(),$nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
+				data: {expo:$('select#op_exportadora').val(),rs:$('#rs').val(),nombre:$('#ne').val(),rut:$('#rut').val(),giro:$('giro').val(),fono:$('#fono').val(),dir:$('#dir').val(),mail:$('#mail').val(),rl:$('#rl').val(),rutr:$('#rutr').val(),fonor:$('#fonor').val(),mailr:$('#mailr').val(),agro:$('#agro').val(),amail:$('#amail').val()},
 				beforeSend:function(){
 					$('#ventana').show();
 					$('#ventana').html('Enviando datos al Servidor');

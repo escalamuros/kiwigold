@@ -104,7 +104,7 @@ $(document).ready(function(){
 		<div id="editar_um" style="width:400px;height:320px;float:left;">
 		editar
 		</div>
-		<div id='nuevo_um' style="float:left;width:400px;heigth:320px;overflow:auto;">
+		<div id='nuevo_um' style="float:left;width:400px;height:320px;overflow:auto;">
 		<table>
 			<tr><td colspan="2">Nueva Unidad de Maduración</td></tr>
 			<tr><td>Nombre:</td>            <td><input type="text" id="num"></td></tr>
