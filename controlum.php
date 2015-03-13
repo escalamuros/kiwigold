@@ -82,7 +82,7 @@ $(document).ready(function(){
 ?>
 	<div id="contenedor" style="color:#567;">
 		<?php echo "<div class='id_prod' id='".$_SESSION['id']."'></div>" ?>
-		<div id="titulo_lab">Control de UM por Productor</div>
+		<div id="titulo_lab"><img class='imgmenu' src='img/controlum.png' />Control de UM por Productor</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>

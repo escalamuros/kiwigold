@@ -5,7 +5,8 @@
 	if(isset($_POST['lista_f_anal'])){
 		$c->conexion();
 		$arr=$c->lista_lab_sin_autorizar($_POST['lista_f_anal']);
-		echo "<div class='btn_color' id='n_anal' style='width:200px'>Nuevo Analisis</div>";
+		echo "<div class='btn_color' id='n_anal' style='width:200px'>Digitar Nuevo Analisis </div>";
+		echo "<div class='btn_color' id='n_anal_serie' style='width:200px'>Nuevo Analisis en Serie</div>";
 		echo "<table>";
 		echo "<tr><td colpsan='3'>Lista de Laboratorios </td></tr>";
 		echo "<tr><td>Fecha</td><td>F Muestreo</td><td>Editar</td></tr>";
@@ -53,6 +54,41 @@
 	if(isset($_POST['peso'])){
 		$c->conexion();
 		$c->actualiza_analisis($_POST['numm'],$_POST['peso'],$_POST['presion1'],$_POST['presion2'],$_POST['ss'],$_POST['color1'],$_POST['color2'],$_POST['pesoi'],$_POST['pesof'],$_POST['obs'],$_POST['ingbd']);
+		$c->desconexion();
+	}
+	//actualiza solo los pesos del laboratorio
+	if(isset($_POST['solo_pesos']))
+	{
+		$c->conexion();
+		$c->actualiza_pesos_analisis($_POST['id_laboratorio'],$_POST['s_peso']);
+		$c->desconexion();
+	}
+	//actualiza solo las presiones
+	if(isset($_POST['solo_presiones']))
+	{
+		$c->conexion();
+		$c->actualiza_presiones_analisis($_POST['id_laboratorio'],$_POST['s_pres1'],$_POST['s_pres2']);
+		$c->desconexion();
+	}
+	//actualiza solo los solidos solubles
+	if(isset($_POST['solo_solidoss']))
+	{
+		$c->conexion();
+		$c->actualiza_solidos_analisis($_POST['id_laboratorio'],$_POST['s_brix']);
+		$c->desconexion();
+	}
+	//actualiza solo las colores
+	if(isset($_POST['solo_colores']))
+	{
+		$c->conexion();
+		$c->actualiza_colores_analisis($_POST['id_laboratorio'],$_POST['s_col1'],$_POST['s_col2']);
+		$c->desconexion();
+	}
+	//actualiza solo las materia inicial y materia final
+	if(isset($_POST['solo_materiasecas']))
+	{
+		$c->conexion();
+		$c->actualiza_materiasecas_analisis($_POST['id_laboratorio'],$_POST['s_peso_i'],$_POST['s_peso_f']);
 		$c->desconexion();
 	}
 	//inserta un nuevo f_analisis y los 48 frutos en analisis

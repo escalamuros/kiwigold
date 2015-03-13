@@ -45,6 +45,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<img class='imgmenu' src='img/usuarios.png' />Usuarios<br>
 <?php
 if(isset($_SESSION['id']))
 {

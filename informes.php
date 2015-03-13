@@ -23,6 +23,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<div id="titulo_lab"><img class='imgmenu' src='img/informes.png' />Lista de Productores, para Informes</div>
 <?php
 if(isset($_SESSION['id']))
 {
@@ -30,7 +31,7 @@ if(isset($_SESSION['id']))
 	{
 		?>
 		<div id="cont_productores">
-		<div id='list_prod'>
+		<div id='list_prod' style='width:500px;'>
 		<?php
 		$a='0';
 		foreach($lis as $p)
@@ -40,6 +41,7 @@ if(isset($_SESSION['id']))
 		}
 		?>
 		</div>
+		<div style="margin-left:5px;"><a href="informe_todo_excel.php"><img src='./img/excel_logo.png' width="30px">Archivo Exel General</a></div>
 		<?php
 	}
 	else

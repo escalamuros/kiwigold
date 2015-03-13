@@ -101,7 +101,7 @@ $(document).ready(function(){
 ?>
 	<div id="contenedor" style="color:#567;">
 		<?php echo "<div class='id_prod' id='".$_SESSION['id']."'></div>" ?>
-		<div id="titulo_lab">Registro de Proyecciones Por Productor</div>
+		<div id="titulo_lab"><img class='imgmenu' src='img/proyeccion.png'  />Registro de Proyecciones Por Productor</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>
@@ -125,7 +125,17 @@ $(document).ready(function(){
 			<tr><td colspan="2">Proyección del Productor</td></tr>
 			<tr><td>Fecha:</td>            <td><input type="date" id="f_p_p"></td></tr>
 			<tr><td>Toneladas:</td>        <td><input type="text" id="t_p_p"></td></tr>
-			<tr><td>Calibre:</td>          <td><input type="text" id="c_p_p"></td></tr>
+			<tr><td>Calibre:</td>          <td>
+				<select id="c_p_p">
+					<option value="Sin Clasificar">Sin clasificar</option>
+					<option value="49">49</option>	<option value="45">45</option>
+					<option value="42">42</option>	<option value="39">39</option>
+					<option value="36">36</option>	<option value="33">33</option>
+					<option value="30">30</option>	<option value="27">27</option>
+					<option value="25">25</option>	<option value="23">23</option>
+					<option value="20">20</option>	<option value="18">18</option>
+				</select>
+			</td></tr>
 			<tr><td colspan="2"><div class="btn_color" id='guar_proy'>Guardar</div></td></tr>
 			</table>
 		</div>

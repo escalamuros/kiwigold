@@ -6,16 +6,14 @@
 	$ar=$c->lista_exportadores();
 	$c->desconexion();
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Untitled Document</title>
-<link href="css/formato.css" rel="stylesheet" type="text/css" />
-<!-- <script src="js/jquery.js"></script> -->
+<!-- <link href="css/formato.css" rel="stylesheet" type="text/css" /> -->
 <script>
-$(document).ready(function(){
-		
+$(document).ready(function(){	
 	$('#opex').bind('change',function(e) {
 		$.ajax({
 			url:'recibeajax.php',
@@ -25,7 +23,6 @@ $(document).ready(function(){
 		});
 		$('#expo_prod').show();
 	});
-	
 	$('#fprod').bind('change',function(e) {
 		$('#flab').html('');
 		$.ajax({
@@ -36,7 +33,6 @@ $(document).ready(function(){
 		});
 		$('#expo_um').show();
 	});
-    
 	$('#flab').bind('change',function() {
 		$.ajax({
 			url:'para_laboratorio.php',
@@ -74,7 +70,7 @@ $(document).ready(function(){
 	$('.cuadrito').focusin(function(e) {
 		if($('#'+this.id).val()==0) { $('#'+this.id).val(''); }
 	});
-	//al presionar agregar, inserta los datos en analisis o actualiza 
+	//al presionar agregar, inserta los datos o actualiza 
 	$('#masdatos').bind('click',function(){
 		var existe = $('#existe_lab').val();
 
@@ -115,10 +111,6 @@ $(document).ready(function(){
 		};		
 	});
 	
-	$('datos_online').bind('click',function(){
-		
-	})
-	
 	$('#cambia_estado_lab').bind('click',function(){
 		var existe = $('#existe_lab').val();
 		if(existe == 0) 
@@ -142,7 +134,7 @@ $(document).ready(function(){
 <body>
 	<?php if(isset($_SESSION['id'])){ ?>
 	<div id="contenedor" style="color:#567;">
-		<div id="titulo_lab">Registro Análisis de Control de Madurez Jintao</div>
+		<div id="titulo_lab"><img class='imgmenu' src='img/kiwimeter.png' />Registro Kiwimeter</div>
 		<div class="men_i" style="height:160px">
 			<div id="expo_lab" class="expo"><div class="etex">Concesionaria :</div>
 				<select name="opexpo" id="opex"><option>Seleccione</option>
@@ -154,35 +146,17 @@ $(document).ready(function(){
 		</div>
 		<div class="men_i" id="datos_2" style="height:160px">		
 		</div>
-		<div id="add_data">
+		<div id="add_data" sy>
 			<input type="hidden" id="existe_lab" value="0">
-			Fecha Analisis: <input type="date" id="fanalisis" />
-			Fecha Muestreo : <input type="date" id="fmuestra" /><br>
-			<table>
-				<tr><td >Nº</td><td >Peso(g)</td><td >Presion 1(lbs)</td><td >Presion 2(lbs)</td>
-				<!-- <td >Promedio Presion 1-2</td> -->
-				<td>SS (ºbrix)</td><td>Color 1(ºH)</td><td>Color 2(ºH)</td>
-				<!-- <td>Promedio Color 1-2</td> -->
-				<td>Peso Neto inicial(g)</td><td>Peso Neto final(g)</td>
-				<!-- <td>Mat Seca</td> -->
-				<td>Observaciones</td></tr>
-				<?php
-					for($a=1;$a<=48;$a++){
-					echo '<tr><td><div id="nummer'.$a.'">'.$a.'</div></td>';
-					echo '<td><input type="text" id="l_peso'.$a.'" size="3" class="cuadrito" /></td>';
-					echo '<td><input type="text" id="l_pre1'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><input type="text" id="l_pre2'.$a.'" class="cuadrito" size="3"/></td>';
-					//echo '<td><div id="p_pres'.$a.'" class="es_1"></div></td>';
-					echo '<td><input type="text" id="l_solu'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><input type="text" id="l_col1'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><input type="text" id="l_col2'.$a.'" class="cuadrito" size="3"/></td>';
-					//echo '<td><div id="p_colo'.$a.'" class="es_1"></div></td>';
-					echo '<td><input type="text" id="l_pesi'.$a.'" class="cuadrito" size="3"/></td>';
-					echo '<td><input type="text" id="l_pesf'.$a.'" class="cuadrito" size="3"/></td>';
-					//echo '<td><div id="m_seca'.$a.'" class="es_1"></div></td>';
-					echo '<td><input type="text" id="l_obse'.$a.'" class="cuadrito" size="28"/></td></tr>';	
-					}	
-				?>
+			<table style="width:400px;">
+				<tr><td>Fecha Muestra</td>					<td><input type="date" id="fmuestra" /></td></tr>
+				<tr><td>Nombre archivo Externo</td>		<td><input /></td></tr>
+				<tr><td>Promedio Externo</td>				<td><input /></td></tr>
+				<tr><td>Presión</td>							<td><input /></td></tr>
+				<tr><td>Solidos solubles</td>				<td><input /></td></tr>
+				<tr><td>Nombre archivo Interno</td>		<td><input /></td></tr>
+				<tr><td>Promedio Interno</td>				<td><input /></td></tr>
+				<tr><td>Indicaciones</td>					<td><input /></td></tr>
 			</table>
 			<div id="masdatos" class="adder">Guardar Datos</div>
 			<br>

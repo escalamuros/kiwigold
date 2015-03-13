@@ -13,17 +13,17 @@ class basededatos
 	function basededatos()
 	{	
 		/*
-		$this->servidor="localhost";
+		$this->servidor="localhost"; //local
 		$this->login="root";
 		$this->clave="1537291534862123";
 		$this->base="kiwibd";
 		
-		$this->servidor="kiwibd.db.11164618.hostedresource.com";
+		$this->servidor="kiwibd.db.11164618.hostedresource.com"; //servidor propio
 		$this->login="kiwibd";
 		$this->clave="Kiwibd123!";
 		$this->base="kiwibd";
 		*/
-		$this->servidor="localhost";
+		$this->servidor="localhost"; //servidor de kiwigold
 		$this->login="kiwigold_user";
 		$this->clave="user_kiwigold123!";
 		$this->base="kiwigold_uno";
@@ -111,6 +111,10 @@ class basededatos
 		}
 		return $arch;
 	}
+	function recuperar_arch_gpx($arch)
+	{
+		return ('test.gpx');
+	}
 	//recupera los datos del archivo
 	function recupera_datos_archivo($id)
 	{
@@ -150,6 +154,69 @@ class basededatos
 	function actualiza_analisis($numm,$peso,$pre1,$pre2,$ss,$col1,$col2,$pei,$pef,$obs,$ing){
 		$cons="update analisis set peso='$peso',presion1='$pre1',presion2='$pre2',ss='$ss',color1='$col1',color2='$col2',pesoi='$pei',pesof='$pef',obs='$obs' where f_analisis='$ing' and numm='$numm';";
 		mysql_query($cons,$this->id_con);
+	}
+	//del arreglo de pesos, actualiza el laboratorio id
+	function actualiza_pesos_analisis($id,$arr)
+	{
+		if(is_array($arr))
+		{
+			$i=1;
+			foreach($arr as $el)
+			{
+				$cons="update analisis set peso='$el' where f_analisis='$id' and numm='$i' ;";
+				mysql_query($cons,$this->id_con);
+				$i++;
+			}
+		}
+	}
+	function actualiza_presiones_analisis($id,$ar1,$ar2)
+	{
+		if((is_array($ar1))&&(is_array($ar2)))
+		{
+			$i=0;
+			for( $i ; $i <= 47 ; $i++ )
+			{
+				$cons="update analisis set presion1='" . $ar1[$i] . "',presion2='" . $ar2[$i] . "' where f_analisis='" . $id . "' and numm='" . ($i+1) . "' ;" ;
+				mysql_query($cons,$this->id_con);
+			}
+		}
+	}
+	function actualiza_solidos_analisis($id,$arr)
+	{
+		if(is_array($arr))
+		{
+			$i=1;
+			foreach($arr as $el)
+			{
+				$cons="update analisis set ss='$el' where f_analisis='$id' and numm='$i' ;";
+				mysql_query($cons,$this->id_con);
+				$i++;
+			}
+		}
+	}
+	function actualiza_colores_analisis($id,$c1,$c2)
+	{
+		if((is_array($c1))&&(is_array($c2)))
+		{
+			$i=0;
+			for( $i ; $i <= 47 ; $i++ )
+			{
+				$cons="update analisis set color1='" . $c1[$i] . "',color2='" . $c2[$i] . "' where f_analisis='" . $id . "' and numm='" . ($i+1) . "' ;" ;
+				mysql_query($cons,$this->id_con);
+			}
+		}
+	}
+	function actualiza_materiasecas_analisis($id,$ms1,$ms2)
+	{
+		if((is_array($ms1))&&(is_array($ms2)))
+		{
+			$i=0;
+			for( $i ; $i <= 47 ; $i++ )
+			{
+				$cons="update analisis set pesoi='" . $ms1[$i] . "',pesof='" . $ms2[$i] . "' where f_analisis='" . $id . "' and numm='" . ($i+1) . "' ;" ;
+				mysql_query($cons,$this->id_con);
+			}
+		}
 	}
 	//inserta nuevos datos de un analisis, segun la f_analisis
 	function llena_analisis($id_anal,$arr){
@@ -274,8 +341,13 @@ class basededatos
 		return $arreglo;
 	}
 	//recupera datos del productor, para generacion de informe en base a "um" hacia cuartel y productora
-	function recupera_dt_para_inf($um)
+	function recupera_dt_para_inf($n_lab)
 	{
+		$cons="select um from f_analisis where id='$n_lab'; ";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,$this->id_bd)){
+			$um=$rs['um'];
+		}
 		$cons="select datos_prod.rs,datos_prod.mail,datos_prod.rl,datos_prod.mailrl,datos_prod.agronomo,datos_prod.amail,cuarteles.nombre,cuarteles.direccion,cuarteles.nenc,cuarteles.eenc from um,datos_prod,cuarteles where um.id='$um' and um.cuartel=cuarteles.id and um.campo=datos_prod.campo";
 		$ejec=mysql_query($cons,$this->id_con);
 		$arreglo="";
@@ -325,6 +397,7 @@ class basededatos
 	}
 	//lista los laboratorios (f_analisis) y desde que cuartel y UM vienen
 	function lista_todo_laboratorio(){
+		$ec=array();
 		$cons="select f_analisis.id,um.um,cuarteles.nombre as n_c,campos.empresa as n_prod,f_analisis.fecha,f_analisis.fecha_m,f_analisis.estado from f_analisis,um,cuarteles,campos where f_analisis.estado<2 and f_analisis.um=um.id and um.cuartel=cuarteles.id and um.campo=campos.id order by f_analisis.fecha asc limit 20 ;";
 		$ejec=mysql_query($cons,$this->id_con);
 		while($rs=mysql_fetch_array($ejec,$this->id_bd)){ $ec[]=array($rs['id'],$rs['um'],$rs['n_c'],$rs['n_prod'],$rs['fecha'],$rs['fecha_m'],$rs['estado']);	}
@@ -767,6 +840,21 @@ class basededatos
 		}
 		$respon = array($res_f,$res_lab,$res_proy,$res_prod);
 		return $respon;
+	}
+	//genera informe de todos los cuarteles, de todos los productores
+	function extraer_todos_productores(){
+		$ar= array();
+		$cons="select exportadoras.nombre, campos.empresa, datos_prod.rs, datos_prod.rut, datos_prod.dir, datos_prod.fono,
+		 datos_prod.rl, datos_prod.rutrl, cuarteles.contrato, cuarteles.año, cuarteles.nombre, cuarteles.direccion,
+		 cuarteles.zona, cuarteles.nenc, cuarteles.fenc, cuarteles.geo, cuarteles.tipo, cuarteles.superficie,
+		 cuarteles.nplantas, cuarteles.dentreh, cuarteles.denh
+		 from cuarteles,campos,exportadoras,datos_prod where datos_prod.campo=campos.id and cuarteles.campo=campos.id and
+		 campos.exportadora=exportadoras.id order by exportadoras.id asc ;";
+		$ejec=mysql_query($cons,$this->id_con);
+		while($rs=mysql_fetch_array($ejec,MYSQL_NUM)){
+			$ar[]=array($rs[0],$rs[1],$rs[2],$rs[3],$rs[4],$rs[5],$rs[6],$rs[7],$rs[8],$rs[9],$rs[10],$rs[11],$rs[12],$rs[13],$rs[14],$rs[15],$rs[16],$rs[17],$rs[18],$rs[19],$rs[20]);
+		}
+		return $ar;
 	}
 }
 ?>

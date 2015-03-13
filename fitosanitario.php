@@ -87,7 +87,7 @@ $(document).ready(function(){
 ?>
 <div id="contenedor" style="color:#567;">
 		<?php echo "<div class='id_prod' id='".$_SESSION['id']."'></div>" ?>
-		<div id="titulo_lab">Registro de Eventos Fitosanitarios</div>
+		<div id="titulo_lab"><img class='imgmenu' src='img/fitosanitarios.png' />Registro de Eventos Fitosanitarios</div>
 		<div class="men_i">
 			<div id="expo_lab" class="expo">
 				<div class="etex">Concesionaria :</div>

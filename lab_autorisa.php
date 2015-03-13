@@ -13,6 +13,7 @@ $c->desconexion();
 <script>
 $(document).ready(function(){
 	$('#man_datos').hide();
+	$('.cuadrito').keypress(function(){});
 	$('#historico').bind('click',function(){
 		$.ajax({
 			url:'lab_historico.php',
@@ -254,12 +255,12 @@ if(isset($_SESSION['id']))
 			</table>
 			<br>
 			<table style="margin: 0 auto 0 auto;">
-			<tr><td></td><td>Peso(g)</td><td>Promedio Presión 1-2</td><td>SS (ºbrix)</td><td>Promedio Color 1-2</td><td>Mat Seca</td></tr>
-			<tr><td>Datos Válidos</td><td><div id="resvalidos" class="resul"></div></td><td><div id="resvalidosp" class="resul"></td><td><div id="resvalidoss" class="resul"></td><td><div id="resvalidosc" class="resul"></td><td><div id="resvalidosm" class="resul"></td></tr>
-			<tr><td>Promedio Aritmetico</td><td><div id="resprom" class="resul"></div></td><td><div id="respromp" class="resul"></td><td><div id="resproms" class="resul"></td><td><div id="respromc" class="resul"></td><td><div id="respromm" class="resul"></td></tr>
-			<tr><td>Min</td><td><div id="resmin" class="resul"></div></td><td><div id="resminp" class="resul"></td><td><div id="resmins" class="resul"></td><td><div id="resminc" class="resul"></td><td><div id="resminm" class="resul"></td></tr>
-			<tr><td>Max</td><td><div id="resmax" class="resul"></div></td><td><div id="resmaxp" class="resul"></td><td><div id="resmaxs" class="resul"></td><td><div id="resmaxc" class="resul"></td><td><div id="resmaxm" class="resul"></td></tr>
-			<tr><td>Desv.Estandar</td><td><div id="resdesv" class="resul"></div></td><td><div id="resdesvp" class="resul"></td><td><div id="resdesvs" class="resul"></td><td><div id="resdesvc" class="resul"></td><td><div id="resdesvm" class="resul"></td></tr>
+			<tr>	<td></td>							<td>Peso(g)</td>												<td>Promedio Presión 1-2</td>									<td>SS (ºbrix)</td>												<td>Promedio Color 1-2</td>									<td>Mat Seca</td></tr>
+			<tr>	<td>Datos Válidos</td>			<td><div id="resvalidos" class="resul"></div></td>	<td><div id="resvalidosp" class="resul"></div></td>	<td><div id="resvalidoss" class="resul"></div></td>	<td><div id="resvalidosc" class="resul"></div></td>	<td><div id="resvalidosm" class="resul"></div></td></tr>
+			<tr>	<td>Promedio Aritmetico</td>	<td><div id="resprom" class="resul"></div></td>		<td><div id="respromp" class="resul"></div></td>		<td><div id="resproms" class="resul"></div></td>		<td><div id="respromc" class="resul"></div></td>		<td><div id="respromm" class="resul"></div></td></tr>
+			<tr>	<td>Min</td>						<td><div id="resmin" class="resul"></div></td>		<td><div id="resminp" class="resul"></div></td>			<td><div id="resmins" class="resul"></div></td>			<td><div id="resminc" class="resul"></div></td>			<td><div id="resminm" class="resul"></div></td></tr>
+			<tr>	<td>Max</td>						<td><div id="resmax" class="resul"></div></td>		<td><div id="resmaxp" class="resul"></div></td>			<td><div id="resmaxs" class="resul"></div></td>			<td><div id="resmaxc" class="resul"></div></td>			<td><div id="resmaxm" class="resul"></div></td></tr>
+			<tr>	<td>Desv.Estandar</td>			<td><div id="resdesv" class="resul"></div></td>		<td><div id="resdesvp" class="resul"></div></td>		<td><div id="resdesvs" class="resul"></div></td>		<td><div id="resdesvc" class="resul"></div></td>		<td><div id="resdesvm" class="resul"></div></td></tr>
 			</table>  
 			<br />
 			<div style="float:left;width:350px;height:200px;">
